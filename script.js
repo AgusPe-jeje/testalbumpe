@@ -175,11 +175,22 @@ async function autenticarUsuario(accion) {
      mostrarCarga(textoSpinner);
 
      try {
+          // Imprimimos en consola la ruta exacta a la que le pega para asegurar que no tenga dobles barras
+          console.log(`Intentando conectar a: ${URL_BASE}/${endpointFinal}`);
+
           const res = await fetch(`${URL_BASE}/${endpointFinal}`, {
                method: 'POST',
                headers: { 'Content-Type': 'application/json' },
                body: JSON.stringify({ username, password })
           });
+          
+          // 🛡️ PARCHE DE SEGURIDAD: Si el servidor no responde un estado OK (200), leemos la respuesta como texto
+          if (!res.ok) {
+               const textoError = await res.text();
+               console.error(`Error del servidor (${res.status}):`, textoError);
+               ocultarCarga();
+               return alert(`❌ Error del servidor (${res.status}). Revisá la consola.`);
+          }
           
           const data = await res.json();
           ocultarCarga();
@@ -210,21 +221,11 @@ async function autenticarUsuario(accion) {
                     alert(`🎉 ¡Cuenta creada con éxito! Bienvenido a la Arena, ${usuarioActual.username}. Empezás con 200 monedas.`);
                }
           }
-     } catch (err) {
-          console.error(err);
+     } catch (errorDeConexion) {
           ocultarCarga();
-     }
-}
-
-function actualizarInterfazUI() {
-     if (!usuarioActual) return;
-     document.getElementById("lbl-usuario").innerText = usuarioActual.username.toUpperCase();
-     document.getElementById("lbl-monedas").innerText = usuarioActual.monedas;
-     document.getElementById("lbl-ranking").innerText = usuarioActual.puntos_ranking;
-     
-     const lblMundiales = document.getElementById("lbl-copas-mundiales");
-     if (lblMundiales) {
-          lblMundiales.innerText = usuarioActual.copas_mundiales || 0;
+          // Usamos una variable clara que no colisione con código ofuscado viejo
+          console.error("❌ Error crítico en autenticarUsuario:", errorDeConexion);
+          alert("❌ No se pudo conectar con el servidor. Verificá tu conexión a internet o el estado de Render.");
      }
 }
 
