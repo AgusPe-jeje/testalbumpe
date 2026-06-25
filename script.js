@@ -2030,7 +2030,7 @@ async function consultarResultadoInvitado(intento = 1) {
      }
 }
 
-// 🔥 10. FUNCIÓN MAESTRA MULTIJUGADOR: TRANSMISIÓN 100% SINCRONIZADA CON TEXTO DE APUESTAS SIMPLES
+// 🔥 10. FUNCIÓN MAESTRA MULTIJUGADOR: TRANSMISIÓN 100% SINCRONIZADA CON TEXTO DE APUESTAS SIMPLES INTERACTIVA
 window.renderizarFixturePasoAPaso = function(bitacora, premio, apuestasTexto) {
     document.getElementById("multi-lobby-espera").style.display = "none";
     document.getElementById("multi-pantalla-fixture").style.display = "block";
@@ -2055,6 +2055,7 @@ window.renderizarFixturePasoAPaso = function(bitacora, premio, apuestasTexto) {
     }
 
     let secuenciaPromesas = Promise.resolve();
+    let ultimaRondaProcesada = null;
 
     bitacora.forEach((partido, index) => {
         const loc = partido.local || "Local";
@@ -2064,6 +2065,35 @@ window.renderizarFixturePasoAPaso = function(bitacora, premio, apuestasTexto) {
         const golesLocalDefinitivos = partido.golesLocal || 0;
         const golesVisitanteDefinitivos = partido.golesVisitante || 0;
 
+        // 🛑 DETECTOR DE CAMBIO DE FASE: Si la ronda cambia, inyectamos una pausa interactiva
+        if (ultimaRondaProcesada && ultimaRondaProcesada !== rondaNombre) {
+            secuenciaPromesas = secuenciaPromesas.then(() => {
+                return new Promise((resolvePausa) => {
+                    const bloquePausa = document.createElement("div");
+                    bloquePausa.style.cssText = "text-align:center; background:#111a2e; border: 1px dashed var(--celeste); padding: 15px; border-radius: 8px; margin: 20px 0; box-shadow: 0 0 15px rgba(0, 200, 255, 0.15); animation: pulse 2s infinite;";
+                    bloquePausa.innerHTML = `
+                        <h4 style="color:var(--celeste); font-family:'Oswald'; margin:0 0 5px 0; font-size: 1.1rem;">⏳ ¡ETAPA TERMINADA!</h4>
+                        <p style="color:#bbb; font-size:0.9rem; margin:0 0 12px 0;">Todos los cruces de la fase anterior han concluido en vivo.</p>
+                        <button type="button" id="btn-continuar-fase-${index}" class="btn-estadio" style="width:70%; margin:0 auto; padding: 8px 15px; background:var(--celeste); border-color:var(--celeste); font-size:0.9rem; cursor:pointer; font-weight:bold; text-transform:uppercase;">
+                            ⏩ CONTINUAR CON LA SIGUIENTE FASE
+                        </button>
+                    `;
+                    tablero.appendChild(bloquePausa);
+                    bloquePausa.scrollIntoView({ behavior: 'smooth' });
+
+                    document.getElementById(`btn-continuar-fase-${index}`).onclick = function() {
+                        this.disabled = true;
+                        this.innerText = "⏳ CARGANDO ETAPA...";
+                        bloquePausa.style.opacity = "0.6";
+                        resolvePausa();
+                    };
+                });
+            });
+        }
+
+        ultimaRondaProcesada = rondaNombre;
+
+        // ⚽ EJECUCIÓN NORMAL VIRTUAL DEL PARTIDO 90 MINUTOS
         secuenciaPromesas = secuenciaPromesas.then(() => {
             return new Promise((resolveCruce) => {
                 const bloquePartido = document.createElement("div");
@@ -2131,6 +2161,9 @@ window.renderizarFixturePasoAPaso = function(bitacora, premio, apuestasTexto) {
         });
     });
 
+    // ========================================================================
+    // 🏁 CIERRE Y PANTALLA DE PREMIOS FINALES
+    // ========================================================================
     secuenciaPromesas.then(() => {
          const bloquePremio = document.createElement("div");
          bloquePremio.style.cssText = "text-align:center; margin-top:25px; padding:15px; background:rgba(0,255,136,0.05); border:2px dashed var(--dorado); border-radius:10px;";
