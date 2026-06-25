@@ -1,1 +1,2263 @@
-const _0x1c0c17=_0x47d0;(function(_0x3639e1,_0x4b61bf){const _0x191ad6=_0x47d0,_0x34a537=_0x3639e1();while(!![]){try{const _0x443717=parseInt(_0x191ad6(0x160))/0x1+parseInt(_0x191ad6(0x253))/0x2+-parseInt(_0x191ad6(0x10c))/0x3*(parseInt(_0x191ad6(0x11e))/0x4)+-parseInt(_0x191ad6(0x21d))/0x5+-parseInt(_0x191ad6(0xb2))/0x6*(parseInt(_0x191ad6(0x9f))/0x7)+parseInt(_0x191ad6(0x296))/0x8*(parseInt(_0x191ad6(0x163))/0x9)+parseInt(_0x191ad6(0x192))/0xa*(-parseInt(_0x191ad6(0x1b8))/0xb);if(_0x443717===_0x4b61bf)break;else _0x34a537['push'](_0x34a537['shift']());}catch(_0xa815ca){_0x34a537['push'](_0x34a537['shift']());}}}(_0x3227,0x7f6f9));const URL_RENDER_SERVICIO='https://testalbumpe-5feo.onrender.com/',URL_BASE=URL_RENDER_SERVICIO+_0x1c0c17(0xa1);let usuarioActual=null,direccionGanadora='',albumCompleto=[],paisSeleccionado='',timbaPreparada=![],intervaloCronometro=null,intervaloCronometroTimba=null,filtroEstadoActual=_0x1c0c17(0x15c),filtroRarezaActual=_0x1c0c17(0x15c),multiSalaId=null,multiCodigoSala=null,multiEsCreador=![],multiIntervaloLobby=null,multiApuestaFijada=0x0;function arrancarCronometroTimbaVisual(_0x31a980){const _0x27d149=_0x1c0c17;clearInterval(intervaloCronometroTimba);const _0x45fced=document[_0x27d149(0x151)](_0x27d149(0x12a));if(!_0x45fced)return;if(_0x31a980<=0x0){_0x45fced[_0x27d149(0x2a0)]=_0x27d149(0x131);return;}let _0x1363a5=_0x31a980;intervaloCronometroTimba=setInterval(()=>{const _0x4e20fe=_0x27d149;_0x1363a5-=0x3e8;if(_0x1363a5<=0x0){clearInterval(intervaloCronometroTimba),_0x45fced[_0x4e20fe(0x2a0)]=_0x4e20fe(0x180);if(usuarioActual)actualizarTimbasRestantesUI();return;}const _0x1f8602=Math[_0x4e20fe(0x136)](_0x1363a5/0x3e8),_0x2d7d59=Math['floor'](_0x1f8602/0x3c),_0x3d97c0=_0x1f8602%0x3c;let _0x458db6=_0x2d7d59[_0x4e20fe(0x125)]()[_0x4e20fe(0x95)](0x2,'0')+'m\x20'+_0x3d97c0[_0x4e20fe(0x125)]()[_0x4e20fe(0x95)](0x2,'0')+'s';_0x45fced[_0x4e20fe(0x2a0)]=_0x4e20fe(0x217)+_0x458db6;},0x3e8);}async function actualizarTimbasRestantesUI(){const _0x4f03ee=_0x1c0c17;if(!usuarioActual)return;const _0x52ad25=document[_0x4f03ee(0x151)](_0x4f03ee(0x12a));if(!_0x52ad25)return;try{const _0x221f28=await fetch(URL_BASE+_0x4f03ee(0x226)+usuarioActual['id']),_0x9172d9=await _0x221f28[_0x4f03ee(0x14a)]();_0x9172d9['timbas']<=0x0?(_0x52ad25[_0x4f03ee(0x216)][_0x4f03ee(0x229)]=_0x4f03ee(0x16b),_0x52ad25[_0x4f03ee(0x216)][_0x4f03ee(0x288)]=_0x4f03ee(0x16b),_0x52ad25['innerText']=_0x4f03ee(0x1b4)):(_0x52ad25[_0x4f03ee(0x216)][_0x4f03ee(0x229)]='var(--dorado)',_0x52ad25['style']['color']=_0x4f03ee(0x22a),_0x52ad25[_0x4f03ee(0x2a0)]=_0x4f03ee(0x19e)+_0x9172d9[_0x4f03ee(0x202)]+'/10'),_0x9172d9[_0x4f03ee(0x28e)]>0x0&&_0x9172d9[_0x4f03ee(0x202)]<0xa&&arrancarCronometroTimbaVisual(_0x9172d9['siguienteIn']);}catch(_0x331e80){console[_0x4f03ee(0x1e9)]('Error\x20al\x20actualizar\x20créditos\x20de\x20timba:',_0x331e80);}}function cambiarModulo(_0x2981c5,_0x36399d){const _0x3619f8=_0x1c0c17;document[_0x3619f8(0x299)](_0x3619f8(0x248))[_0x3619f8(0x1c4)](_0x3b5c27=>_0x3b5c27[_0x3619f8(0x216)][_0x3619f8(0x178)]=_0x3619f8(0x1f9)),document[_0x3619f8(0x299)](_0x3619f8(0x27d))[_0x3619f8(0x1c4)](_0x337192=>_0x337192[_0x3619f8(0x268)][_0x3619f8(0x162)]('activo'));const _0x532465=document[_0x3619f8(0x151)](_0x2981c5);if(_0x532465)_0x532465['style'][_0x3619f8(0x178)]=_0x3619f8(0x122);if(_0x36399d)_0x36399d[_0x3619f8(0x268)]['add'](_0x3619f8(0x261));if(_0x2981c5===_0x3619f8(0x147)&&usuarioActual)cargarAlbumLocal();if(_0x2981c5===_0x3619f8(0x263)&&usuarioActual)iniciarDueloLocal();_0x2981c5===_0x3619f8(0xad)&&usuarioActual&&(rotarPartidoTimba(),document['getElementById'](_0x3619f8(0x109))['value']=_0x3619f8(0x1e3),conmutarControlesTimbaUI(),actualizarTimbasRestantesUI());}function mostrarCarga(_0x5005e0='Conectando\x20con\x20la\x20Arena...'){const _0x445233=_0x1c0c17;document['getElementById'](_0x445233(0x220))[_0x445233(0x2a0)]=_0x5005e0,document[_0x445233(0x151)](_0x445233(0x28d))[_0x445233(0x268)][_0x445233(0x23f)]('activo');}function ocultarCarga(){const _0x3c5ceb=_0x1c0c17;document[_0x3c5ceb(0x151)](_0x3c5ceb(0x28d))[_0x3c5ceb(0x268)][_0x3c5ceb(0x162)](_0x3c5ceb(0x261));}function arrancarCronometroVisual(_0x163a3d){const _0x1ca69a=_0x1c0c17;clearInterval(intervaloCronometro);const _0x576603=document['getElementById']('cronometro-tiros');if(!_0x576603)return;if(_0x163a3d<=0x0){_0x576603['innerText']='🔋\x20¡Energía\x20al\x20Máximo!',document['querySelectorAll'](_0x1ca69a(0x1a8))['forEach'](_0x190440=>_0x190440[_0x1ca69a(0x216)][_0x1ca69a(0x270)]='auto');return;}let _0x239afc=_0x163a3d;intervaloCronometro=setInterval(()=>{const _0x3a7ee9=_0x1ca69a;_0x239afc-=0x3e8;if(_0x239afc<=0x0){clearInterval(intervaloCronometro),_0x576603[_0x3a7ee9(0x2a0)]=_0x3a7ee9(0x1f4),document['querySelectorAll']('.zona-disparo-target')[_0x3a7ee9(0x1c4)](_0x18e700=>_0x18e700['style']['pointerEvents']='auto');if(usuarioActual)iniciarDueloLocal();return;}const _0x21c410=Math[_0x3a7ee9(0x136)](_0x239afc/0x3e8),_0x50a30d=Math[_0x3a7ee9(0x136)](_0x21c410/0xe10),_0x34f0dd=Math['floor'](_0x21c410%0xe10/0x3c),_0x45d1a2=_0x21c410%0x3c;let _0xf246ca='';if(_0x50a30d>0x0)_0xf246ca+=_0x50a30d+'h\x20';_0xf246ca+=_0x34f0dd[_0x3a7ee9(0x125)]()['padStart'](0x2,'0')+'m\x20'+_0x45d1a2[_0x3a7ee9(0x125)]()[_0x3a7ee9(0x95)](0x2,'0')+'s',_0x576603[_0x3a7ee9(0x2a0)]=_0x3a7ee9(0x1da)+_0xf246ca;},0x3e8);}async function autenticarUsuario(_0x49e1df){const _0x2aae14=_0x1c0c17,_0x25b2bf=document[_0x2aae14(0x151)](_0x2aae14(0x126))[_0x2aae14(0x183)][_0x2aae14(0x278)](),_0x667d29=document['getElementById']('input-pass')[_0x2aae14(0x183)];if(!_0x25b2bf||!_0x667d29)return alert(_0x2aae14(0x23b));const _0x5f1689=_0x49e1df===_0x2aae14(0x141)?'Iniciando\x20sesión...':_0x2aae14(0x20c),_0x3f0c90=_0x49e1df===_0x2aae14(0x141)?_0x2aae14(0x141):_0x2aae14(0xbb);mostrarCarga(_0x5f1689);try{const _0xad919=await fetch(URL_BASE+'/'+_0x3f0c90,{'method':'POST','headers':{'Content-Type':_0x2aae14(0x103)},'body':JSON[_0x2aae14(0x233)]({'username':_0x25b2bf,'password':_0x667d29})}),_0x3458ed=await _0xad919[_0x2aae14(0x14a)]();ocultarCarga();if(_0x3458ed[_0x2aae14(0x1e9)])alert(_0x3458ed[_0x2aae14(0x1e9)]);else{usuarioActual=_0x3458ed[_0x2aae14(0xf5)],document[_0x2aae14(0x151)](_0x2aae14(0x1c8))[_0x2aae14(0x216)]['display']=_0x2aae14(0x1f9);const _0x31b601=document[_0x2aae14(0x151)]('interfaz-juego');_0x31b601[_0x2aae14(0x216)][_0x2aae14(0x144)]('display'),_0x31b601[_0x2aae14(0x268)][_0x2aae14(0x23f)](_0x2aae14(0x17b)),filtroEstadoActual=_0x2aae14(0x15c),filtroRarezaActual='todas',actualizarInterfazUI(),cargarAlbumLocal(),actualizarTimbasRestantesUI(),iniciarControladorAnunciosSeguro(),_0x49e1df==='login'?alert(_0x2aae14(0xd2)+usuarioActual[_0x2aae14(0x256)]+'!'):alert(_0x2aae14(0x1fe)+usuarioActual['username']+_0x2aae14(0xd8));}}catch(_0xae6ff7){console['error'](_0xae6ff7),ocultarCarga();}}function actualizarInterfazUI(){const _0x21bdea=_0x1c0c17;if(!usuarioActual)return;document[_0x21bdea(0x151)](_0x21bdea(0x16a))[_0x21bdea(0x2a0)]=usuarioActual[_0x21bdea(0x256)][_0x21bdea(0x209)](),document[_0x21bdea(0x151)]('lbl-monedas')['innerText']=usuarioActual['monedas'],document['getElementById'](_0x21bdea(0x1cb))[_0x21bdea(0x2a0)]=usuarioActual[_0x21bdea(0x107)];const _0x32038c=document[_0x21bdea(0x151)](_0x21bdea(0xba));_0x32038c&&(_0x32038c[_0x21bdea(0x2a0)]=usuarioActual['copas_mundiales']||0x0);}async function cargarAlbumLocal(){const _0x49efe0=_0x1c0c17;if(!usuarioActual)return;const _0x48e417=document['getElementById'](_0x49efe0(0x156));try{const _0x3cf4eb=await fetch(URL_BASE+'/album/'+usuarioActual['id']),_0x467b79=await _0x3cf4eb['json']();albumCompleto=_0x467b79[_0x49efe0(0x1b6)],window[_0x49efe0(0x20b)]=_0x467b79[_0x49efe0(0x1b6)];const _0x534024=albumCompleto['length'],_0x49579b=albumCompleto[_0x49efe0(0x22d)](_0x2b7257=>_0x2b7257['obtenido']>0x0)[_0x49efe0(0x99)],_0x356dd4=_0x534024>0x0?Math[_0x49efe0(0x276)](_0x49579b/_0x534024*0x64):0x0;document[_0x49efe0(0x151)](_0x49efe0(0x203))[_0x49efe0(0x2a0)]=_0x49579b+_0x49efe0(0x25a)+_0x534024+'\x20('+_0x356dd4+'%)',document[_0x49efe0(0x151)](_0x49efe0(0x1e8))['style'][_0x49efe0(0x27a)]=_0x356dd4+'%';const _0x47cc60=new Map();albumCompleto['forEach'](_0x226045=>{const _0x2c14a1=_0x49efe0;!_0x47cc60[_0x2c14a1(0x1ee)](_0x226045[_0x2c14a1(0x121)])&&_0x47cc60[_0x2c14a1(0x27b)](_0x226045[_0x2c14a1(0x121)],{'bandera':_0x226045['bandera'],'complete':!![]});}),_0x47cc60[_0x49efe0(0x1c4)]((_0x6c754d,_0x369a22)=>{const _0x4656be=_0x49efe0,_0x30c919=albumCompleto[_0x4656be(0x22d)](_0x506de6=>_0x506de6[_0x4656be(0x121)]===_0x369a22),_0x1bd4b2=_0x30c919[_0x4656be(0xcb)](_0x5a9892=>_0x5a9892['obtenido']>0x0);_0x6c754d['complete']=_0x1bd4b2;}),_0x48e417[_0x49efe0(0x22f)]='',!paisSeleccionado&&_0x47cc60['size']>0x0&&(paisSeleccionado=_0x47cc60[_0x49efe0(0xae)]()['next']()[_0x49efe0(0x183)]),_0x47cc60[_0x49efe0(0x1c4)]((_0x181d01,_0x50d580)=>{const _0x55ff44=_0x49efe0,_0x25ed1d=document['createElement']('button');_0x25ed1d[_0x55ff44(0x244)]=_0x55ff44(0x152)+(_0x50d580===paisSeleccionado?_0x55ff44(0x261):'')+'\x20'+(_0x181d01[_0x55ff44(0x1f7)]?_0x55ff44(0x137):'');const _0xd8dbb2=_0x181d01[_0x55ff44(0x1f7)]?_0x55ff44(0x266):'';_0x25ed1d[_0x55ff44(0x22f)]=_0x55ff44(0x196)+_0x181d01[_0x55ff44(0x227)]+_0x55ff44(0x14f)+_0x50d580['toUpperCase']()+_0xd8dbb2,_0x25ed1d[_0x55ff44(0x1af)]=()=>{const _0x3bce08=_0x55ff44;paisSeleccionado=_0x50d580,document[_0x3bce08(0x299)](_0x3bce08(0x13e))['forEach'](_0x168ffa=>_0x168ffa[_0x3bce08(0x268)][_0x3bce08(0x162)](_0x3bce08(0x261))),_0x25ed1d[_0x3bce08(0x268)][_0x3bce08(0x23f)]('activo'),_0x25ed1d[_0x3bce08(0x9b)]({'behavior':_0x3bce08(0x240),'block':'nearest','inline':'center'}),mostrarJugadoresPorPais();},_0x48e417['appendChild'](_0x25ed1d);}),mostrarJugadoresPorPais(),document['getElementById'](_0x49efe0(0x109))&&document[_0x49efe0(0x151)]('select-tipo-apuesta')[_0x49efe0(0x183)]===_0x49efe0(0xf6)&&cargarRepetidasEnDesplegableUI();}catch(_0x48a3e4){console['error'](_0x49efe0(0x264),_0x48a3e4);}}function mostrarJugadoresPorPais(){const _0xfa80fb=_0x1c0c17,_0x4d6a4a=document[_0xfa80fb(0x151)](_0xfa80fb(0x161));if(!_0x4d6a4a)return;_0x4d6a4a['innerHTML']='';const _0x157497=albumCompleto['filter'](_0x499ced=>_0x499ced['pais']===paisSeleccionado);_0x157497[_0xfa80fb(0x1c4)]((_0x11dfe6,_0x60b2a7)=>{const _0x19e0cc=_0xfa80fb,_0x5d08c7=_0x11dfe6[_0x19e0cc(0x12e)]>0x0,_0x1bd7f5=document['createElement'](_0x19e0cc(0x1dd));_0x1bd7f5[_0x19e0cc(0x244)]=_0x19e0cc(0xc2)+_0x11dfe6[_0x19e0cc(0x1ae)][_0x19e0cc(0x1a3)]()+'\x20'+(_0x5d08c7?'':_0x19e0cc(0xd6)),_0x1bd7f5['style'][_0x19e0cc(0xcd)]=_0x60b2a7%0xc*0x1e+'ms',_0x1bd7f5[_0x19e0cc(0x22f)]='\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20'+(_0x11dfe6[_0x19e0cc(0x12e)]>0x1?_0x19e0cc(0x257)+_0x11dfe6['obtenido']+_0x19e0cc(0x1a6):'')+_0x19e0cc(0x23d)+_0x11dfe6[_0x19e0cc(0xac)]+_0x19e0cc(0xe6)+_0x11dfe6[_0x19e0cc(0x1d8)]+_0x19e0cc(0x108)+_0x11dfe6['rareza'][_0x19e0cc(0x209)]()+'</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20',_0x4d6a4a[_0x19e0cc(0x222)](_0x1bd7f5);}),aplicarFiltrosCruzadosUI();}let colaCartasPack=[],indiceCartaActualPack=0x0,sobreAbiertoCompletoCache=[];async function comprarSobreEspecifico(_0x4d2856){const _0x32160e=_0x1c0c17;if(!usuarioActual)return alert(_0x32160e(0x1f5));mostrarCarga(_0x32160e(0x13a)+_0x4d2856[_0x32160e(0x209)]()+_0x32160e(0xbe));try{const _0x56d6cb=await fetch(URL_BASE+'/comprar-sobre',{'method':'POST','headers':{'Content-Type':_0x32160e(0x103)},'body':JSON[_0x32160e(0x233)]({'usuario_id':usuarioActual['id'],'tipoCofre':_0x4d2856})}),_0x2511d7=await _0x56d6cb[_0x32160e(0x14a)]();ocultarCarga();if(_0x2511d7[_0x32160e(0xe5)])return alert(_0x2511d7[_0x32160e(0x258)]);if(_0x2511d7[_0x32160e(0x1e9)])return alert(_0x32160e(0x188)+_0x2511d7[_0x32160e(0x1e9)]);usuarioActual[_0x32160e(0x1e3)]=_0x2511d7[_0x32160e(0x1e3)],actualizarInterfazUI(),colaCartasPack=_0x2511d7[_0x32160e(0x295)],sobreAbiertoCompletoCache=_0x2511d7[_0x32160e(0x295)],indiceCartaActualPack=0x0,document['getElementById']('grid-sobre-abierto')[_0x32160e(0x22f)]='';const _0x3c8b8b=document['getElementById'](_0x32160e(0xbc));_0x3c8b8b[_0x32160e(0x216)][_0x32160e(0x178)]=_0x32160e(0xf8),_0x3c8b8b[_0x32160e(0x9b)]({'behavior':_0x32160e(0x240),'block':_0x32160e(0x24d)}),ejecutarSecuenciaReveladoCarta();}catch(_0x25dcdd){console['error'](_0x32160e(0x1d7),_0x25dcdd),ocultarCarga();}}let animacionCartaEnCurso=![];async function ejecutarSecuenciaReveladoCarta(){const _0x2bee47=_0x1c0c17;if(indiceCartaActualPack>=colaCartasPack[_0x2bee47(0x99)]){document[_0x2bee47(0x151)](_0x2bee47(0xbc))[_0x2bee47(0x216)]['display']=_0x2bee47(0x1f9),renderizarGrillaFinalSobres(),animacionCartaEnCurso=![];return;}animacionCartaEnCurso=!![];const _0x177e33=document['getElementById'](_0x2bee47(0x1ff));if(_0x177e33)_0x177e33[_0x2bee47(0x262)]=!![];const _0x4f1079=colaCartasPack[indiceCartaActualPack],_0x4386ee=document[_0x2bee47(0x151)]('pantalla-carta-presentada'),_0x48c22e=document[_0x2bee47(0x151)]('pista-bandera'),_0x4ec009=document['getElementById'](_0x2bee47(0x26c)),_0xbcfcb3=document['getElementById'](_0x2bee47(0x297));_0x48c22e[_0x2bee47(0x244)]=_0x2bee47(0xf7),_0x48c22e[_0x2bee47(0x2a0)]=_0x2bee47(0x208),_0x4ec009[_0x2bee47(0x244)]=_0x2bee47(0xf7),_0x4ec009[_0x2bee47(0x2a0)]=_0x2bee47(0x1ef),_0xbcfcb3[_0x2bee47(0x244)]=_0x2bee47(0xf7),_0xbcfcb3[_0x2bee47(0x2a0)]=_0x2bee47(0x100),_0x4386ee[_0x2bee47(0x22f)]='',await new Promise(_0x66594f=>setTimeout(_0x66594f,0xc8)),_0x48c22e[_0x2bee47(0x2a0)]=_0x4f1079[_0x2bee47(0x227)]||'🃏',_0x48c22e[_0x2bee47(0x268)][_0x2bee47(0x23f)](_0x2bee47(0x250)),await new Promise(_0x2deaf1=>setTimeout(_0x2deaf1,0x258));let _0x40eda2=_0x2bee47(0x174);const _0xeac143=_0x4f1079[_0x2bee47(0xfe)]?_0x4f1079[_0x2bee47(0xfe)][_0x2bee47(0x209)]():'';if(_0xeac143[_0x2bee47(0x224)](_0x2bee47(0x1a2))||_0xeac143[_0x2bee47(0x224)](_0x2bee47(0x267))||_0xeac143[_0x2bee47(0x224)](_0x2bee47(0x13d)))_0x40eda2='DEF';else{if(_0xeac143[_0x2bee47(0x224)](_0x2bee47(0x1d5))||_0xeac143['includes'](_0x2bee47(0x1aa))||_0xeac143['includes']('CC'))_0x40eda2=_0x2bee47(0x1d5);}_0x4ec009[_0x2bee47(0x2a0)]=_0x40eda2,_0x4ec009['classList'][_0x2bee47(0x23f)]('revelada'),await new Promise(_0x1ca7d5=>setTimeout(_0x1ca7d5,0x258));let _0x21f50d=_0x4f1079[_0x2bee47(0x1ae)]['toUpperCase']();if(_0x21f50d==='ESPECIAL')_0x21f50d='RARA';_0xbcfcb3[_0x2bee47(0x2a0)]=_0x21f50d,_0xbcfcb3[_0x2bee47(0x268)]['add'](_0x2bee47(0x250)),await new Promise(_0x47fc4b=>setTimeout(_0x47fc4b,0x1f4));let _0x2c5cc0=_0x4f1079['rareza']['toLowerCase']();if(_0x2c5cc0==='especial')_0x2c5cc0=_0x2bee47(0x1b2);const _0x2127ab=document[_0x2bee47(0x94)]('div');_0x2127ab[_0x2bee47(0x244)]=_0x2bee47(0xc2)+_0x2c5cc0+_0x2bee47(0x128);let _0x4d6400=_0x2bee47(0x279);if(_0x2c5cc0===_0x2bee47(0x1b2))_0x4d6400=_0x2bee47(0x1d0);else{if(_0x2c5cc0===_0x2bee47(0x1c7))_0x4d6400=_0x2bee47(0x271);else{if(_0x2c5cc0===_0x2bee47(0x29a))_0x4d6400=_0x2bee47(0x235);}}_0x2127ab['innerHTML']=_0x2bee47(0xff)+(_0x4f1079[_0x2bee47(0x12e)]>0x1?_0x2bee47(0x257)+_0x4f1079['obtenido']+_0x2bee47(0x1a6):'')+_0x2bee47(0x204)+_0x4f1079[_0x2bee47(0xac)]+_0x2bee47(0xe6)+_0x4f1079[_0x2bee47(0x1d8)]+'\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22position:\x20absolute;\x20top:\x200;\x20left:\x200;\x20width:\x2018px;\x20height:\x20100%;\x20background:\x20linear-gradient(90deg,\x20'+_0x4d6400+_0x2bee47(0x238)+_0x21f50d+'</div>\x0a\x20\x20\x20\x20',_0x4386ee[_0x2bee47(0x222)](_0x2127ab),await new Promise(_0x422858=>setTimeout(_0x422858,0x190)),animacionCartaEnCurso=![];if(_0x177e33)_0x177e33[_0x2bee47(0x262)]=![];}function mostrarSiguienteCartaSecuencia(){if(animacionCartaEnCurso)return;indiceCartaActualPack++,ejecutarSecuenciaReveladoCarta();}async function renderizarGrillaFinalSobres(){const _0x2999f9=_0x1c0c17,_0x4a084b=document[_0x2999f9(0x151)](_0x2999f9(0xa5));_0x4a084b[_0x2999f9(0x22f)]='',sobreAbiertoCompletoCache[_0x2999f9(0x1c4)]((_0xcfe5f,_0x5c6335)=>{const _0x1b49f4=_0x2999f9,_0xfdfcc=document[_0x1b49f4(0x94)]('div');_0xfdfcc['style'][_0x1b49f4(0x265)]='display:\x20flex;\x20flex-direction:\x20column;\x20align-items:\x20center;\x20gap:\x208px;';let _0x2b9e42=_0xcfe5f[_0x1b49f4(0x1ae)][_0x1b49f4(0x1a3)]();if(_0x2b9e42==='especial')_0x2b9e42=_0x1b49f4(0x1b2);let _0x453419=_0xcfe5f[_0x1b49f4(0x1ae)][_0x1b49f4(0x209)]();if(_0x453419==='ESPECIAL')_0x453419=_0x1b49f4(0x158);const _0x10065f=document[_0x1b49f4(0x94)]('div');_0x10065f[_0x1b49f4(0x244)]='carta-clash\x20'+_0x2b9e42,_0x10065f['style'][_0x1b49f4(0xcd)]=_0x5c6335*0.1+'s',_0x10065f[_0x1b49f4(0x22f)]=_0x1b49f4(0xe1)+(_0xcfe5f[_0x1b49f4(0x12e)]>0x1?_0x1b49f4(0x257)+_0xcfe5f[_0x1b49f4(0x12e)]+_0x1b49f4(0x1a6):'')+_0x1b49f4(0x23d)+_0xcfe5f[_0x1b49f4(0xac)]+_0x1b49f4(0xe6)+_0xcfe5f['nombre']+_0x1b49f4(0x108)+_0x453419+'</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20',_0xfdfcc[_0x1b49f4(0x222)](_0x10065f),_0x4a084b[_0x1b49f4(0x222)](_0xfdfcc);}),usuarioActual&&await cargarAlbumLocal();}async function iniciarDueloLocal(){const _0xfd4e0c=_0x1c0c17;if(!usuarioActual)return alert('❌\x20Iniciá\x20sesión.');const _0x1a56ea=document[_0xfd4e0c(0x151)](_0xfd4e0c(0x1be)),_0xd90622=document[_0xfd4e0c(0x1ed)](_0xfd4e0c(0x215)),_0x47f8f9=document[_0xfd4e0c(0x151)](_0xfd4e0c(0x1b5));cargarRankingLocal();try{const _0x826afb=await fetch(URL_BASE+_0xfd4e0c(0x19b)+usuarioActual['id']),_0x4670e2=await _0x826afb[_0xfd4e0c(0x14a)]();if(_0x4670e2[_0xfd4e0c(0x9d)]<=0x0){_0x1a56ea[_0xfd4e0c(0x216)]['color']=_0xfd4e0c(0x16b),_0x1a56ea['innerText']=_0xfd4e0c(0x102);if(_0xd90622)_0xd90622[_0xfd4e0c(0x262)]=!![];if(_0x47f8f9)_0x47f8f9[_0xfd4e0c(0x268)][_0xfd4e0c(0x23f)](_0xfd4e0c(0x1a1));direccionGanadora='';}else{_0x1a56ea[_0xfd4e0c(0x216)]['color']=_0xfd4e0c(0x114),_0x1a56ea[_0xfd4e0c(0x2a0)]=_0xfd4e0c(0x167)+_0x4670e2[_0xfd4e0c(0x9d)]+_0xfd4e0c(0x11f);if(_0xd90622)_0xd90622['disabled']=![];if(_0x47f8f9)_0x47f8f9['classList'][_0xfd4e0c(0x162)](_0xfd4e0c(0x1a1));document[_0xfd4e0c(0x299)]('.zona-disparo-target')[_0xfd4e0c(0x1c4)](_0x19886b=>_0x19886b['style'][_0xfd4e0c(0x270)]='auto');const _0x68145d=[_0xfd4e0c(0x290),_0xfd4e0c(0xa4),_0xfd4e0c(0xe3)];direccionGanadora=_0x68145d[Math[_0xfd4e0c(0x136)](Math[_0xfd4e0c(0xd9)]()*_0x68145d[_0xfd4e0c(0x99)])];}arrancarCronometroVisual(_0x4670e2['siguienteIn']);}catch(_0x2eaa98){console[_0xfd4e0c(0x1e9)]('Error\x20al\x20verificar\x20tiros\x20iniciales:',_0x2eaa98);}const _0x24cf9d=document[_0xfd4e0c(0x151)](_0xfd4e0c(0xdb)),_0x656562=document[_0xfd4e0c(0x151)](_0xfd4e0c(0xeb));_0x24cf9d&&_0x656562&&(_0x24cf9d['style'][_0xfd4e0c(0x18b)]='translate(0,\x200)\x20scale(1)',_0x656562[_0xfd4e0c(0x216)][_0xfd4e0c(0x18b)]='translateX(0px)');}async function ejecutarPenalLocal(_0x3d9d79){const _0x4ff1cb=_0x1c0c17;if(!usuarioActual||!direccionGanadora)return;const _0x3574e5=window[_0x4ff1cb(0x22e)]<=0x300,_0x37916c=_0x3574e5?0.55:0x1,_0x4ca1d4=_0x3574e5?0.65:0x1,_0x2a9472={'SUP_IZQUIERDA':{'balon':_0x4ff1cb(0xd5)+-0xb9*_0x37916c+_0x4ff1cb(0x12b)+-0xb9*_0x4ca1d4+_0x4ff1cb(0xaf),'arquero':_0x4ff1cb(0xd5)+-0xb9*_0x37916c+_0x4ff1cb(0x12b)+-0x41*_0x4ca1d4+_0x4ff1cb(0xc1)},'SUP_CENTRO':{'balon':_0x4ff1cb(0x1f1)+-0xcd*_0x4ca1d4+_0x4ff1cb(0xaf),'arquero':'translate(0px,\x20'+-0x4b*_0x4ca1d4+'px)\x20rotate(0deg)'},'SUP_DERECHA':{'balon':_0x4ff1cb(0xd5)+0xb9*_0x37916c+_0x4ff1cb(0x12b)+-0xb9*_0x4ca1d4+_0x4ff1cb(0xaf),'arquero':_0x4ff1cb(0xd5)+0xb9*_0x37916c+'px,\x20'+-0x41*_0x4ca1d4+_0x4ff1cb(0x190)},'INF_IZQUIERDA':{'balon':_0x4ff1cb(0xd5)+-0xb9*_0x37916c+'px,\x20'+-0x14*_0x4ca1d4+_0x4ff1cb(0xaf),'arquero':_0x4ff1cb(0xd5)+-0xb9*_0x37916c+_0x4ff1cb(0x12b)+0x5f*_0x4ca1d4+'px)\x20rotate(-15deg)'},'INF_CENTRO':{'balon':_0x4ff1cb(0x1f1)+-0x23*_0x4ca1d4+'px)','arquero':_0x4ff1cb(0x1f1)+0x55*_0x4ca1d4+'px)\x20rotate(0deg)'},'INF_DERECHA':{'balon':_0x4ff1cb(0xd5)+0xb9*_0x37916c+_0x4ff1cb(0x12b)+-0x14*_0x4ca1d4+'px)','arquero':'translate('+0xb9*_0x37916c+_0x4ff1cb(0x12b)+0x5f*_0x4ca1d4+_0x4ff1cb(0x234)}},_0x4a0da4=Object[_0x4ff1cb(0xae)](_0x2a9472),_0x5246f3=_0x4a0da4[Math[_0x4ff1cb(0x136)](Math[_0x4ff1cb(0xd9)]()*_0x4a0da4['length'])],_0x5b60df=document['getElementById'](_0x4ff1cb(0xeb));_0x5b60df&&(_0x5b60df[_0x4ff1cb(0x216)][_0x4ff1cb(0xdd)]='5',_0x5b60df[_0x4ff1cb(0x216)][_0x4ff1cb(0x18b)]=_0x2a9472[_0x5246f3]['arquero']);const _0x5c01d9=document[_0x4ff1cb(0x151)](_0x4ff1cb(0xdb));_0x5c01d9&&(_0x5c01d9[_0x4ff1cb(0x216)][_0x4ff1cb(0xdd)]='10',_0x5c01d9[_0x4ff1cb(0x216)][_0x4ff1cb(0x18b)]=_0x2a9472[_0x3d9d79]['balon']);document[_0x4ff1cb(0x299)]('.zona-disparo-target')['forEach'](_0x1cc63f=>_0x1cc63f['style']['pointerEvents']=_0x4ff1cb(0x1f9)),await new Promise(_0x445ba2=>setTimeout(_0x445ba2,0x258));const _0x46ad64=_0x3d9d79===_0x5246f3,_0x3d0d05=!_0x46ad64,_0x145201=document[_0x4ff1cb(0x151)](_0x4ff1cb(0x1be));_0x46ad64?(_0x145201['style']['color']=_0x4ff1cb(0x16b),_0x145201[_0x4ff1cb(0x2a0)]='¡ATAJADO\x20POR\x20EL\x20ARQUERO!\x20🧤'):(_0x145201[_0x4ff1cb(0x216)][_0x4ff1cb(0x288)]=_0x4ff1cb(0x18a),_0x145201[_0x4ff1cb(0x2a0)]=_0x4ff1cb(0x170));direccionGanadora='';try{const _0x437035=await fetch(URL_BASE+_0x4ff1cb(0x93),{'method':_0x4ff1cb(0x1fd),'headers':{'Content-Type':_0x4ff1cb(0x103)},'body':JSON['stringify']({'usuario_id':usuarioActual['id'],'gano':_0x3d0d05})}),_0x2b6c0f=await _0x437035[_0x4ff1cb(0x14a)]();if(_0x2b6c0f[_0x4ff1cb(0xc9)]){alert(_0x2b6c0f[_0x4ff1cb(0x258)]),_0x145201['style'][_0x4ff1cb(0x288)]='var(--rojo)',_0x145201['innerText']=_0x4ff1cb(0x14e);return;}usuarioActual[_0x4ff1cb(0x1e3)]=_0x2b6c0f[_0x4ff1cb(0x24e)][_0x4ff1cb(0x1e3)],usuarioActual[_0x4ff1cb(0x107)]=_0x2b6c0f[_0x4ff1cb(0x24e)][_0x4ff1cb(0x107)],actualizarInterfazUI(),cargarRankingLocal(),_0x145201[_0x4ff1cb(0x2a0)]+=_0x4ff1cb(0xb0)+_0x2b6c0f[_0x4ff1cb(0x9c)]+'\x20tiros.';const _0x4de633=document[_0x4ff1cb(0x1ed)]('button[onclick=\x27iniciarDueloLocal()\x27]');if(_0x2b6c0f[_0x4ff1cb(0x9c)]<=0x0){if(_0x4de633)_0x4de633[_0x4ff1cb(0x262)]=!![];}else document[_0x4ff1cb(0x299)]('.zona-disparo-target')[_0x4ff1cb(0x1c4)](_0x2495e7=>_0x2495e7[_0x4ff1cb(0x216)][_0x4ff1cb(0x270)]='auto');arrancarCronometroVisual(_0x2b6c0f[_0x4ff1cb(0x28e)]);}catch(_0x440520){console[_0x4ff1cb(0x1e9)](_0x440520),document[_0x4ff1cb(0x299)]('.zona-disparo-target')[_0x4ff1cb(0x1c4)](_0x19fcb1=>_0x19fcb1[_0x4ff1cb(0x216)][_0x4ff1cb(0x270)]=_0x4ff1cb(0x9e));}}async function cargarRankingLocal(){const _0x2d6e2c=_0x1c0c17;cargarRankingMundialesLocal();const _0x3def4b=document[_0x2d6e2c(0x151)](_0x2d6e2c(0x16f));if(!_0x3def4b)return;try{const _0x517e73=await fetch(URL_BASE+_0x2d6e2c(0x25b)),_0x1b8e8c=await _0x517e73['json']();_0x3def4b[_0x2d6e2c(0x22f)]='';if(!_0x1b8e8c[_0x2d6e2c(0x210)]||_0x1b8e8c[_0x2d6e2c(0x210)][_0x2d6e2c(0x99)]===0x0){_0x3def4b[_0x2d6e2c(0x22f)]=_0x2d6e2c(0xc8);return;}_0x1b8e8c[_0x2d6e2c(0x210)]['forEach']((_0x4a8250,_0x274986)=>{const _0xc4aa3b=_0x2d6e2c,_0x1bb1c0=document[_0xc4aa3b(0x94)]('tr');usuarioActual&&_0x4a8250[_0xc4aa3b(0x256)]===usuarioActual['username']&&(_0x1bb1c0[_0xc4aa3b(0x244)]=_0xc4aa3b(0x127));let _0x4192a7=_0x274986+0x1;if(_0x274986===0x0)_0x4192a7='🥇';if(_0x274986===0x1)_0x4192a7='🥈';if(_0x274986===0x2)_0x4192a7='🥉';_0x1bb1c0[_0xc4aa3b(0x22f)]=_0xc4aa3b(0x1ca)+_0x4192a7+_0xc4aa3b(0x10b)+_0x4a8250[_0xc4aa3b(0x256)]+'\x20'+(usuarioActual&&_0x4a8250[_0xc4aa3b(0x256)]===usuarioActual['username']?_0xc4aa3b(0x1a4):'')+'\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td\x20style=\x22color:\x20#ff4a4a;\x20font-weight:\x20bold;\x22>'+_0x4a8250[_0xc4aa3b(0x107)]+'</td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20',_0x3def4b[_0xc4aa3b(0x222)](_0x1bb1c0);});}catch(_0x2c9d49){console[_0x2d6e2c(0x1e9)](_0x2c9d49);}}async function cargarRankingMundialesLocal(){const _0x5c3eae=_0x1c0c17,_0x248233=document[_0x5c3eae(0x151)]('tabla-ranking-mundiales-body');if(!_0x248233)return;try{const _0x3e24a8=await fetch(URL_BASE+'/ranking-mundiales'),_0x3c08a3=await _0x3e24a8[_0x5c3eae(0x14a)]();_0x248233[_0x5c3eae(0x22f)]='';if(!_0x3c08a3[_0x5c3eae(0x210)]||_0x3c08a3['ranking']['length']===0x0){_0x248233['innerHTML']='<tr><td\x20colspan=\x223\x22\x20style=\x22color:#777;\x20padding:\x2015px;\x22>🌟\x20Todavía\x20no\x20hay\x20campeones\x20en\x20la\x20Arena.\x20¡Sé\x20el\x20primero!\x20👑</td></tr>';return;}_0x3c08a3[_0x5c3eae(0x210)][_0x5c3eae(0x1c4)]((_0x4b57ed,_0x3e902d)=>{const _0x26c02c=_0x5c3eae,_0x547662=document['createElement']('tr');usuarioActual&&_0x4b57ed['username']===usuarioActual[_0x26c02c(0x256)]&&(_0x547662[_0x26c02c(0x244)]='fila-usuario-actual');let _0x4e2aa2=_0x3e902d+0x1;if(_0x3e902d===0x0)_0x4e2aa2='🥇';if(_0x3e902d===0x1)_0x4e2aa2='🥈';if(_0x3e902d===0x2)_0x4e2aa2='🥉';_0x547662[_0x26c02c(0x22f)]=_0x26c02c(0x1ca)+_0x4e2aa2+'</b></td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td\x20style=\x22text-align:\x20left;\x20padding-left:\x2015px;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20'+_0x4b57ed[_0x26c02c(0x256)][_0x26c02c(0x209)]()+'\x20'+(usuarioActual&&_0x4b57ed[_0x26c02c(0x256)]===usuarioActual[_0x26c02c(0x256)]?'<span\x20style=\x22color:var(--celeste);\x20font-size:0.8rem;\x22>(Vos)</span>':'')+_0x26c02c(0x254)+_0x4b57ed['copas_mundiales']+_0x26c02c(0x13f),_0x248233[_0x26c02c(0x222)](_0x547662);});}catch(_0x3e4c4b){console[_0x5c3eae(0x1e9)]('Error\x20al\x20cargar\x20ranking\x20de\x20mundiales:',_0x3e4c4b);}}async function cerrarSesionLocal(){const _0x1d26c8=_0x1c0c17;if(!usuarioActual)return;const _0xea967b=confirm('¿Estás\x20seguro\x20de\x20que\x20querés\x20salir,\x20'+usuarioActual[_0x1d26c8(0x256)]+'?');if(!_0xea967b)return;try{await fetch(URL_BASE+_0x1d26c8(0x194),{'method':_0x1d26c8(0x1fd),'headers':{'Content-Type':_0x1d26c8(0x103)},'body':JSON['stringify']({'username':usuarioActual[_0x1d26c8(0x256)]})});}catch(_0x31fa79){console[_0x1d26c8(0x1e9)]('Error\x20al\x20avisar\x20logout\x20al\x20servidor:',_0x31fa79);}clearInterval(intervaloCronometro),usuarioActual=null,direccionGanadora='',albumCompleto=[],window['albumCompleto']=[],paisSeleccionado='',document['getElementById'](_0x1d26c8(0x126))[_0x1d26c8(0x183)]='',document['getElementById'](_0x1d26c8(0x24f))[_0x1d26c8(0x183)]='';const _0x1122a3=document['getElementById']('interfaz-juego');_0x1122a3['classList'][_0x1d26c8(0x162)](_0x1d26c8(0x17b)),_0x1122a3[_0x1d26c8(0x216)]['display']='none',document[_0x1d26c8(0x151)]('seccion-login')[_0x1d26c8(0x216)][_0x1d26c8(0x178)]='block',alert(_0x1d26c8(0xdf));}const LISTA_SELECCIONES_TIMBA=[{'nombre':_0x1c0c17(0x260),'bandera':'🇦🇷'},{'nombre':_0x1c0c17(0x1ce),'bandera':'🇧🇷'},{'nombre':_0x1c0c17(0x259),'bandera':'🇺🇾'},{'nombre':_0x1c0c17(0x239),'bandera':_0x1c0c17(0xbf)},{'nombre':'FRANCIA','bandera':_0x1c0c17(0xc4)},{'nombre':'ESPAÑA','bandera':'🇪🇸'},{'nombre':_0x1c0c17(0x25f),'bandera':_0x1c0c17(0x14b)},{'nombre':_0x1c0c17(0xe9),'bandera':'🏴'},{'nombre':_0x1c0c17(0x198),'bandera':_0x1c0c17(0x1e0)},{'nombre':_0x1c0c17(0x9a),'bandera':'🇳🇱'},{'nombre':_0x1c0c17(0x175),'bandera':_0x1c0c17(0xe0)},{'nombre':_0x1c0c17(0x17a),'bandera':_0x1c0c17(0x205)},{'nombre':'MÉXICO','bandera':_0x1c0c17(0x1f6)},{'nombre':_0x1c0c17(0x1f8),'bandera':_0x1c0c17(0xc5)},{'nombre':_0x1c0c17(0x243),'bandera':'🇲🇦'},{'nombre':_0x1c0c17(0x275),'bandera':_0x1c0c17(0x13b)},{'nombre':_0x1c0c17(0xfb),'bandera':_0x1c0c17(0xb1)},{'nombre':_0x1c0c17(0x193),'bandera':'🇸🇳'},{'nombre':_0x1c0c17(0x98),'bandera':_0x1c0c17(0x230)},{'nombre':_0x1c0c17(0x1fa),'bandera':_0x1c0c17(0x104)}];var historialPartidosSimulados=[];function rotarPartidoTimba(){const _0x449fd5=_0x1c0c17;let _0x2e7038=LISTA_SELECCIONES_TIMBA[Math['floor'](Math[_0x449fd5(0xd9)]()*LISTA_SELECCIONES_TIMBA[_0x449fd5(0x99)])],_0x81387=LISTA_SELECCIONES_TIMBA[Math['floor'](Math[_0x449fd5(0xd9)]()*LISTA_SELECCIONES_TIMBA['length'])];while(_0x2e7038[_0x449fd5(0x1d8)]===_0x81387['nombre']){_0x81387=LISTA_SELECCIONES_TIMBA[Math[_0x449fd5(0x136)](Math[_0x449fd5(0xd9)]()*LISTA_SELECCIONES_TIMBA['length'])];}document[_0x449fd5(0x151)](_0x449fd5(0x179))['innerText']=_0x2e7038[_0x449fd5(0x227)],document[_0x449fd5(0x151)]('timba-local')[_0x449fd5(0x2a0)]=_0x2e7038['nombre'],document['getElementById'](_0x449fd5(0x21f))['innerText']=_0x81387[_0x449fd5(0x227)],document[_0x449fd5(0x151)](_0x449fd5(0x284))[_0x449fd5(0x2a0)]=_0x81387[_0x449fd5(0x1d8)];}function conmutarControlesTimbaUI(){const _0x2e2dc1=_0x1c0c17,_0x399504=document['getElementById'](_0x2e2dc1(0x109))[_0x2e2dc1(0x183)];_0x399504==='monedas'?(document[_0x2e2dc1(0x151)](_0x2e2dc1(0x96))[_0x2e2dc1(0x216)]['display']=_0x2e2dc1(0xf8),document['getElementById'](_0x2e2dc1(0xa8))['style'][_0x2e2dc1(0x178)]=_0x2e2dc1(0x1f9)):(document[_0x2e2dc1(0x151)](_0x2e2dc1(0x96))['style'][_0x2e2dc1(0x178)]=_0x2e2dc1(0x1f9),document[_0x2e2dc1(0x151)](_0x2e2dc1(0xa8))[_0x2e2dc1(0x216)]['display']='flex',cargarRepetidasEnDesplegableUI());}function cargarRepetidasEnDesplegableUI(){const _0x363813=_0x1c0c17,_0x1c8e33=document['getElementById'](_0x363813(0x1c5));if(!_0x1c8e33)return;_0x1c8e33[_0x363813(0x22f)]='';const _0x1dd46b=window[_0x363813(0x20b)]||albumCompleto;if(!_0x1dd46b||!Array[_0x363813(0x1fb)](_0x1dd46b)){const _0x314008=document['createElement']('option');_0x314008[_0x363813(0x183)]='',_0x314008[_0x363813(0x2a0)]=_0x363813(0x1bb),_0x1c8e33[_0x363813(0x222)](_0x314008);return;}const _0x3eca86=_0x1dd46b[_0x363813(0x22d)](_0x380111=>_0x380111&&_0x380111[_0x363813(0x12e)]>0x1);if(_0x3eca86[_0x363813(0x99)]===0x0){const _0xa3f3a7=document[_0x363813(0x94)]('option');_0xa3f3a7['value']='',_0xa3f3a7['innerText']=_0x363813(0x1f3),_0x1c8e33[_0x363813(0x222)](_0xa3f3a7);return;}_0x3eca86[_0x363813(0x1c4)](_0x42c1dd=>{const _0x1aff72=_0x363813;if(!_0x42c1dd)return;const _0x10cd3b=_0x42c1dd[_0x1aff72(0x1d8)]||'Jugador',_0x29e254=_0x42c1dd[_0x1aff72(0x12e)]||0x2,_0x4acda3=_0x42c1dd[_0x1aff72(0x227)]||'🃏',_0x261f7e=_0x42c1dd[_0x1aff72(0x1ae)]||'común',_0xa16943=_0x42c1dd['id'],_0x1eac66=document[_0x1aff72(0x94)]('option');_0x1eac66[_0x1aff72(0x183)]=_0xa16943,_0x1eac66[_0x1aff72(0x2a0)]=_0x4acda3+'\x20'+_0x10cd3b[_0x1aff72(0x209)]()+_0x1aff72(0x177)+_0x29e254+')\x20['+_0x261f7e[_0x1aff72(0x209)]()+']',_0x1c8e33[_0x1aff72(0x222)](_0x1eac66);});}function actualizarHistorialUI(_0xb637f9){const _0x13d3c6=_0x1c0c17;historialPartidosSimulados['unshift'](_0xb637f9);if(historialPartidosSimulados[_0x13d3c6(0x99)]>0x3)historialPartidosSimulados[_0x13d3c6(0x168)]();const _0x1c851d=document['getElementById'](_0x13d3c6(0x199));if(!_0x1c851d)return;_0x1c851d[_0x13d3c6(0x22f)]='',historialPartidosSimulados[_0x13d3c6(0x1c4)](_0x198cb=>{const _0x788a1c=_0x13d3c6,_0x433cce=document['createElement']('li');_0x433cce[_0x788a1c(0x244)]=_0x788a1c(0x149),_0x433cce[_0x788a1c(0x22f)]=_0x788a1c(0x11d)+_0x198cb[_0x788a1c(0x1a7)]+_0x788a1c(0x277)+_0x198cb[_0x788a1c(0xb3)]+_0x788a1c(0x285)+_0x198cb[_0x788a1c(0x22b)]+'</b>',_0x1c851d['appendChild'](_0x433cce);});}async function prepararOpcionesApuesta(){const _0x13f29e=_0x1c0c17;if(!usuarioActual)return alert(_0x13f29e(0xf0));const _0x5956d3=document[_0x13f29e(0x151)]('select-tipo-apuesta')['value'];let _0x3e5012=0x0,_0x524cc4=null;if(_0x5956d3===_0x13f29e(0x1e3)){_0x3e5012=parseInt(document['getElementById']('input-monto-apuesta')[_0x13f29e(0x183)]);if(isNaN(_0x3e5012)||_0x3e5012<=0x0)return alert(_0x13f29e(0x18d));if(usuarioActual[_0x13f29e(0x1e3)]<_0x3e5012)return alert(_0x13f29e(0x10a));}else{_0x524cc4=document[_0x13f29e(0x151)]('select-cromo-repetido')[_0x13f29e(0x183)];if(!_0x524cc4)return alert('❌\x20Debés\x20seleccionar\x20un\x20cromo\x20repetido\x20válido\x20de\x20la\x20lista.');}mostrarCarga(_0x13f29e(0x1ac));try{const _0xea4b60=await fetch(URL_BASE+_0x13f29e(0x1e6),{'method':'POST','headers':{'Content-Type':_0x13f29e(0x103)},'body':JSON[_0x13f29e(0x233)]({'usuario_id':usuarioActual['id'],'tipoApuesta':_0x5956d3,'montoApuesta':_0x3e5012,'jugadorIdApostado':_0x524cc4?parseInt(_0x524cc4):null})}),_0x277f3d=await _0xea4b60[_0x13f29e(0x14a)]();ocultarCarga();if(_0x277f3d[_0x13f29e(0xc9)]){alert(_0x277f3d['mensaje']),actualizarTimbasRestantesUI();return;}if(!_0x277f3d['ok'])return alert(_0x277f3d[_0x13f29e(0x258)]);const _0x230a96=document[_0x13f29e(0x151)]('contenedor-opciones-goles');if(!_0x230a96)return;_0x230a96[_0x13f29e(0x22f)]='',_0x230a96[_0x13f29e(0x216)]['display']='grid',_0x277f3d[_0x13f29e(0x206)]['forEach'](_0x52dbc1=>{const _0x502a7d=_0x13f29e,_0xdb3686=document[_0x502a7d(0x94)](_0x502a7d(0xf2));_0xdb3686[_0x502a7d(0x1c0)]=_0x502a7d(0xf2),_0xdb3686['className']='btn-estadio\x20btn-opcion-resultado',_0xdb3686[_0x502a7d(0x216)][_0x502a7d(0x176)]=_0x502a7d(0x10d),_0xdb3686[_0x502a7d(0x2a0)]=_0x52dbc1[_0x502a7d(0x1d4)],_0xdb3686[_0x502a7d(0x1af)]=()=>procesarEleccionTimbaSegura(_0x52dbc1[_0x502a7d(0xef)]),_0x230a96[_0x502a7d(0x222)](_0xdb3686);}),timbaPreparada=!![],actualizarTimbasRestantesUI();}catch(_0x5eaf6a){console[_0x13f29e(0x1e9)](_0x13f29e(0xd4),_0x5eaf6a),ocultarCarga();}}async function procesarEleccionTimbaSegura(_0x1fd6f6){const _0x1e6f81=_0x1c0c17;if(!timbaPreparada)return;const _0x1216ea=document['getElementById'](_0x1e6f81(0x179))['innerText'],_0x5b8aac=document[_0x1e6f81(0x151)](_0x1e6f81(0x10f))[_0x1e6f81(0x2a0)],_0x225b30=document['getElementById'](_0x1e6f81(0x21f))[_0x1e6f81(0x2a0)],_0x244a30=document[_0x1e6f81(0x151)](_0x1e6f81(0x284))[_0x1e6f81(0x2a0)];mostrarCarga(_0x1e6f81(0x191));try{const _0x4627de=await fetch(URL_BASE+_0x1e6f81(0x14c),{'method':_0x1e6f81(0x1fd),'headers':{'Content-Type':'application/json'},'body':JSON[_0x1e6f81(0x233)]({'usuario_id':usuarioActual['id'],'idOpcionElegida':_0x1fd6f6})}),_0x4a166b=await _0x4627de[_0x1e6f81(0x14a)]();ocultarCarga();if(!_0x4a166b['ok'])return alert(_0x4a166b[_0x1e6f81(0x258)]);usuarioActual['monedas']=_0x4a166b['datos'][_0x1e6f81(0x1e3)],usuarioActual[_0x1e6f81(0x107)]=_0x4a166b['datos'][_0x1e6f81(0x107)],actualizarInterfazUI(),alert(_0x1e6f81(0x1ea)+_0x4a166b['mensajeResultado']),document['getElementById'](_0x1e6f81(0x1b0))['style'][_0x1e6f81(0x178)]=_0x1e6f81(0x1f9),await cargarAlbumLocal(),document['getElementById']('select-tipo-apuesta')['value']===_0x1e6f81(0xf6)&&cargarRepetidasEnDesplegableUI(),actualizarHistorialUI({'local':_0x1216ea+'\x20'+_0x5b8aac,'visitor':_0x225b30+'\x20'+_0x244a30,'res':_0x4a166b['golesLReal']+_0x1e6f81(0xee)+_0x4a166b[_0x1e6f81(0x245)]}),timbaPreparada=![],rotarPartidoTimba();}catch(_0x120d26){console['error'](_0x1e6f81(0xa3),_0x120d26),ocultarCarga();}}setTimeout(rotarPartidoTimba,0x3e8);let mundialTernaPaises=[],mundialRivalClasif='',jugadoresSeleccionadosDraft=[],intervaloCronometroMundial=null;const MAPA_PUNTOS_RAREZA={'comun':0x3c,'especial':0x44,'rara':0x4b,'epica':0x55,'legendaria':0x60};async function actualizarEstadoMundialUI(){const _0x5e1e39=_0x1c0c17;if(!usuarioActual)return;try{const _0x4afe3d=await fetch(URL_BASE+_0x5e1e39(0x15f)+usuarioActual['id']),_0x562a00=await _0x4afe3d['json'](),_0x2d994a=document[_0x5e1e39(0x151)](_0x5e1e39(0xba));if(_0x2d994a)_0x2d994a['innerText']=_0x562a00[_0x5e1e39(0x1ab)]||0x0;arrancarCronometroMundialVisual(_0x562a00['siguienteIn']);}catch(_0x314d92){console['error'](_0x5e1e39(0x25c),_0x314d92);}}function arrancarCronometroMundialVisual(_0x14bb42){const _0x341790=_0x1c0c17;clearInterval(intervaloCronometroMundial);const _0x15388b=document[_0x341790(0x151)](_0x341790(0x186)),_0x19877f=document[_0x341790(0x151)](_0x341790(0x1df)),_0x2ca749=document[_0x341790(0x151)](_0x341790(0xec));if(!_0x15388b)return;if(_0x14bb42<=0x0){_0x15388b['innerText']=_0x341790(0x197),_0x15388b[_0x341790(0x216)]['color']=_0x341790(0x1b1);if(_0x19877f)_0x19877f[_0x341790(0x216)][_0x341790(0x178)]=_0x341790(0x12d);return;}if(_0x19877f)_0x19877f[_0x341790(0x216)][_0x341790(0x178)]=_0x341790(0x1f9);if(_0x2ca749)_0x2ca749['innerHTML']='';let _0x4a29e3=_0x14bb42;intervaloCronometroMundial=setInterval(()=>{const _0x4d0892=_0x341790;_0x4a29e3-=0x3e8;if(_0x4a29e3<=0x0){clearInterval(intervaloCronometroMundial),_0x15388b[_0x4d0892(0x2a0)]=_0x4d0892(0x130);if(_0x19877f)_0x19877f[_0x4d0892(0x216)][_0x4d0892(0x178)]=_0x4d0892(0x12d);return;}const _0x14d3fa=Math[_0x4d0892(0x136)](_0x4a29e3/0x3e8),_0x268ff9=Math['floor'](_0x14d3fa/0xe10),_0x337692=Math[_0x4d0892(0x136)](_0x14d3fa%0xe10/0x3c),_0x2ac77e=_0x14d3fa%0x3c;_0x15388b[_0x4d0892(0x2a0)]=_0x4d0892(0xf9)+_0x268ff9+'h\x20'+_0x337692[_0x4d0892(0x125)]()[_0x4d0892(0x95)](0x2,'0')+'m\x20'+_0x2ac77e[_0x4d0892(0x125)]()[_0x4d0892(0x95)](0x2,'0')+'s',_0x15388b[_0x4d0892(0x216)]['color']='var(--rojo)';},0x3e8);}async function prepararInscripcionMundial(){const _0x32df02=_0x1c0c17;if(!usuarioActual)return;mostrarCarga(_0x32df02(0x26f));try{const _0x5f1387=await fetch(URL_BASE+'/mundial/preparar',{'method':_0x32df02(0x1fd),'headers':{'Content-Type':_0x32df02(0x103)},'body':JSON[_0x32df02(0x233)]({'usuario_id':usuarioActual['id']})}),_0x890bc8=await _0x5f1387[_0x32df02(0x14a)]();ocultarCarga();if(!_0x890bc8['ok'])return alert(_0x890bc8[_0x32df02(0x258)]);_0x890bc8['monedasActualizadas']!==undefined?(usuarioActual[_0x32df02(0x1e3)]=_0x890bc8[_0x32df02(0x289)],actualizarInterfazUI()):(usuarioActual[_0x32df02(0x1e3)]-=0x1f4,actualizarInterfazUI());const _0x1f4bbf=document[_0x32df02(0x1ed)](_0x32df02(0x1bd));_0x1f4bbf&&(_0x1f4bbf[_0x32df02(0x216)][_0x32df02(0x178)]='none');const _0x38157d=document[_0x32df02(0x1ed)](_0x32df02(0x18c));if(_0x38157d)_0x38157d[_0x32df02(0x216)]['display']=_0x32df02(0x1f9);mundialTernaPaises=_0x890bc8[_0x32df02(0x269)],mundialRivalClasif=_0x890bc8['rivalClasificacion'],jugadoresSeleccionadosDraft=[];const _0x2f5dfa=document[_0x32df02(0x151)]('zona-eleccion-pais-mundial');_0x2f5dfa[_0x32df02(0x22f)]='',document[_0x32df02(0x151)](_0x32df02(0x1c6))[_0x32df02(0x216)]['display']=_0x32df02(0x122),document[_0x32df02(0x151)](_0x32df02(0x146))[_0x32df02(0x216)][_0x32df02(0x178)]='none',document[_0x32df02(0x151)](_0x32df02(0x14d))['style'][_0x32df02(0x178)]=_0x32df02(0x1f9),_0x890bc8[_0x32df02(0x269)][_0x32df02(0x1c4)](_0x505f6c=>{const _0x1ff305=_0x32df02,_0x1c5a6d=document[_0x1ff305(0x94)]('button');_0x1c5a6d[_0x1ff305(0x244)]=_0x1ff305(0x1dc),_0x1c5a6d[_0x1ff305(0x216)][_0x1ff305(0x176)]=_0x1ff305(0x28a),_0x1c5a6d[_0x1ff305(0x2a0)]='⚽\x20'+_0x505f6c[_0x1ff305(0x209)](),_0x1c5a6d['onclick']=()=>iniciarDraftJugadoresMundial(_0x505f6c),_0x2f5dfa[_0x1ff305(0x222)](_0x1c5a6d);});}catch(_0x16214a){console[_0x32df02(0x1e9)](_0x16214a),ocultarCarga();}}function iniciarDraftJugadoresMundial(_0x5a729b){const _0x20d6b4=_0x1c0c17;window[_0x20d6b4(0x29f)]=_0x5a729b,document[_0x20d6b4(0x151)](_0x20d6b4(0x1c6))[_0x20d6b4(0x216)]['display']=_0x20d6b4(0x1f9),document[_0x20d6b4(0x151)](_0x20d6b4(0x146))['style']['display']=_0x20d6b4(0x122),document['getElementById'](_0x20d6b4(0x23a))[_0x20d6b4(0x2a0)]=_0x5a729b[_0x20d6b4(0x209)](),document[_0x20d6b4(0x151)](_0x20d6b4(0x101))[_0x20d6b4(0x2a0)]=mundialRivalClasif[_0x20d6b4(0x209)](),actualizarEstrellasVisualesDraft(),renderizarGridCartasDisponiblesDraft(_0x5a729b);}function renderizarGridCartasDisponiblesDraft(_0xd4354b){const _0x241eb4=_0x1c0c17,_0x2704ed=document[_0x241eb4(0x151)]('grid-cartas-draft-mundial');if(!_0x2704ed)return;_0x2704ed[_0x241eb4(0x22f)]='';const _0x8b8efb=albumCompleto['filter'](_0x5e68ab=>_0x5e68ab['obtenido']>0x0&&_0x5e68ab[_0x241eb4(0x121)]['toLowerCase']()===_0xd4354b[_0x241eb4(0x1a3)]());_0x8b8efb['forEach'](_0x4d595b=>{const _0x14d20a=_0x241eb4,_0x1d7bdc=document[_0x14d20a(0x94)](_0x14d20a(0x1dd)),_0x13b77d=jugadoresSeleccionadosDraft[_0x14d20a(0x224)](_0x4d595b['id']);_0x1d7bdc[_0x14d20a(0x244)]=_0x14d20a(0xc2)+_0x4d595b[_0x14d20a(0x1ae)][_0x14d20a(0x1a3)]()+'\x20'+(_0x13b77d?_0x14d20a(0x1b7):''),_0x1d7bdc[_0x14d20a(0x22f)]='\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<img\x20src=\x22'+_0x4d595b[_0x14d20a(0xac)]+'\x22\x20class=\x22carta-foto\x22\x20alt=\x22'+_0x4d595b[_0x14d20a(0x1d8)]+_0x14d20a(0x108)+_0x4d595b['rareza']['toUpperCase']()+_0x14d20a(0x1ec),_0x1d7bdc['onclick']=()=>{const _0x4a8bde=_0x14d20a;if(jugadoresSeleccionadosDraft[_0x4a8bde(0x224)](_0x4d595b['id']))jugadoresSeleccionadosDraft=jugadoresSeleccionadosDraft['filter'](_0x58cd58=>_0x58cd58!==_0x4d595b['id']);else{if(jugadoresSeleccionadosDraft[_0x4a8bde(0x99)]>=0x3)return alert(_0x4a8bde(0x142));jugadoresSeleccionadosDraft[_0x4a8bde(0x13c)](_0x4d595b['id']);}renderizarGridCartasDisponiblesDraft(_0xd4354b),actualizarEstrellasVisualesDraft();},_0x2704ed[_0x14d20a(0x222)](_0x1d7bdc);});}function actualizarEstrellasVisualesDraft(){const _0x9dddca=_0x1c0c17,_0x10b536=document[_0x9dddca(0x151)](_0x9dddca(0x241));if(!_0x10b536)return;if(jugadoresSeleccionadosDraft[_0x9dddca(0x99)]!==0x3){_0x10b536[_0x9dddca(0x2a0)]='⚠️\x20Alineá\x203\x20jugadores\x20para\x20calcular\x20poder';return;}const _0x3cbad0=albumCompleto['filter'](_0x21b24e=>jugadoresSeleccionadosDraft[_0x9dddca(0x224)](_0x21b24e['id'])),_0x542a28=_0x3cbad0[_0x9dddca(0x97)]((_0x393839,_0xe3429a)=>_0x393839+MAPA_PUNTOS_RAREZA[_0xe3429a[_0x9dddca(0x1ae)][_0x9dddca(0x1a3)]()],0x0),_0x19c122=_0x542a28/0x3;let _0x270f08=0x1;if(_0x19c122>=0x5a)_0x270f08=0x5;else{if(_0x19c122>=0x4f)_0x270f08=0x4;else{if(_0x19c122>=0x46)_0x270f08=0x3;else{if(_0x19c122>=0x3e)_0x270f08=0x2;}}}_0x10b536[_0x9dddca(0x2a0)]='⭐'[_0x9dddca(0x145)](_0x270f08)+('\x20('+_0x270f08+_0x9dddca(0x20e));}async function ejecutarTorneoMundial(){const _0x10cd4c=_0x1c0c17,_0x1303dc=document[_0x10cd4c(0x151)](_0x10cd4c(0xb9));if(_0x1303dc&&_0x1303dc[_0x10cd4c(0x216)][_0x10cd4c(0x178)]==='block'){if(jugadoresSeleccionadosDraft[_0x10cd4c(0x99)]!==0x3)return alert(_0x10cd4c(0xab));confirmarInscripcionMultiServidor(window[_0x10cd4c(0x29f)],jugadoresSeleccionadosDraft);return;}if(jugadoresSeleccionadosDraft[_0x10cd4c(0x99)]!==0x3)return alert(_0x10cd4c(0xab));mostrarCarga(_0x10cd4c(0x106));try{const _0x19b2d9=await fetch(URL_BASE+_0x10cd4c(0x294),{'method':_0x10cd4c(0x1fd),'headers':{'Content-Type':_0x10cd4c(0x103)},'body':JSON[_0x10cd4c(0x233)]({'usuario_id':usuarioActual['id'],'seleccionElegida':window['mundialSeleccionUsuario'],'rivalClasificacion':mundialRivalClasif,'jugadorIds':jugadoresSeleccionadosDraft})}),_0x25c43d=await _0x19b2d9[_0x10cd4c(0x14a)]();ocultarCarga();if(!_0x25c43d['ok'])return alert(_0x25c43d['mensaje']);document[_0x10cd4c(0x151)](_0x10cd4c(0x146))['style'][_0x10cd4c(0x178)]=_0x10cd4c(0x1f9),document[_0x10cd4c(0x151)](_0x10cd4c(0x14d))[_0x10cd4c(0x216)]['display']=_0x10cd4c(0x122);const _0x26b676=document[_0x10cd4c(0x151)](_0x10cd4c(0xca));_0x26b676[_0x10cd4c(0x22f)]='';if(!_0x25c43d['progreso'][_0x10cd4c(0x1a5)]){_0x26b676[_0x10cd4c(0x22f)]=_0x10cd4c(0x1cd),usuarioActual[_0x10cd4c(0x1e3)]=_0x25c43d[_0x10cd4c(0x1c2)]?.[_0x10cd4c(0x1e3)]||usuarioActual[_0x10cd4c(0x1e3)],actualizarInterfazUI(),actualizarEstadoMundialUI(),liberarNavegacionArenaUI();return;}const _0x158196=document[_0x10cd4c(0x94)](_0x10cd4c(0x1dd));_0x158196[_0x10cd4c(0x216)][_0x10cd4c(0x265)]=_0x10cd4c(0x154),_0x158196[_0x10cd4c(0x22f)]=_0x10cd4c(0xb8),_0x26b676['appendChild'](_0x158196);const _0x3e5377=_0x3531df=>{const _0x53c326=_0x10cd4c,_0x5bf908=document[_0x53c326(0x151)]('tbody-tabla-grupo-live');if(!_0x5bf908)return;let _0xfd3baf=Object['values'](_0x3531df)[_0x53c326(0x12f)]((_0x90bd66,_0xbade2e)=>{const _0x1cf39b=_0x53c326;if(_0xbade2e['pts']!==_0x90bd66[_0x1cf39b(0x251)])return _0xbade2e[_0x1cf39b(0x251)]-_0x90bd66[_0x1cf39b(0x251)];return _0xbade2e['gf']-_0xbade2e['gc']-(_0x90bd66['gf']-_0x90bd66['gc']);});_0x5bf908[_0x53c326(0x22f)]='',_0xfd3baf[_0x53c326(0x1c4)]((_0x3902e1,_0x4958a4)=>{const _0x2df6f5=_0x53c326,_0x3df85c=_0x3902e1[_0x2df6f5(0x121)]===window['mundialSeleccionUsuario'],_0x1fe506=document[_0x2df6f5(0x94)]('tr');_0x1fe506[_0x2df6f5(0x216)][_0x2df6f5(0x288)]=_0x3df85c?_0x2df6f5(0x1b1):_0x2df6f5(0x143);if(_0x4958a4<0x2)_0x1fe506[_0x2df6f5(0x216)][_0x2df6f5(0x1fc)]=_0x2df6f5(0x274);_0x1fe506['innerHTML']=_0x2df6f5(0x29b)+(_0x4958a4<0x2?_0x2df6f5(0x1b1):_0x2df6f5(0x16b))+_0x2df6f5(0x16c)+(_0x4958a4+0x1)+'</td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td\x20style=\x22text-align:left;\x22>⚽\x20'+_0x3902e1[_0x2df6f5(0x121)][_0x2df6f5(0x209)]()+_0x2df6f5(0x17e)+_0x3902e1['gf']+_0x2df6f5(0x17e)+_0x3902e1['gc']+'</td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td\x20style=\x22color:var(--dorado);\x20font-size:1.2rem;\x22>'+_0x3902e1[_0x2df6f5(0x251)]+'</td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20',_0x5bf908[_0x2df6f5(0x222)](_0x1fe506);});};let _0x248772={};_0x25c43d['progreso'][_0x10cd4c(0x16e)][_0x10cd4c(0x1c4)](_0x26f622=>{_0x248772[_0x26f622]={'pais':_0x26f622,'pts':0x0,'gf':0x0,'gc':0x0};}),_0x3e5377(_0x248772);for(let _0x56be47=0x0;_0x56be47<_0x25c43d[_0x10cd4c(0x26a)]['bitacoraGrupo'][_0x10cd4c(0x99)];_0x56be47++){const _0x48e3cf=_0x25c43d['progreso'][_0x10cd4c(0x148)][_0x56be47],_0x18b0ed=document[_0x10cd4c(0x94)](_0x10cd4c(0x1dd));_0x18b0ed[_0x10cd4c(0x216)][_0x10cd4c(0x265)]=_0x10cd4c(0x133),_0x18b0ed['innerHTML']=_0x10cd4c(0x20d)+_0x48e3cf['fecha']+'\x20DEL\x20GRUPO</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22display:flex;\x20justify-content:space-between;\x20margin-bottom:4px;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span>🇦🇷\x20'+_0x48e3cf[_0x10cd4c(0x1a7)]+_0x10cd4c(0x277)+_0x48e3cf['visitante']+_0x10cd4c(0x155)+_0x56be47+_0x10cd4c(0x120)+_0x48e3cf[_0x10cd4c(0x195)]+_0x10cd4c(0x277)+_0x48e3cf[_0x10cd4c(0x20a)]+_0x10cd4c(0x1d3)+_0x56be47+'\x22\x20style=\x22color:#aaa;\x20font-family:\x27Oswald\x27;\x22>0\x20-\x200</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20id=\x22reloj-f'+_0x56be47+_0x10cd4c(0x22c),_0x26b676[_0x10cd4c(0x222)](_0x18b0ed),_0x18b0ed[_0x10cd4c(0x9b)]({'behavior':_0x10cd4c(0x240)}),await new Promise(_0x44b913=>{let _0x45dc00=0x0,_0x47d975=0x0,_0x4b77e2=0x0,_0xcdf322=0x0,_0x597a8f=0x0;const _0x40ab1d=setInterval(()=>{const _0x1e078b=_0x47d0;_0x45dc00+=0x9;if(_0x45dc00>0x5a)_0x45dc00=0x5a;if(_0x47d975<_0x48e3cf['gL']&&Math['random']()<0.2)_0x47d975++;if(_0x4b77e2<_0x48e3cf['gV']&&Math[_0x1e078b(0xd9)]()<0.2)_0x4b77e2++;if(_0xcdf322<_0x48e3cf['gBL']&&Math['random']()<0.2)_0xcdf322++;if(_0x597a8f<_0x48e3cf[_0x1e078b(0x21a)]&&Math[_0x1e078b(0xd9)]()<0.2)_0x597a8f++;_0x45dc00===0x5a&&(_0x47d975=_0x48e3cf['gL'],_0x4b77e2=_0x48e3cf['gV'],_0xcdf322=_0x48e3cf[_0x1e078b(0x1de)],_0x597a8f=_0x48e3cf[_0x1e078b(0x21a)]);document['getElementById'](_0x1e078b(0x273)+_0x56be47)[_0x1e078b(0x2a0)]=_0x47d975+_0x1e078b(0xee)+_0x4b77e2,document[_0x1e078b(0x151)](_0x1e078b(0x18e)+_0x56be47)[_0x1e078b(0x2a0)]=_0xcdf322+_0x1e078b(0xee)+_0x597a8f,document[_0x1e078b(0x151)]('reloj-f'+_0x56be47)[_0x1e078b(0x2a0)]=_0x1e078b(0xfa)+_0x45dc00+':00';if(_0x45dc00>=0x5a){clearInterval(_0x40ab1d);const _0x2286d1=(_0x111ef5,_0x147b99,_0x5dc7c9,_0x5d7061)=>{const _0x2cd954=_0x1e078b;_0x248772[_0x111ef5]['gf']+=_0x5dc7c9,_0x248772[_0x111ef5]['gc']+=_0x5d7061,_0x248772[_0x147b99]['gf']+=_0x5d7061,_0x248772[_0x147b99]['gc']+=_0x5dc7c9;if(_0x5dc7c9>_0x5d7061)_0x248772[_0x111ef5][_0x2cd954(0x251)]+=0x3;else{if(_0x5dc7c9<_0x5d7061)_0x248772[_0x147b99][_0x2cd954(0x251)]+=0x3;else _0x248772[_0x111ef5]['pts']+=0x1,_0x248772[_0x147b99]['pts']+=0x1;}};_0x2286d1(_0x48e3cf['local'],_0x48e3cf[_0x1e078b(0xb3)],_0x48e3cf['gL'],_0x48e3cf['gV']),_0x2286d1(_0x48e3cf['botL'],_0x48e3cf['botV'],_0x48e3cf['gBL'],_0x48e3cf['gBV']),_0x3e5377(_0x248772),_0x44b913();}},0x3e8);});}if(!_0x25c43d[_0x10cd4c(0x26a)][_0x10cd4c(0x246)]){const _0x2b0e05=document['createElement'](_0x10cd4c(0x1dd));_0x2b0e05[_0x10cd4c(0x216)]['cssText']=_0x10cd4c(0x17f),_0x2b0e05['innerText']=_0x10cd4c(0xc7)+_0x25c43d[_0x10cd4c(0x26a)][_0x10cd4c(0x19a)]+_0x10cd4c(0xe4),_0x26b676[_0x10cd4c(0x222)](_0x2b0e05),usuarioActual[_0x10cd4c(0x1e3)]=_0x25c43d[_0x10cd4c(0x1c2)]?.[_0x10cd4c(0x1e3)]||usuarioActual[_0x10cd4c(0x1e3)],actualizarInterfazUI(),actualizarEstadoMundialUI(),liberarNavegacionArenaUI();return;}const _0x1a7738=document[_0x10cd4c(0x94)]('h3');_0x1a7738[_0x10cd4c(0x216)][_0x10cd4c(0x265)]='color:var(--dorado);\x20text-align:center;\x20font-family:\x27Oswald\x27;\x20margin:20px\x200\x2010px\x200;',_0x1a7738[_0x10cd4c(0x2a0)]='🔥\x20¡CLASIFICASTE!\x20EMPIEZAN\x20LAS\x20LLAVES\x20DE\x20PLAY-OFFS',_0x26b676['appendChild'](_0x1a7738);for(let _0x3729cd=0x0;_0x3729cd<_0x25c43d[_0x10cd4c(0x26a)][_0x10cd4c(0x17c)][_0x10cd4c(0x99)];_0x3729cd++){const _0x1c46e1=_0x25c43d[_0x10cd4c(0x26a)][_0x10cd4c(0x17c)][_0x3729cd],_0x216851=_0x1c46e1[_0x10cd4c(0x184)][_0x10cd4c(0x224)]('Ganaste');await simularMarcadorPantalla(_0x26b676,_0x1c46e1[_0x10cd4c(0x1d9)],window['mundialSeleccionUsuario'],_0x1c46e1[_0x10cd4c(0xbd)],_0x216851);if(!_0x216851)break;}if(_0x25c43d[_0x10cd4c(0x26a)][_0x10cd4c(0x1a0)]){const _0x3ee39a=document[_0x10cd4c(0x94)](_0x10cd4c(0x1dd));_0x3ee39a['style'][_0x10cd4c(0x265)]=_0x10cd4c(0x117),_0x3ee39a['innerText']=_0x10cd4c(0x1d1),_0x3ee39a[_0x10cd4c(0x9b)]({'behavior':_0x10cd4c(0x240)}),_0x26b676[_0x10cd4c(0x222)](_0x3ee39a);}_0x25c43d[_0x10cd4c(0x1c2)]&&(usuarioActual[_0x10cd4c(0x1e3)]=_0x25c43d[_0x10cd4c(0x1c2)]['monedas'],usuarioActual[_0x10cd4c(0x107)]=_0x25c43d[_0x10cd4c(0x1c2)][_0x10cd4c(0x107)],usuarioActual['copas_mundiales']=_0x25c43d[_0x10cd4c(0x1c2)][_0x10cd4c(0xa7)],actualizarInterfazUI(),cargarRankingMundialesLocal()),actualizarEstadoMundialUI(),liberarNavegacionArenaUI();}catch(_0xcf997f){console[_0x10cd4c(0x1e9)](_0xcf997f),ocultarCarga(),liberarNavegacionArenaUI();}}function liberarNavegacionArenaUI(){const _0x48a349=_0x1c0c17,_0x2f9036=document[_0x48a349(0x1ed)](_0x48a349(0x1bd));_0x2f9036&&_0x2f9036['style'][_0x48a349(0x144)](_0x48a349(0x178));const _0x335236=document[_0x48a349(0x1ed)]('.btn-logout-kick');_0x335236&&_0x335236[_0x48a349(0x216)]['removeProperty'](_0x48a349(0x178));}function simularMarcadorPantalla(_0x335052,_0x584ff1,_0x3c98a9,_0xc12eda,_0x45cb5e){return new Promise(async _0x19b479=>{const _0x33442d=_0x47d0,_0x3824a1=_0x584ff1['toLowerCase']()['includes'](_0x33442d(0x1bf))&&!_0x584ff1['toLowerCase']()[_0x33442d(0x224)](_0x33442d(0x29e))&&!_0x584ff1[_0x33442d(0x1a3)]()[_0x33442d(0x224)](_0x33442d(0x213))&&!_0x584ff1[_0x33442d(0x1a3)]()['includes'](_0x33442d(0x139)),_0x10fe5a=_0x3824a1?0x1e:0xa,_0x86865e=document['createElement'](_0x33442d(0x1dd));_0x86865e['className']='item-historial-partido',_0x86865e[_0x33442d(0x216)]['flexDirection']=_0x33442d(0x15a),_0x86865e[_0x33442d(0x216)][_0x33442d(0x225)]=_0x33442d(0x232),_0x86865e['style'][_0x33442d(0x1fc)]='#0b111e',_0x86865e[_0x33442d(0x22f)]=_0x33442d(0x1f2)+_0x584ff1['toUpperCase']()+_0x33442d(0xf4)+_0x584ff1[_0x33442d(0xc3)](/ /g,'')+_0x33442d(0x24b)+_0x3c98a9+'</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20id=\x22score-vivo-'+_0x584ff1['replace'](/ /g,'')+_0x33442d(0x187)+_0xc12eda+_0x33442d(0x113),_0x335052[_0x33442d(0x222)](_0x86865e),_0x86865e[_0x33442d(0x9b)]({'behavior':_0x33442d(0x240)});let _0x39e237=Math[_0x33442d(0x136)](Math[_0x33442d(0xd9)]()*0x3),_0x2f5a07=Math[_0x33442d(0x136)](Math['random']()*0x3);if(_0x45cb5e&&_0x39e237<=_0x2f5a07)_0x39e237=_0x2f5a07+Math['floor'](Math[_0x33442d(0xd9)]()*0x2)+0x1;else!_0x45cb5e&&_0x2f5a07<=_0x39e237&&(_0x2f5a07=_0x39e237+Math[_0x33442d(0x136)](Math[_0x33442d(0xd9)]()*0x2)+0x1);let _0xca12f2=0x0,_0x4aa5c2=0x0,_0x2c9e04=0x0;const _0xb57fa=0x5a/(_0x10fe5a*0x2),_0x156dac=setInterval(()=>{const _0x1e814f=_0x33442d;_0x2c9e04+=_0xb57fa;if(_0x2c9e04>0x5a)_0x2c9e04=0x5a;if(_0xca12f2<_0x39e237&&Math[_0x1e814f(0xd9)]()<0.15)_0xca12f2++;if(_0x4aa5c2<_0x2f5a07&&Math[_0x1e814f(0xd9)]()<0.15)_0x4aa5c2++;_0x2c9e04===0x5a&&(_0xca12f2=_0x39e237,_0x4aa5c2=_0x2f5a07);document['getElementById'](_0x1e814f(0x281)+_0x584ff1['replace'](/ /g,''))[_0x1e814f(0x2a0)]=_0x1e814f(0xa6)+Math[_0x1e814f(0x136)](_0x2c9e04)[_0x1e814f(0x125)]()[_0x1e814f(0x95)](0x2,'0')+_0x1e814f(0x11c),document[_0x1e814f(0x151)]('score-vivo-'+_0x584ff1[_0x1e814f(0xc3)](/ /g,''))[_0x1e814f(0x2a0)]=_0xca12f2+_0x1e814f(0xee)+_0x4aa5c2;if(_0x2c9e04>=0x5a){clearInterval(_0x156dac),_0x86865e[_0x1e814f(0x216)]['borderColor']=_0x45cb5e?_0x1e814f(0x1b1):_0x1e814f(0x16b);const _0xe29bec=document[_0x1e814f(0x94)](_0x1e814f(0x1dd));_0xe29bec[_0x1e814f(0x216)][_0x1e814f(0x265)]=_0x1e814f(0x27e)+(_0x45cb5e?_0x1e814f(0x1b1):_0x1e814f(0x16b))+';',_0xe29bec[_0x1e814f(0x2a0)]=_0x45cb5e?'FINALIZADO\x20-\x20AVANZAS\x20✅':_0x1e814f(0x219),_0x86865e[_0x1e814f(0x222)](_0xe29bec),_0x19b479();}},0x1f4);});}function _0x47d0(_0x3d0820,_0x58efe5){_0x3d0820=_0x3d0820-0x93;const _0x322794=_0x3227();let _0x47d001=_0x322794[_0x3d0820];return _0x47d001;}const cambiarModuloOriginal=cambiarModulo;cambiarModulo=function(_0x407a34,_0x45874e){const _0x151794=_0x1c0c17;cambiarModuloOriginal(_0x407a34,_0x45874e),_0x407a34===_0x151794(0xed)&&usuarioActual&&(actualizarEstadoMundialUI(),cargarRankingMundialesLocal(),document[_0x151794(0x151)](_0x151794(0x1c6))[_0x151794(0x216)]['display']='block',document[_0x151794(0x151)](_0x151794(0x146))[_0x151794(0x216)][_0x151794(0x178)]=_0x151794(0x1f9),document[_0x151794(0x151)]('fase-fixture-mundial')['style'][_0x151794(0x178)]=_0x151794(0x1f9));};function abrirModalAyuda(){const _0x559828=_0x1c0c17,_0x51f72d=document['getElementById'](_0x559828(0x1e5));if(_0x51f72d)_0x51f72d['style']['display']=_0x559828(0xf8);}function cerrarModalAyuda(){const _0x252514=_0x1c0c17,_0x479e3a=document[_0x252514(0x151)](_0x252514(0x1e5));if(_0x479e3a)_0x479e3a[_0x252514(0x216)][_0x252514(0x178)]=_0x252514(0x1f9);}async function iniciarControladorAnunciosSeguro(){const _0x2de97a=_0x1c0c17;try{const _0x5e60a0=await fetch(URL_BASE+_0x2de97a(0x169)),_0x14b773=await _0x5e60a0[_0x2de97a(0x14a)]();if(!_0x14b773||!_0x14b773[_0x2de97a(0x261)])return;const _0x15f8f9=document[_0x2de97a(0x151)](_0x2de97a(0x218)),_0x80738e=document[_0x2de97a(0x151)](_0x2de97a(0x25d)),_0x3e297f=document['getElementById']('anuncioCuerpo');if(!_0x15f8f9||!_0x80738e||!_0x3e297f)return;_0x80738e[_0x2de97a(0x124)]=_0x14b773[_0x2de97a(0x172)]['toUpperCase'](),_0x3e297f['innerHTML']='';if(_0x14b773[_0x2de97a(0x1e1)]){const _0x1c9bc1=document[_0x2de97a(0x94)]('p');_0x1c9bc1[_0x2de97a(0x124)]=_0x14b773[_0x2de97a(0x1e1)],_0x3e297f[_0x2de97a(0x222)](_0x1c9bc1);}if(_0x14b773[_0x2de97a(0x2a2)]===_0x2de97a(0x1b9)&&_0x14b773['urlImagen']){const _0x1be198=document[_0x2de97a(0x94)](_0x2de97a(0xea));_0x1be198['src']=_0x14b773['urlImagen'],_0x1be198[_0x2de97a(0x244)]='anuncio-media',_0x1be198['alt']=_0x2de97a(0x287),_0x3e297f[_0x2de97a(0x222)](_0x1be198);}else{if(_0x14b773[_0x2de97a(0x2a2)]===_0x2de97a(0xe8)&&_0x14b773[_0x2de97a(0x181)]){const _0x5749a4=document[_0x2de97a(0x94)](_0x2de97a(0x1dd));_0x5749a4[_0x2de97a(0x244)]=_0x2de97a(0x249);const _0x131c85=document['createElement'](_0x2de97a(0x15d));_0x131c85[_0x2de97a(0x25e)]=_0x14b773[_0x2de97a(0x181)],_0x131c85[_0x2de97a(0x16d)](_0x2de97a(0xd0),_0x2de97a(0x26d)),_0x131c85[_0x2de97a(0x216)]['border']='none',_0x5749a4[_0x2de97a(0x222)](_0x131c85),_0x3e297f[_0x2de97a(0x222)](_0x5749a4);}}_0x15f8f9[_0x2de97a(0x216)][_0x2de97a(0x178)]=_0x2de97a(0xf8);}catch(_0x2bd71e){console[_0x2de97a(0x1e9)]('Error\x20al\x20validar\x20el\x20banner\x20de\x20novedades\x20de\x20la\x20Arena:',_0x2bd71e);}}function cerrarAnuncioGlobal(){const _0xa2c4a0=_0x1c0c17,_0x11217b=document[_0xa2c4a0(0x151)](_0xa2c4a0(0x218));_0x11217b&&(_0x11217b[_0xa2c4a0(0x216)][_0xa2c4a0(0x178)]=_0xa2c4a0(0x1f9),document[_0xa2c4a0(0x151)](_0xa2c4a0(0x21c))['innerHTML']='');}function filtrarAlbumPorEstado(_0x5d166b,_0x20eef8){const _0x34818e=_0x1c0c17;filtroEstadoActual=_0x5d166b,actualizarVisualBotonesFiltro(_0x20eef8,_0x34818e(0x1cf)),aplicarFiltrosCruzadosUI();}function filtrarAlbumPorRareza(_0x3eea82,_0x5eb93b){const _0x5db5e0=_0x1c0c17;filtroRarezaActual=_0x3eea82,actualizarVisualBotonesFiltro(_0x5eb93b,_0x5db5e0(0x1ae)),aplicarFiltrosCruzadosUI();}function aplicarFiltrosCruzadosUI(){const _0x2f957f=_0x1c0c17,_0x3371ee=document[_0x2f957f(0x151)](_0x2f957f(0x161));if(!_0x3371ee)return;const _0x2b6027=_0x3371ee[_0x2f957f(0xaa)]('carta-clash');let _0x144d6a=0x0;for(let _0x234822 of _0x2b6027){const _0x31f146=_0x234822[_0x2f957f(0x268)]['contains'](_0x2f957f(0xd6));let _0x434bd3=_0x2f957f(0x1e4);if(_0x234822[_0x2f957f(0x268)][_0x2f957f(0x140)](_0x2f957f(0x1b2)))_0x434bd3=_0x2f957f(0x1b2);else{if(_0x234822[_0x2f957f(0x268)][_0x2f957f(0x140)](_0x2f957f(0x1c7)))_0x434bd3=_0x2f957f(0x1c7);else{if(_0x234822[_0x2f957f(0x268)][_0x2f957f(0x140)](_0x2f957f(0x29a)))_0x434bd3=_0x2f957f(0x29a);}}let _0x15e7d4=![];if(filtroEstadoActual===_0x2f957f(0x15c))_0x15e7d4=!![];else{if(filtroEstadoActual===_0x2f957f(0x28b)&&!_0x31f146)_0x15e7d4=!![];else{if(filtroEstadoActual==='pendientes'&&_0x31f146)_0x15e7d4=!![];}}let _0x59ab17=![];if(filtroRarezaActual===_0x2f957f(0x15c))_0x59ab17=!![];else{if(filtroRarezaActual===_0x434bd3)_0x59ab17=!![];}_0x15e7d4&&_0x59ab17?(_0x234822['style']['display']='block',_0x144d6a++):_0x234822['style'][_0x2f957f(0x178)]=_0x2f957f(0x1f9);}console['log'](_0x2f957f(0x1cc)+filtroEstadoActual+']\x20|\x20Rareza\x20['+filtroRarezaActual+'].\x20Mostrando\x20'+_0x144d6a+_0x2f957f(0xc6));}function actualizarVisualBotonesFiltro(_0x352322,_0x4ed9c7){const _0x10dab2=_0x1c0c17,_0x1fce38=_0x352322[_0x10dab2(0xd7)][_0x10dab2(0xaa)](_0x10dab2(0x2a3));for(let _0x20a8b0 of _0x1fce38){_0x20a8b0[_0x10dab2(0x268)]['remove'](_0x10dab2(0x261));}_0x352322[_0x10dab2(0x268)]['add'](_0x10dab2(0x261));}window[_0x1c0c17(0x28c)]=_0x1c0c17(0x171);function _0x3227(){const _0x4b8e8c=['\x0a\x0a🎉\x20¡Conservás\x20tu\x20cromo\x20apostado\x20y\x20ganaste\x20un\x20nuevo\x20crack:\x0a🌟\x20[\x20','includes','alignItems','/timbas-restantes/','bandera','multi-select-tipo-apuesta','borderColor','var(--dorado)','res','\x22\x20style=\x22text-align:center;\x20font-size:0.8rem;\x20margin-top:5px;\x20color:#64748b;\x22>⏱️\x2000:00</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','filter','innerWidth','innerHTML','🇺🇸','ganador_username','stretch','stringify','px)\x20rotate(15deg)','#ffb100','multi-grid-cartas-draft','oro','\x200%,\x20rgba(0,0,0,0)\x20100%);\x20opacity:\x200.4;\x20z-index:\x203;\x22></div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22rareza-vertical\x22>','ALEMANIA','lbl-tu-seleccion-mundial','❌\x20Completá\x20los\x20datos.','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22display:flex;\x20justify-content:space-between;\x20color:var(--dorado);\x20font-size:0.9rem;\x20border-bottom:1px\x20solid\x20#1a2436;\x20padding-bottom:4px;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span>📋\x20','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<img\x20src=\x22','multi-score-','add','smooth','lbl-estrellas-equipo-mundial','🤖\x20¡El\x20torneo\x20fue\x20conquistado\x20por\x20un\x20Bot!\x0a👑\x20Campeón:\x20','MARRUECOS','className','golesVReal','clasifico','🎰\x20Pozo:\x201\x20Cromo\x20Épico/Leg\x20Mínimo','.modulo-contenido,\x20#modulo-mundial-multi','anuncio-video-container','<div\x20style=\x22color:var(--rojo);\x20padding:15px;\x20text-align:center;\x20font-weight:bold;\x22>❌\x20No\x20tenés\x20jugadores\x20de\x20este\x20país\x20en\x20tu\x20álbum\x20colector.</div>','\x22>⏱️\x2000:00</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22display:flex;\x20justify-content:space-between;\x20align-items:center;\x20margin-top:8px;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20style=\x22font-size:1.1rem;\x20width:40%;\x20text-align:left;\x22>🇦🇷\x20','participantes','center','datos','input-pass','revelada','pts','❌\x20Sin\x20cromos\x20repetidos\x20en\x20el\x20álbum','713924UdUqoH','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td\x20style=\x22color:\x20var(--dorado);\x20font-weight:\x20bold;\x20font-size:\x201.2rem;\x22>🏆\x20','multi-select-carta-apuesta-invitado','username','<div\x20class=\x22badge-repetidas\x22>x','mensaje','URUGUAY','\x20/\x20','/ranking','Error\x20al\x20pedir\x20estado\x20del\x20Mundial:','anuncioTitulo','src','ITALIA','ARGENTINA','activo','disabled','modulo-penales','Error\x20al\x20calcular\x20progreso\x20de\x20álbum:','cssText','\x20👑','ARQ','classList','terna','progreso','then','pista-posicion','true','multiMiCartaApostadaTexto','Inscribiendo\x20equipo\x20y\x20debitando\x20arancel\x20de\x20la\x20FIFA...','pointerEvents','#a335ee','join','goles-m1-f','rgba(0,255,136,0.03)','CROACIA','round','\x20vs\x20','trim','#8e9bb0','width','set','\x0a💸\x20El\x20pozo\x20de\x20la\x20Arena\x20se\x20ha\x20disuelto.','.tile-modulo-fifa,\x20.btn-modulo-match','text-align:right;\x20font-size:0.85rem;\x20font-weight:bold;\x20margin-top:5px;\x20color:','seleccion','definicionPenales','reloj-vivo-','\x20Oro','🪙\x20MODALIDAD:\x20TIMBA\x20POR\x20ORO','timba-visitante','</span>\x20<b\x20style=\x22color:\x20var(--celeste);\x22>','renderizarFixturePasoAPaso','Novedades\x20de\x20la\x20Arena','color','monedasActualizadas','8px','desbloqueadas','multiTipoApuestaActual','pantalla-carga','siguienteIn','multi-wrapper-oro','IZQUIERDA','multi-menu-inicial','selectedIndex','multi-input-codigo','/mundial/jugar','sobre','8AjngDR','pista-rareza','function','querySelectorAll','legendaria','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td\x20style=\x22padding:6px\x200;\x20color:','flex-direction:\x20column;\x20align-items:\x20stretch;\x20background:\x20#0b111e;\x20margin-bottom:15px;\x20border-left:4px\x20solid\x20var(--dorado);','warn','octavos','mundialSeleccionUsuario','innerText','PARTIDO\x20#','tipo','btn-filtro-tv','/jugar-penal','createElement','padStart','wrapper-apuesta-monedas','reduce','ESTADOS\x20UNIDOS','length','HOLANDA','scrollIntoView','tiros_restantes','tiros','auto','14CEHDYj','multi-reloj-','/api','multi-fase-inscripcion','Error\x20al\x20procesar\x20jugada\x20segura:','CENTRO','grid-sobre-abierto','⏱️\x20','copas_mundiales','wrapper-apuesta-cromo','ganadorUsername','getElementsByClassName','❌\x20Completá\x20la\x20alineación\x20de\x203\x20jugadores.','foto','modulo-timba','keys','px)','\x20—\x20Te\x20quedan\x20','🇧🇪','1718748SIOZSe','visitante','text','usuario_id','nombreCartaPremio','sala_id','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<h4\x20style=\x22color:var(--dorado);\x20margin:0\x200\x2010px\x200;\x20font-family:\x27Oswald\x27;\x20text-align:center;\x22>📊\x20TABLA\x20EN\x20VIVO\x20-\x20GRUPO</h4>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<table\x20style=\x22width:100%;\x20border-collapse:collapse;\x20text-align:center;\x20font-weight:bold;\x20font-size:1.1rem;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<thead>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<tr\x20style=\x22color:#64748b;\x20font-size:0.85rem;\x22><th>POS</th><th\x20style=\x22text-align:left;\x22>SELECCIÓN</th><th>GF</th><th>GC</th><th>PTS</th></tr>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</thead>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<tbody\x20id=\x22tbody-tabla-grupo-live\x22></tbody>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</table>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','multi-fase-draft','lbl-copas-mundiales','registro','contenedor-pack-opening','rival','...','🇩🇪','premio','px)\x20rotate(-25deg)','carta-clash\x20','replace','🇫🇷','🇯🇵','\x20figuras.','❌\x20Quedaste\x20fuera\x20del\x20Mundial\x20en\x20Fase\x20de\x20Grupos\x20(Puesto\x20#','<tr><td\x20colspan=\x223\x22\x20style=\x22color:#777;\x22>No\x20hay\x20jugadores\x20en\x20la\x20arena</td></tr>','error_limite','lista-cruces-mundial-simulacion','every','ganoBot','animationDelay','🃏\x20','creador_id','allowfullscreen','btn-regresar-limpio-multi','⚔️\x20¡Bienvenido\x20de\x20vuelta,\x20','tipo_apuesta','Error\x20al\x20preparar\x20opciones\x20seguras:','translate(','bloqueada','parentElement','.\x20Empezás\x20con\x20200\x20monedas.','random','multi-txt-espera-host','balon-animado','button[onclick*=\x27modulo-sobres\x27]','zIndex','</p>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20type=\x22button\x22\x20id=\x22btn-regresar-limpio-multi\x22\x20class=\x22btn-estadio\x20btn-next-shot\x22\x20style=\x22width:80%;\x20margin:15px\x20auto\x200;\x20background:var(--celeste);\x20border-color:var(--celeste);\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20🔄\x20REGRESAR\x20A\x20LA\x20HOME\x20DE\x20LA\x20ARENA\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20','🚪\x20Sesión\x20cerrada\x20correctamente.\x20Volviste\x20al\x20menú\x20local.','🇨🇴','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','🃏\x20MODALIDAD:\x20DUELO\x20DE\x20CARTAS\x20REPETIDAS\x0a⚠️\x20¡Muerte\x20Súbita!\x20El\x20perdedor\x20descarta.\x0a\x0a🔒\x20TÚ\x20APUESTA\x20FIJADA:\x20','DERECHA',').\x20Volvé\x20a\x20intentarlo\x20en\x203hs.','error_oro','\x22\x20class=\x22carta-foto\x22\x20alt=\x22','⚽\x20Modo\x20de\x20Práctica','video','INGLATERRA','img','arquero-animado','zona-eleccion-pais-mundial','modulo-minimundial','\x20-\x20','idOpcion','❌\x20Iniciá\x20sesión\x20para\x20timbear.','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','button','multi-lbl-tu-seleccion','</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20id=\x22reloj-vivo-','usuario','cromo','pista-bloque','flex','⏱️\x20Próximo\x20torneo\x20en:\x20','⏱️\x20MINUTO\x20','BÉLGICA','multi-select-carta-apuesta','❌\x20No\x20tenés\x20cartas\x20repetidas\x20para\x20arriesgar','posicion','\x0a\x20\x20\x20\x20\x20\x20\x20\x20','🃏\x20?','lbl-rival-clasificacion-mundial','❌\x20¡NO\x20TE\x20QUEDAN\x20TIROS!\x20Esperá\x20que\x20recargue\x20energía.','application/json','🇸🇦','Error\x20crítico\x20al\x20consultar\x20fixture\x20el\x20invitado:','Pidiendo\x20autorización\x20de\x20planilla\x20a\x20la\x20FIFA...','puntos_ranking','\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22rareza-vertical\x22>','select-tipo-apuesta','🪙\x20No\x20tenés\x20suficiente\x20Oro.','</b></td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td\x20style=\x22text-align:\x20left;\x20padding-left:\x2015px;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','3GOQzfY','5px','Seleccionada\x20en\x20Vestuario','timba-local','⚠️\x20Alineá\x203\x20jugadores\x20para\x20calcular\x20poder','🚪\x20Salida\x20de\x20la\x20sala\x20confirmada.\x20Interfaz\x20unificada\x20restablecida.','pozo','\x20🤖</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20','white','</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20id=\x22multi-reloj-','lobby-txt-codigo','text-align:center;\x20margin-top:20px;\x20color:var(--dorado);\x20font-size:1.4rem;\x20font-weight:bold;','penalesVisitante','/multijugador/sala/','multi-btn-iniciar-fixture','multi-pantalla-fixture',':00','<span>⚔️\x20','3029468hGGUNP','\x20tiros.','\x22\x20style=\x22color:var(--verde-match);\x20font-family:\x27Oswald\x27;\x22>0\x20-\x200</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22display:flex;\x20justify-content:space-between;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span>🤖\x20','pais','block','multi-info-sala-dinamica','textContent','toString','input-usuario','fila-usuario-actual','\x20caminante-entrada','🤖\x20¡El\x20torneo\x20fue\x20conquistado\x20por\x20un\x20Bot\x20(','cronometro-timba','px,\x20','Error\x20al\x20sincronizar\x20el\x20torneo.','inline-block','obtenido','sort','⚡\x20¡Vestuarios\x20listos!\x20Actualizando...','🔋\x20¡Apuestas\x20al\x20Máximo\x20(10/10)!','Rival','background:#0b111e;\x20padding:12px;\x20border-radius:8px;\x20border-left:4px\x20solid\x20var(--celeste);\x20margin-bottom:15px;','\x20]\x20transferido\x20al\x20inventario!\x0a\x0a💀\x20Los\x20competidores\x20derrotados\x20perdieron\x20su\x20cromo\x20permanentemente.','¡El\x20Torneo\x20comenzó!\x20Recibiendo\x20transmisión\x20oficial\x20del\x20fixture...','floor','pais-completo','/3)...','semi','Adquiriendo\x20derechos\x20de\x20pack\x20','🇭🇷','push','POR','.btn-pais','</td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','contains','login','❌\x20Alineación\x20completa\x20(Máximo\x203).','#fff','removeProperty','repeat','fase-draft-mundial','modulo-album','bitacoraGrupo','item-historial-partido','json','🇮🇹','/timba/procesar','fase-fixture-mundial','¡SIN\x20ENERGÍA!\x20⏱️','</span>\x20','⚠️\x20No\x20se\x20recibió\x20bitácora\x20válida.','getElementById','btn-pais\x20','resolve','background:rgba(0,0,0,0.4);\x20padding:15px;\x20border-radius:12px;\x20margin-bottom:20px;\x20border:1px\x20solid\x20#1a2436;','</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20id=\x22goles-m1-f','selector-paises','<br>','RARA','\x20GANADOR:\x20','column','multi-wrapper-carta','todas','iframe','lobby-txt-pozo','/mundial/estado/','652571zZzFov','contenedor-grid-album','remove','8743401yeVhLq','penalesLocal','Conectando\x20con\x20la\x20central\x20de\x20la\x20Arena\x20Online...','💥\x20TANDA\x20DE\x20PENALES:\x20(','⚽\x20¡PREPARÁ\x20EL\x20DISPARO!\x20—\x20Te\x20quedan\x20','pop','/anuncio-actual','lbl-usuario','var(--rojo)',';\x22>','setAttribute','integrantesGrupo','tabla-ranking-body','¡GOOOL!\x20🪙\x20+100\x20Oro','amistoso','titulo','\x22>⏱️\x2000:00</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22display:flex;\x20justify-content:space-between;\x20align-items:center;\x20margin-top:8px;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20style=\x22font-size:1.1rem;\x20width:40%;\x20text-align:left;\x22>⚽\x20','DEL','COLOMBIA','margin','\x20(x','display','timba-bandera-local','CHILE','mostrar','bitacoraPlayoffs','Validando\x20credenciales\x20de\x20la\x20sala...','</td>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td>','text-align:center;\x20padding:15px;\x20border:2px\x20solid\x20var(--rojo);\x20color:var(--rojo);\x20font-weight:bold;\x20border-radius:8px;\x20margin-top:10px;','⚡\x20¡Apuesta\x20recargada!\x20Actualizando...','urlVideo','⚠️\x20<span\x20style=\x22color:\x20var(--rojo);\x20font-family:\x20\x27Oswald\x27;\x22>CROMOS\x20ARRIESGADOS\x20EN\x20ESTA\x20ARENA:</span><br>','value','resultado','/multijugador/preparar-draft','cronometro-mundial','\x22\x20style=\x22font-family:\x27Oswald\x27;\x20font-size:1.4rem;\x20background:#000;\x20padding:2px\x2012px;\x20border-radius:4px;\x20color:var(--verde-match);\x22>0\x20-\x200</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20style=\x22font-size:1.1rem;\x20width:40%;\x20text-align:right;\x22>','❌\x20Error:\x20','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20style=\x22font-weight:bold;\x20color:#fff;\x22>','var(--celeste)','transform','.btn-logout-kick','❌\x20Ingresá\x20un\x20monto\x20de\x20oro\x20válido.','goles-m2-f','finalizado','px)\x20rotate(25deg)','Procesando\x20tu\x20jugada...','430KkuDFy','SENEGAL','/logout','botL','<span>','🔋\x20¡Inscripción\x20abierta\x20para\x20el\x20MiniMundial!','PORTUGAL','lista-historial-timba','posicionFinalGrupo','/tiros-restantes/','codigo_sala','multi-wrapper-apuesta-invitado','🎰\x20Apuestas\x20disponibles:\x20','options','campeon','bloqueado-energia','DEF','toLowerCase','<span\x20style=\x22color:var(--celeste);\x20font-size:0.8rem;\x22>(Vos)</span>','ganoClasificacion','</div>','local','.zona-disparo-target','Error\x20en\x20loop\x20del\x20lobby:','VOL','copas','Estudiando\x20probabilidades...','jugando','rareza','onclick','contenedor-opciones-goles','var(--verde-match)','rara','Jugador\x20Épico','❌\x20SIN\x20ENERGÍA\x20PARA\x20TIMBEAR\x20⏱️','escenario-penal','album','activo-draft','30811DGLbuq','imagen','lobby-lista-participantes','⏳\x20Cargando\x20inventario...','bitacora','.nav-modulos-estadio','resultado-penal','final','type','</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','datosActualizados','</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20style=\x22color:var(--dorado);\x20font-family:\x27Oswald\x27;\x22>⚽\x20','forEach','select-cromo-repetido','fase-inscripcion-mundial','epica','seccion-login','background:rgba(255,255,255,0.05);\x20padding:10px\x2015px;\x20border-radius:8px;\x20display:flex;\x20justify-content:space-between;\x20align-items:center;\x20border-left:4px\x20solid\x20var(--verde-match);\x20margin-bottom:6px;','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<td><b>','lbl-ranking','🔎\x20Filtro\x20aplicado:\x20Estado\x20[','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22item-historial-partido\x22\x20style=\x22color:var(--rojo);\x20border-color:var(--rojo);\x20text-align:center;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span>❌\x20Quedaste\x20afuera\x20del\x20torneo\x20por\x20falta\x20de\x20puntos\x20en\x20las\x20eliminatorias\x20mundialistas.\x20Volvé\x20a\x20intentarlo\x20en\x203hs.</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','BRASIL','estado','#0074e8','🏆\x20¡CAMPEÓN\x20DEL\x20MUNDO!\x20🏆\x0a🎁\x20¡Premio\x20de\x205.000\x20de\x20Oro\x20depositado!','multi-cronologia-goles','</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20id=\x22goles-m2-f','label','MED','/multijugador/crear','Error\x20en\x20la\x20apertura\x20del\x20pack:','nombre','ronda','⏱️\x20Próximo\x20tiro\x20en:\x20','❌\x20Debés\x20alinear\x20exactamente\x203\x20jugadores.','btn-estadio\x20btn-modulo-match','div','gBL','btn-preparar-mundial','🇵🇹','texto','\x20(Tenes\x20','monedas','comun','modal-ayuda-juego','/timba/preparar','option','barra-progreso-llenado','error','⚽\x20RESULTADO\x20DE\x20LA\x20TIMBA\x20⚽\x0a\x0a','🤝\x20MODALIDAD:\x20AMISTOSO\x20ONLINE','</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','querySelector','has','⚽\x20?','❌\x20Debés\x20elegir\x20tu\x20cromo\x20a\x20arriesgar.','translate(0px,\x20','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22display:flex;\x20justify-content:space-between;\x20color:var(--dorado);\x20font-size:0.9rem;\x20border-bottom:1px\x20solid\x20#1a2436;\x20padding-bottom:4px;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span>📋\x20','❌\x20No\x20tenés\x20cromos\x20repetidos','⚡\x20¡Tiro\x20recargado!\x20Actualizando...','❌\x20Error.','🇲🇽','complete','JAPÓN','none','ARABIA\x20SAUDITA','isArray','background','POST','🎉\x20¡Cuenta\x20creada\x20con\x20éxito!\x20Bienvenido\x20a\x20la\x20Arena,\x20','btn-siguiente-carta-pack','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22background:rgba(11,17,30,0.8);\x20padding:12px;\x20border-radius:8px;\x20border:1px\x20solid\x20var(--dorado);\x20text-align:center;\x20font-weight:bold;\x20color:var(--dorado);\x20margin-bottom:15px;\x20font-family:\x27Oswald\x27;\x20white-space:pre-line;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<h3\x20style=\x22color:var(--dorado);\x20font-family:\x27Oswald\x27;\x20margin:0\x200\x2010px\x200;\x22>🏁\x20CRÓNICA\x20DEFINITIVA</h3>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<p\x20style=\x22color:#fff;\x20font-weight:bold;\x20white-space:pre-line;\x20font-size:1.05rem;\x22>','timbas','lbl-progreso-numerico','\x0a\x20\x20\x20\x20\x20\x20\x20\x20<img\x20src=\x22','🇨🇱','opciones','multi-zona-eleccion-pais','⏳\x20?','toUpperCase','botV','albumCompleto','Creando\x20tu\x20cuenta\x20en\x20la\x20Arena...','\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22color:var(--celeste);\x20font-size:0.9rem;\x20font-weight:bold;\x20margin-bottom:6px;\x22>📅\x20FECHA\x20','/5\x20Estrellas)','parentNode','ranking','multi-lobby-espera','log','cuartos','🏆\x20¡FIN\x20DEL\x20TORNEO!\x20🏆\x0a👑\x20Campeón:\x20','button[onclick=\x27iniciarDueloLocal()\x27]','style','⏱️\x20Próxima\x20apuesta\x20en:\x20','modalAnuncioGlobal','FINALIZADO\x20-\x20ELIMINADO\x20❌','gBV','Sorteando\x20las\x20llaves\x20y\x20cerrando\x20las\x20planillas\x20online...','anuncioCuerpo','41595xRnPmJ','/multijugador/jugar','timba-bandera-visitante','texto-carga-dinamico','carta','appendChild'];_0x3227=function(){return _0x4b8e8c;};return _0x3227();}async function abrirDraftMulti(_0x284eff){const _0x2c9917=_0x1c0c17;multiEsCreador=_0x284eff;if(!_0x284eff){const _0x521498=document[_0x2c9917(0x151)](_0x2c9917(0x293))[_0x2c9917(0x183)][_0x2c9917(0x278)]()[_0x2c9917(0x209)]();if(_0x521498[_0x2c9917(0x99)]!==0x6)return alert('❌\x20Código\x20inválido.\x20Debe\x20tener\x206\x20caracteres.');multiCodigoSala=_0x521498,mostrarCarga(_0x2c9917(0x17d));try{const _0x299e42=await fetch(URL_BASE+_0x2c9917(0x119)+_0x521498),_0x4adad8=await _0x299e42['json']();ocultarCarga();if(!_0x4adad8['ok'])return alert(_0x4adad8[_0x2c9917(0x258)]);window['multiTipoApuestaActual']=_0x4adad8[_0x2c9917(0xd3)]?_0x4adad8[_0x2c9917(0xd3)][_0x2c9917(0x1a3)]():_0x2c9917(0x171),multiSalaId=_0x4adad8[_0x2c9917(0xb7)];}catch(_0x1ef678){return ocultarCarga(),alert('Error\x20de\x20conexión\x20con\x20la\x20sala.');}}else{const _0x54d591=document[_0x2c9917(0x151)]('multi-input-apuesta');multiApuestaFijada=_0x54d591?parseInt(_0x54d591[_0x2c9917(0x183)])||0x0:0x0;const _0x37b749=document[_0x2c9917(0x151)](_0x2c9917(0x228));window[_0x2c9917(0x28c)]=_0x37b749?_0x37b749['value']['toLowerCase']():_0x2c9917(0x171);}document['getElementById'](_0x2c9917(0x291))[_0x2c9917(0x216)][_0x2c9917(0x178)]='none',document[_0x2c9917(0x151)](_0x2c9917(0xa2))[_0x2c9917(0x216)][_0x2c9917(0x178)]='block',prepararInscripcionMundialMulti();}async function prepararInscripcionMundialMulti(){const _0x588e5c=_0x1c0c17;if(!usuarioActual)return;mostrarCarga(_0x588e5c(0x165));try{const _0x24020a=await fetch(URL_BASE+_0x588e5c(0x185),{'method':_0x588e5c(0x1fd),'headers':{'Content-Type':_0x588e5c(0x103)},'body':JSON['stringify']({'usuario_id':usuarioActual['id']})}),_0x5d1fcf=await _0x24020a[_0x588e5c(0x14a)]();ocultarCarga();if(!_0x5d1fcf['ok'])return document[_0x588e5c(0x151)](_0x588e5c(0x291))[_0x588e5c(0x216)][_0x588e5c(0x178)]=_0x588e5c(0x122),document[_0x588e5c(0x151)]('multi-fase-inscripcion')['style']['display']=_0x588e5c(0x1f9),alert(_0x5d1fcf['mensaje']);const _0x2c019e=document[_0x588e5c(0x1ed)](_0x588e5c(0x1bd));if(_0x2c019e)_0x2c019e['style'][_0x588e5c(0x178)]=_0x588e5c(0x1f9);const _0x243ef2=document[_0x588e5c(0x1ed)](_0x588e5c(0x18c));if(_0x243ef2)_0x243ef2[_0x588e5c(0x216)][_0x588e5c(0x178)]=_0x588e5c(0x1f9);mundialTernaPaises=_0x5d1fcf[_0x588e5c(0x269)],jugadoresSeleccionadosDraft=[];const _0x18a1fb=document[_0x588e5c(0x151)](_0x588e5c(0x207));if(!_0x18a1fb)return;_0x18a1fb[_0x588e5c(0x22f)]='',_0x5d1fcf['terna'][_0x588e5c(0x1c4)](_0x178068=>{const _0x1c1b0c=_0x588e5c,_0x19738b=document['createElement'](_0x1c1b0c(0xf2));_0x19738b[_0x1c1b0c(0x244)]=_0x1c1b0c(0x1dc),_0x19738b[_0x1c1b0c(0x216)][_0x1c1b0c(0x176)]=_0x1c1b0c(0x28a),_0x19738b[_0x1c1b0c(0x2a0)]='⚽\x20'+_0x178068['toUpperCase'](),_0x19738b['onclick']=()=>iniciarDraftJugadoresMundialMulti(_0x178068),_0x18a1fb[_0x1c1b0c(0x222)](_0x19738b);});}catch(_0x18c45e){console[_0x588e5c(0x1e9)]('Error\x20en\x20draft\x20multi\x20frontend:',_0x18c45e),ocultarCarga();}}function iniciarDraftJugadoresMundialMulti(_0x3e5ce7){const _0x3c9a11=_0x1c0c17;window[_0x3c9a11(0x29f)]=_0x3e5ce7,document[_0x3c9a11(0x151)](_0x3c9a11(0xa2))['style']['display']=_0x3c9a11(0x1f9),document[_0x3c9a11(0x151)](_0x3c9a11(0xb9))['style'][_0x3c9a11(0x178)]='block',document[_0x3c9a11(0x151)](_0x3c9a11(0xf3))['innerText']=_0x3e5ce7[_0x3c9a11(0x209)]();const _0x60e261=document[_0x3c9a11(0x151)](_0x3c9a11(0x19d));if(window['multiTipoApuestaActual']===_0x3c9a11(0x221)&&!multiEsCreador){if(_0x60e261)_0x60e261['style'][_0x3c9a11(0x178)]='block';const _0x463d49=document[_0x3c9a11(0x151)]('multi-select-carta-apuesta-invitado');if(_0x463d49){_0x463d49[_0x3c9a11(0x22f)]='';const _0x4c9f0f=albumCompleto[_0x3c9a11(0x22d)](_0x202f08=>_0x202f08['obtenido']>0x1);if(_0x4c9f0f[_0x3c9a11(0x99)]===0x0){const _0x2d1eb7=document[_0x3c9a11(0x94)]('option');_0x2d1eb7[_0x3c9a11(0x183)]='',_0x2d1eb7[_0x3c9a11(0x2a0)]=_0x3c9a11(0xfd),_0x463d49[_0x3c9a11(0x222)](_0x2d1eb7);}else _0x4c9f0f[_0x3c9a11(0x1c4)](_0x4092ff=>{const _0x1f3580=_0x3c9a11,_0x245fec=document[_0x1f3580(0x94)](_0x1f3580(0x1e7));_0x245fec[_0x1f3580(0x183)]=_0x4092ff['id'],_0x245fec[_0x1f3580(0x2a0)]=_0x1f3580(0xce)+_0x4092ff[_0x1f3580(0x1d8)][_0x1f3580(0x209)]()+_0x1f3580(0x1e2)+_0x4092ff['obtenido']+')',_0x463d49[_0x1f3580(0x222)](_0x245fec);});}}else{if(_0x60e261)_0x60e261[_0x3c9a11(0x216)][_0x3c9a11(0x178)]=_0x3c9a11(0x1f9);}actualizarEstrellasVisualesDraftMulti(),renderizarGridCartasDisponiblesDraftMulti(_0x3e5ce7);}function renderizarGridCartasDisponiblesDraftMulti(_0x51087c){const _0x483be5=_0x1c0c17,_0x549e2d=document[_0x483be5(0x151)](_0x483be5(0x236));if(!_0x549e2d)return;_0x549e2d['innerHTML']='';const _0x54a87e=albumCompleto[_0x483be5(0x22d)](_0x5cf7c9=>_0x5cf7c9[_0x483be5(0x12e)]>0x0&&_0x5cf7c9[_0x483be5(0x121)][_0x483be5(0x1a3)]()===_0x51087c[_0x483be5(0x1a3)]());if(_0x54a87e[_0x483be5(0x99)]===0x0){_0x549e2d[_0x483be5(0x22f)]=_0x483be5(0x24a);return;}_0x54a87e[_0x483be5(0x1c4)](_0x5b92c1=>{const _0x43a3f6=_0x483be5,_0xe3f954=document[_0x43a3f6(0x94)]('div'),_0x438bdd=jugadoresSeleccionadosDraft[_0x43a3f6(0x224)](_0x5b92c1['id']);_0xe3f954[_0x43a3f6(0x244)]=_0x43a3f6(0xc2)+_0x5b92c1[_0x43a3f6(0x1ae)]['toLowerCase']()+'\x20'+(_0x438bdd?'activo-draft':''),_0xe3f954['innerHTML']=_0x43a3f6(0x23d)+_0x5b92c1[_0x43a3f6(0xac)]+'\x22\x20class=\x22carta-foto\x22\x20alt=\x22'+_0x5b92c1['nombre']+_0x43a3f6(0x108)+_0x5b92c1[_0x43a3f6(0x1ae)]['toUpperCase']()+'</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20',_0xe3f954[_0x43a3f6(0x1af)]=()=>{const _0x58a052=_0x43a3f6;if(jugadoresSeleccionadosDraft[_0x58a052(0x224)](_0x5b92c1['id']))jugadoresSeleccionadosDraft=jugadoresSeleccionadosDraft[_0x58a052(0x22d)](_0x4dffb0=>_0x4dffb0!==_0x5b92c1['id']);else{if(jugadoresSeleccionadosDraft['length']>=0x3)return alert('❌\x20La\x20alineación\x20ya\x20está\x20completa\x20(Máximo\x203).');jugadoresSeleccionadosDraft[_0x58a052(0x13c)](_0x5b92c1['id']);}renderizarGridCartasDisponiblesDraftMulti(_0x51087c),actualizarEstrellasVisualesDraftMulti();},_0x549e2d['appendChild'](_0xe3f954);});}function actualizarEstrellasVisualesDraftMulti(){const _0x1eb68a=_0x1c0c17,_0x2cf351=document[_0x1eb68a(0x151)]('multi-lbl-estrellas-equipo');if(!_0x2cf351)return;if(jugadoresSeleccionadosDraft['length']!==0x3){_0x2cf351['innerText']=_0x1eb68a(0x110);return;}const _0x29fea3=albumCompleto[_0x1eb68a(0x22d)](_0x2c33ee=>jugadoresSeleccionadosDraft[_0x1eb68a(0x224)](_0x2c33ee['id'])),_0x22a14e=_0x29fea3[_0x1eb68a(0x97)]((_0x1538a6,_0x14f4dd)=>_0x1538a6+MAPA_PUNTOS_RAREZA[_0x14f4dd[_0x1eb68a(0x1ae)][_0x1eb68a(0x1a3)]()],0x0)/0x3;let _0x2c6426=0x1;if(_0x22a14e>=0x5a)_0x2c6426=0x5;else{if(_0x22a14e>=0x4f)_0x2c6426=0x4;else{if(_0x22a14e>=0x46)_0x2c6426=0x3;else{if(_0x22a14e>=0x3e)_0x2c6426=0x2;}}}_0x2cf351[_0x1eb68a(0x2a0)]='⭐'['repeat'](_0x2c6426)+('\x20('+_0x2c6426+_0x1eb68a(0x20e));}async function confirmarInscripcionMultiServidor(_0x51fe71,_0x5b7809){const _0x42b5c8=_0x1c0c17;if(_0x5b7809[_0x42b5c8(0x99)]!==0x3)return alert(_0x42b5c8(0x1db));let _0x4636e7=null;if(window[_0x42b5c8(0x28c)]===_0x42b5c8(0x221)){const _0x2ebd2f=multiEsCreador?'multi-select-carta-apuesta':_0x42b5c8(0x255),_0x5d122a=document[_0x42b5c8(0x151)](_0x2ebd2f);_0x4636e7=_0x5d122a?_0x5d122a[_0x42b5c8(0x183)]:null;if(!_0x4636e7)return alert(_0x42b5c8(0x1f0));window[_0x42b5c8(0x26e)]=_0x5d122a[_0x42b5c8(0x19f)][_0x5d122a[_0x42b5c8(0x292)]][_0x42b5c8(0xb4)];}else window[_0x42b5c8(0x26e)]=null;mostrarCarga('Enviando\x20planilla\x20de\x20vestuarios\x20a\x20la\x20Arena\x20Online...');let _0x4f3981=URL_BASE+_0x42b5c8(0x1d6),_0x5b11a3={'usuario_id':usuarioActual['id'],'seleccion':_0x51fe71,'jugador_ids':_0x5b7809,'tipo_apuesta':window['multiTipoApuestaActual'],'apuesta_oro':multiApuestaFijada,'carta_apuesta_id':_0x4636e7?parseInt(_0x4636e7):null};!multiEsCreador&&(_0x4f3981=URL_BASE+'/multijugador/unirse',_0x5b11a3={'usuario_id':usuarioActual['id'],'seleccion':_0x51fe71,'jugador_ids':_0x5b7809,'codigo_sala':multiCodigoSala,'carta_apuesta_id':_0x4636e7?parseInt(_0x4636e7):null});try{const _0x17ea0c=await fetch(_0x4f3981,{'method':_0x42b5c8(0x1fd),'headers':{'Content-Type':_0x42b5c8(0x103)},'body':JSON[_0x42b5c8(0x233)](_0x5b11a3)}),_0xd8783b=await _0x17ea0c['json']();if(!_0xd8783b['ok'])return ocultarCarga(),alert(_0xd8783b[_0x42b5c8(0x258)]);if(_0xd8783b['monedasActualizadas']!==undefined){usuarioActual[_0x42b5c8(0x1e3)]=_0xd8783b[_0x42b5c8(0x289)];if(typeof actualizarInterfazUI==='function')actualizarInterfazUI();}multiSalaId=_0xd8783b[_0x42b5c8(0xb7)];if(_0xd8783b[_0x42b5c8(0x19c)])multiCodigoSala=_0xd8783b[_0x42b5c8(0x19c)];document['getElementById'](_0x42b5c8(0xb9))[_0x42b5c8(0x216)][_0x42b5c8(0x178)]=_0x42b5c8(0x1f9),document[_0x42b5c8(0x151)]('multi-lobby-espera')[_0x42b5c8(0x216)][_0x42b5c8(0x178)]=_0x42b5c8(0x122),document[_0x42b5c8(0x151)](_0x42b5c8(0x116))[_0x42b5c8(0x2a0)]=multiCodigoSala,ocultarCarga(),multiIntervaloLobby=setInterval(actualizarLobbyEnVivo,0xbb8),actualizarLobbyEnVivo();}catch(_0xd4a44a){console[_0x42b5c8(0x1e9)](_0xd4a44a),ocultarCarga();}}async function actualizarLobbyEnVivo(){const _0x557198=_0x1c0c17;if(!multiCodigoSala)return;try{const _0x5ec9d8=await fetch(URL_BASE+_0x557198(0x119)+multiCodigoSala),_0x10bfe1=await _0x5ec9d8[_0x557198(0x14a)]();if(!_0x10bfe1['ok'])return clearInterval(multiIntervaloLobby),console[_0x557198(0x212)](_0x10bfe1[_0x557198(0x258)]);_0x10bfe1[_0x557198(0xd3)]&&(window['multiTipoApuestaActual']=_0x10bfe1[_0x557198(0xd3)][_0x557198(0x1a3)]());if(_0x10bfe1[_0x557198(0x1cf)]===_0x557198(0x18f)||_0x10bfe1[_0x557198(0x1cf)]===_0x557198(0x1ad)){clearInterval(multiIntervaloLobby);!multiEsCreador&&(multiSalaId=_0x10bfe1[_0x557198(0xb7)],consultarResultadoInvitado());return;}const _0x1616fc=document[_0x557198(0x151)](_0x557198(0x1ba));let _0x37d4a7=document[_0x557198(0x151)](_0x557198(0x123));!_0x37d4a7&&_0x1616fc&&(_0x37d4a7=document[_0x557198(0x94)](_0x557198(0x1dd)),_0x37d4a7['id']=_0x557198(0x123),_0x1616fc[_0x557198(0x20f)]['insertBefore'](_0x37d4a7,_0x1616fc));if(_0x37d4a7){let _0xb7f395=_0x557198(0x283);if(window['multiTipoApuestaActual']==='carta'){let _0x48ebd4=window['multiMiCartaApostadaTexto']||_0x557198(0x10e);_0xb7f395=_0x557198(0xe2)+_0x48ebd4[_0x557198(0x209)]();}else window[_0x557198(0x28c)]===_0x557198(0x171)&&(_0xb7f395=_0x557198(0x1eb));_0x37d4a7[_0x557198(0x22f)]=_0x557198(0x200)+_0xb7f395+_0x557198(0xf1);}const _0x482990=document['getElementById'](_0x557198(0x15e));if(_0x482990){if(window[_0x557198(0x28c)]==='carta')_0x482990['innerText']=_0x557198(0x247);else window[_0x557198(0x28c)]===_0x557198(0x171)?_0x482990[_0x557198(0x2a0)]=_0x557198(0xe7):_0x482990[_0x557198(0x2a0)]='💰\x20Pozo\x20Actual:\x20'+_0x10bfe1['pozo_total']+_0x557198(0x282);}document[_0x557198(0x151)]('lobby-cnt-jugadores')['innerText']=_0x10bfe1[_0x557198(0x24c)]['length'],_0x1616fc[_0x557198(0x22f)]='',_0x10bfe1[_0x557198(0x24c)][_0x557198(0x1c4)](_0x435d2a=>{const _0x2b142c=_0x557198,_0x28b84c=document[_0x2b142c(0x94)](_0x2b142c(0x1dd));_0x28b84c['style'][_0x2b142c(0x265)]=_0x2b142c(0x1c9);const _0x8d9a37=_0x435d2a[_0x2b142c(0xb5)]===_0x10bfe1[_0x2b142c(0xcf)];_0x28b84c['innerHTML']=_0x2b142c(0x189)+(_0x8d9a37?'👑\x20':'')+_0x435d2a[_0x2b142c(0x256)]+_0x2b142c(0x1c3)+_0x435d2a[_0x2b142c(0x27f)][_0x2b142c(0x209)]()+_0x2b142c(0x1c1),_0x1616fc[_0x2b142c(0x222)](_0x28b84c);}),multiEsCreador?(document[_0x557198(0x151)](_0x557198(0x11a))[_0x557198(0x216)]['display']=_0x557198(0x122),document['getElementById']('multi-txt-espera-host')[_0x557198(0x216)]['display']=_0x557198(0x1f9)):(document[_0x557198(0x151)](_0x557198(0x11a))[_0x557198(0x216)][_0x557198(0x178)]='none',document[_0x557198(0x151)](_0x557198(0xda))[_0x557198(0x216)][_0x557198(0x178)]=_0x557198(0x122));}catch(_0x50658e){console[_0x557198(0x1e9)](_0x557198(0x1a9),_0x50658e);}}async function lanzarSimulacionMulti(){const _0x104890=_0x1c0c17;mostrarCarga(_0x104890(0x21b)),clearInterval(multiIntervaloLobby);try{const _0x5c83ae=await fetch(URL_BASE+_0x104890(0x21e),{'method':_0x104890(0x1fd),'headers':{'Content-Type':_0x104890(0x103)},'body':JSON[_0x104890(0x233)]({'sala_id':multiSalaId,'usuario_id':usuarioActual['id']})}),_0x559272=await _0x5c83ae[_0x104890(0x14a)]();ocultarCarga();if(!_0x559272['ok']){alert(_0x559272[_0x104890(0x258)]),multiIntervaloLobby=setInterval(actualizarLobbyEnVivo,0xbb8);return;}window[_0x104890(0x286)](_0x559272[_0x104890(0x1bc)],_0x559272['premio']);}catch(_0x514c00){console[_0x104890(0x1e9)](_0x514c00),ocultarCarga();}}async function consultarResultadoInvitado(_0x35ff77=0x1){const _0x1f49a9=_0x1c0c17;_0x35ff77===0x1&&mostrarCarga(_0x1f49a9(0x135));try{const _0x9281a4=await fetch(URL_BASE+'/multijugador/resultado-invitado/'+multiSalaId),_0x65957=await _0x9281a4[_0x1f49a9(0x14a)]();if(_0x65957['ok']&&(!_0x65957[_0x1f49a9(0x1bc)]||_0x65957['bitacora'][_0x1f49a9(0x99)]<=0x1)){if(_0x35ff77<=0x3){console['log']('⏳\x20Bitácora\x20en\x20proceso\x20de\x20cálculo\x20en\x20Neon.\x20Reintentando\x20pase\x20en\x20800ms\x20(Intento\x20'+_0x35ff77+_0x1f49a9(0x138)),setTimeout(()=>consultarResultadoInvitado(_0x35ff77+0x1),0x320);return;}}ocultarCarga();if(!_0x65957['ok']){alert(_0x65957[_0x1f49a9(0x258)]||_0x1f49a9(0x12c)),cancelarMundialMultiLobby();return;}window[_0x1f49a9(0x286)](_0x65957[_0x1f49a9(0x1bc)],_0x65957[_0x1f49a9(0xc0)]);}catch(_0x26e1b4){console[_0x1f49a9(0x1e9)](_0x1f49a9(0x105),_0x26e1b4),ocultarCarga();}}window[_0x1c0c17(0x286)]=function(_0x1a5809,_0x15ae27,_0x591a28){const _0x4482b1=_0x1c0c17;document[_0x4482b1(0x151)](_0x4482b1(0x211))[_0x4482b1(0x216)][_0x4482b1(0x178)]='none',document['getElementById']('multi-pantalla-fixture')[_0x4482b1(0x216)]['display']=_0x4482b1(0x122);const _0x551c0e=document[_0x4482b1(0x151)](_0x4482b1(0x1d2));if(!_0x551c0e)return;_0x551c0e[_0x4482b1(0x22f)]='';if(_0x591a28&&Array['isArray'](_0x591a28)&&_0x591a28[_0x4482b1(0x99)]>0x0){const _0x514087=document[_0x4482b1(0x94)](_0x4482b1(0x1dd));_0x514087['style'][_0x4482b1(0x265)]='background:\x20rgba(255,\x200,\x200,\x200.05);\x20border:\x201px\x20solid\x20var(--rojo);\x20padding:\x2012px;\x20border-radius:\x208px;\x20margin-bottom:\x2020px;\x20font-weight:\x20bold;\x20color:\x20#fff;\x20font-size:\x200.95rem;\x20text-align:\x20center;\x20font-family:\x20sans-serif;\x20line-height:\x201.5;\x20box-shadow:\x200\x200\x2010px\x20rgba(239,\x2068,\x2068,\x200.1);',_0x514087['innerHTML']=_0x4482b1(0x182)+_0x591a28[_0x4482b1(0x272)](_0x4482b1(0x157)),_0x551c0e[_0x4482b1(0x222)](_0x514087);}if(!_0x1a5809||!Array['isArray'](_0x1a5809)||_0x1a5809['length']===0x0){console[_0x4482b1(0x29d)](_0x4482b1(0x150));return;}let _0x15f043=Promise[_0x4482b1(0x153)]();_0x1a5809[_0x4482b1(0x1c4)]((_0x5b503e,_0x47f15e)=>{const _0x255ea1=_0x4482b1,_0x1d2450=_0x5b503e[_0x255ea1(0x1a7)]||'Local',_0x3a6067=_0x5b503e[_0x255ea1(0xb3)]||_0x255ea1(0x132),_0x4d384d=_0x5b503e[_0x255ea1(0x1d9)]||_0x255ea1(0x2a1)+(_0x47f15e+0x1),_0x5639ff=_0x5b503e['golesLocal']||0x0,_0x2dd587=_0x5b503e['golesVisitante']||0x0;_0x15f043=_0x15f043[_0x255ea1(0x26b)](()=>{return new Promise(_0x308781=>{const _0x5f33f5=_0x47d0,_0x2c1bf5=document['createElement']('div');_0x2c1bf5['className']='item-historial-partido',_0x2c1bf5[_0x5f33f5(0x216)][_0x5f33f5(0x265)]=_0x5f33f5(0x29c),_0x2c1bf5[_0x5f33f5(0x22f)]=_0x5f33f5(0x23c)+_0x4d384d[_0x5f33f5(0x209)]()+_0x5f33f5(0x115)+_0x47f15e+_0x5f33f5(0x173)+_0x1d2450[_0x5f33f5(0x209)]()+'</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20id=\x22multi-score-'+_0x47f15e+'\x22\x20style=\x22font-family:\x27Oswald\x27;\x20font-size:1.4rem;\x20background:#000;\x20padding:2px\x2012px;\x20border-radius:4px;\x20color:var(--verde-match);\x22>0\x20-\x200</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<span\x20style=\x22font-size:1.1rem;\x20width:40%;\x20text-align:right;\x22>'+_0x3a6067[_0x5f33f5(0x209)]()+'\x20⚽</span>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20id=\x22multi-penales-box-'+_0x47f15e+'\x22\x20style=\x22display:none;\x20text-align:center;\x20color:var(--rojo);\x20font-weight:bold;\x20font-size:0.9rem;\x20margin-top:5px;\x22></div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20',_0x551c0e[_0x5f33f5(0x222)](_0x2c1bf5),_0x2c1bf5[_0x5f33f5(0x9b)]({'behavior':_0x5f33f5(0x240)});let _0x365980=0x0,_0x456f0e=0x0,_0x3d1d96=0x0;const _0x582492=setInterval(()=>{const _0x42d243=_0x5f33f5;_0x365980+=0xf;if(_0x365980>0x5a)_0x365980=0x5a;if(_0x365980>=0x1e&&_0x456f0e<_0x5639ff&&_0x5639ff>0x0)_0x456f0e++;if(_0x365980>=0x3c&&_0x3d1d96<_0x2dd587&&_0x2dd587>0x0)_0x3d1d96++;_0x365980===0x5a&&(_0x456f0e=_0x5639ff,_0x3d1d96=_0x2dd587);const _0x12d35d=document[_0x42d243(0x151)](_0x42d243(0xa0)+_0x47f15e),_0x16b6b0=document['getElementById'](_0x42d243(0x23e)+_0x47f15e);if(_0x12d35d)_0x12d35d[_0x42d243(0x2a0)]=_0x42d243(0xfa)+_0x365980+_0x42d243(0x11c);if(_0x16b6b0)_0x16b6b0[_0x42d243(0x2a0)]=_0x456f0e+_0x42d243(0xee)+_0x3d1d96;if(_0x365980>=0x5a){clearInterval(_0x582492);if(_0x5b503e[_0x42d243(0x280)]){const _0x2bc6bd=document[_0x42d243(0x151)]('multi-penales-box-'+_0x47f15e);_0x2bc6bd&&(_0x2bc6bd[_0x42d243(0x216)]['display']='block',_0x2bc6bd['innerText']=_0x42d243(0x166)+_0x5b503e[_0x42d243(0x164)]+_0x42d243(0xee)+_0x5b503e[_0x42d243(0x118)]+')');}_0x2c1bf5[_0x42d243(0x216)]['borderColor']='var(--verde-match)';const _0x14cad6=document[_0x42d243(0x94)]('div');_0x14cad6[_0x42d243(0x216)]['cssText']='text-align:right;\x20font-size:0.85rem;\x20font-weight:bold;\x20margin-top:5px;\x20color:var(--verde-match);',_0x14cad6[_0x42d243(0x2a0)]=_0x42d243(0x159)+_0x5b503e[_0x42d243(0xa9)][_0x42d243(0x209)]()+'\x20✅',_0x2c1bf5[_0x42d243(0x222)](_0x14cad6),_0x308781();}},0x190);});});}),_0x15f043['then'](()=>{const _0x364da6=_0x4482b1,_0x521b88=document[_0x364da6(0x94)](_0x364da6(0x1dd));_0x521b88['style'][_0x364da6(0x265)]='text-align:center;\x20margin-top:25px;\x20padding:15px;\x20background:rgba(0,255,136,0.05);\x20border:2px\x20dashed\x20var(--dorado);\x20border-radius:10px;';let _0x24eb67='👑\x20¡Fin\x20de\x20la\x20transmisión\x20de\x20la\x20Arena!\x0a🎁\x20El\x20torneo\x20ha\x20concluido\x20exitosamente.';if(_0x15ae27&&!_0x15ae27[_0x364da6(0xcc)]){if(_0x15ae27[_0x364da6(0xd3)]===_0x364da6(0x237))_0x24eb67=_0x364da6(0x214)+_0x15ae27['ganador_username'][_0x364da6(0x209)]()+'\x0a🎁\x20¡Se\x20lleva\x20el\x20pozo\x20acumulado\x20de\x20🪙\x20'+_0x15ae27[_0x364da6(0x112)]+'\x20de\x20Oro!';else _0x15ae27[_0x364da6(0xd3)]==='carta'&&(_0x24eb67=_0x364da6(0x214)+_0x15ae27[_0x364da6(0x231)][_0x364da6(0x209)]()+_0x364da6(0x223)+(_0x15ae27[_0x364da6(0xb6)]||_0x364da6(0x1b3))+_0x364da6(0x134));}else _0x15ae27&&_0x15ae27[_0x364da6(0xcc)]&&(_0x15ae27['tipo_apuesta']===_0x364da6(0x221)?_0x24eb67=_0x364da6(0x129)+_0x15ae27[_0x364da6(0x231)][_0x364da6(0x209)]()+')!\x0a\x0a💀\x20¡CRÍTICO!\x20Ningún\x20usuario\x20real\x20ganó.\x20Ambos\x20jugadores\x20perdieron\x20sus\x20cartas\x20apostadas\x20de\x20forma\x20permanente.':_0x24eb67=_0x364da6(0x242)+_0x15ae27[_0x364da6(0x231)]['toUpperCase']()+_0x364da6(0x27c));_0x521b88[_0x364da6(0x22f)]=_0x364da6(0x201)+_0x24eb67+_0x364da6(0xde),_0x551c0e[_0x364da6(0x222)](_0x521b88),_0x521b88[_0x364da6(0x9b)]({'behavior':_0x364da6(0x240)}),document[_0x364da6(0x151)](_0x364da6(0xd1))[_0x364da6(0x1af)]=()=>{const _0x2413d7=_0x364da6;document[_0x2413d7(0x151)](_0x2413d7(0x11b))[_0x2413d7(0x216)][_0x2413d7(0x178)]='none',document[_0x2413d7(0x151)](_0x2413d7(0x291))[_0x2413d7(0x216)][_0x2413d7(0x178)]=_0x2413d7(0x122);const _0x2284dc=document['getElementById']('modulo-mundial-multi');if(_0x2284dc)_0x2284dc[_0x2413d7(0x216)]['display']=_0x2413d7(0x122);const _0x5b291c=document[_0x2413d7(0x1ed)](_0x2413d7(0x1bd));if(_0x5b291c)_0x5b291c[_0x2413d7(0x216)][_0x2413d7(0x144)](_0x2413d7(0x178));const _0x5717c9=document[_0x2413d7(0x1ed)]('.btn-logout-kick');if(_0x5717c9)_0x5717c9['style']['removeProperty'](_0x2413d7(0x178));multiSalaId=null,multiCodigoSala=null,multiEsCreador=![];if(typeof cambiarModulo==='function'){const _0x4331a6=document[_0x2413d7(0x1ed)](_0x2413d7(0xdc));cambiarModulo('modulo-sobres',_0x4331a6);}};});};function conmutarInputsMultiUI(){const _0x113858=_0x1c0c17,_0x4990a8=document[_0x113858(0x151)](_0x113858(0x228));if(!_0x4990a8)return;const _0x29dbbe=_0x4990a8['value'],_0x1c7346=document[_0x113858(0x151)](_0x113858(0x28f)),_0xf0536d=document[_0x113858(0x151)](_0x113858(0x15b));if(_0x29dbbe==='oro'){if(_0x1c7346)_0x1c7346[_0x113858(0x216)][_0x113858(0x178)]=_0x113858(0x122);if(_0xf0536d)_0xf0536d['style'][_0x113858(0x178)]=_0x113858(0x1f9);}else{if(_0x29dbbe===_0x113858(0x221)){if(_0x1c7346)_0x1c7346[_0x113858(0x216)][_0x113858(0x178)]=_0x113858(0x1f9);if(_0xf0536d)_0xf0536d['style'][_0x113858(0x178)]=_0x113858(0x122);if(typeof cargarRepetidasEnDesplegableUI===_0x113858(0x298)){const _0x2b26bd=document[_0x113858(0x151)](_0x113858(0xfc));if(_0x2b26bd){_0x2b26bd['innerHTML']='';const _0x3df51b=window['albumCompleto']||albumCompleto||[],_0xabaa2b=_0x3df51b[_0x113858(0x22d)](_0x1e1503=>_0x1e1503&&_0x1e1503[_0x113858(0x12e)]>0x1);if(_0xabaa2b['length']===0x0){const _0x546798=document[_0x113858(0x94)](_0x113858(0x1e7));_0x546798[_0x113858(0x183)]='',_0x546798['innerText']=_0x113858(0x252),_0x2b26bd[_0x113858(0x222)](_0x546798);}else _0xabaa2b[_0x113858(0x1c4)](_0x5b1974=>{const _0x5a1951=_0x113858,_0x4559c1=document[_0x5a1951(0x94)](_0x5a1951(0x1e7));_0x4559c1[_0x5a1951(0x183)]=_0x5b1974['id'],_0x4559c1[_0x5a1951(0x2a0)]=(_0x5b1974[_0x5a1951(0x227)]||'🃏')+'\x20'+_0x5b1974[_0x5a1951(0x1d8)][_0x5a1951(0x209)]()+_0x5a1951(0x177)+_0x5b1974[_0x5a1951(0x12e)]+')',_0x2b26bd['appendChild'](_0x4559c1);});}}}else{if(_0x1c7346)_0x1c7346[_0x113858(0x216)][_0x113858(0x178)]=_0x113858(0x1f9);if(_0xf0536d)_0xf0536d[_0x113858(0x216)][_0x113858(0x178)]='none';}}}function cancelarMundialMultiLobby(){const _0x5b9672=_0x1c0c17;if(multiIntervaloLobby)clearInterval(multiIntervaloLobby);document[_0x5b9672(0x151)](_0x5b9672(0xa2))[_0x5b9672(0x216)][_0x5b9672(0x178)]=_0x5b9672(0x1f9),document[_0x5b9672(0x151)](_0x5b9672(0xb9))['style'][_0x5b9672(0x178)]=_0x5b9672(0x1f9),document[_0x5b9672(0x151)](_0x5b9672(0x211))['style']['display']='none',document[_0x5b9672(0x151)](_0x5b9672(0x11b))[_0x5b9672(0x216)][_0x5b9672(0x178)]='none',document['getElementById'](_0x5b9672(0x291))[_0x5b9672(0x216)][_0x5b9672(0x178)]='block';const _0x4d60d1=document[_0x5b9672(0x1ed)](_0x5b9672(0x1bd));if(_0x4d60d1)_0x4d60d1[_0x5b9672(0x216)][_0x5b9672(0x144)](_0x5b9672(0x178));const _0x2ab6ba=document[_0x5b9672(0x1ed)]('.btn-logout-kick');if(_0x2ab6ba)_0x2ab6ba['style'][_0x5b9672(0x144)](_0x5b9672(0x178));multiSalaId=null,multiCodigoSala=null,multiEsCreador=![],jugadoresSeleccionadosDraft=[],console[_0x5b9672(0x212)](_0x5b9672(0x111));}
+/* ========================================================================
+   ===         🏆 VIRTUAL ALBUM MUNDIAL - ENGINE CORREGIDO 🏆           ===
+   ======================================================================== */
+
+const URL_RENDER_SERVICIO = "https://testalbumpe-5feo.onrender.com/";
+const URL_BASE = `${URL_RENDER_SERVICIO}/api`; // 👈 El problema está en la barra final de arriba
+
+let usuarioActual = null;
+let direccionGanadora = "";
+let albumCompleto = [];
+let paisSeleccionado = "";
+let timbaPreparada = false;
+let intervaloCronometro = null;       // Global para evitar crasheos en Penales
+let intervaloCronometroTimba = null;  // Reloj global de la Timba
+
+// Variables globales para controlar el estado de los filtros del álbum
+let filtroEstadoActual = 'todas'; // 'todas', 'desbloqueadas', 'pendientes'
+let filtroRarezaActual = 'todas'; // 'todas', 'comun', 'rara', 'epica', 'legendaria'
+
+let multiSalaId = null;
+let multiCodigoSala = null;
+let multiEsCreador = false;
+let multiIntervaloLobby = null;
+let multiApuestaFijada = 0;
+
+
+/* ========================================================================
+   ⏱️ REGENERACIÓN DE ENERGÍA PARA LA TIMBA
+   ======================================================================== */
+function arrancarCronometroTimbaVisual(milisegundos) {
+     clearInterval(intervaloCronometroTimba);
+     const lblCronometro = document.getElementById('cronometro-timba');
+     
+     if (!lblCronometro) return;
+
+     if (milisegundos <= 0) {
+          lblCronometro.innerText = '🔋 ¡Apuestas al Máximo (10/10)!';
+          return;
+     }
+
+     let tiempoRestante = milisegundos;
+     intervaloCronometroTimba = setInterval(() => {
+          tiempoRestante -= 1000;
+          
+          if (tiempoRestante <= 0) {
+               clearInterval(intervaloCronometroTimba);
+               lblCronometro.innerText = '⚡ ¡Apuesta recargada! Actualizando...';
+               if (usuarioActual) actualizarTimbasRestantesUI();
+               return;
+          }
+
+          const totalSegundos = Math.floor(tiempoRestante / 1000);
+          const minutos = Math.floor(totalSegundos / 60);
+          const segundos = totalSegundos % 60;
+
+          let textoReloj = minutos.toString().padStart(2, '0') + 'm ' + segundos.toString().padStart(2, '0') + 's';
+          lblCronometro.innerText = '⏱️ Próxima apuesta en: ' + textoReloj;
+     }, 1000);
+}
+
+async function actualizarTimbasRestantesUI() {
+     if (!usuarioActual) return;
+     
+     const lblCronometro = document.getElementById('cronometro-timba');
+     if (!lblCronometro) return;
+
+     try {
+          const res = await fetch(URL_BASE + '/timbas-restantes/' + usuarioActual.id);
+          const datos = await res.json();
+          
+          if (datos.timbas <= 0) {
+               lblCronometro.style.borderColor = 'var(--rojo)';
+               lblCronometro.style.color = 'var(--rojo)';
+               lblCronometro.innerText = '❌ SIN ENERGÍA PARA TIMBEAR ⏱️';
+          } else {
+               lblCronometro.style.borderColor = 'var(--dorado)';
+               lblCronometro.style.color = 'var(--dorado)';
+               lblCronometro.innerText = '🎰 Apuestas disponibles: ' + datos.timbas + '/10';
+          }
+
+          if (datos.siguienteIn > 0 && datos.timbas < 10) {
+               arrancarCronometroTimbaVisual(datos.siguienteIn);
+          }
+     } catch (err) {
+          console.error('Error al actualizar créditos de timba:', err);
+     }
+}
+
+/* ========================================================================
+   🎛️ 1. CONTROL DE MÓDULOS DE LA UI (ADAPTADO A MUNDIAL UI)
+   ======================================================================== */
+function cambiarModulo(idModulo, botonPresionado) {
+     // Oculta tanto los módulos comunes como el multijugador
+     document.querySelectorAll('.modulo-contenido, #modulo-mundial-multi').forEach(mod => mod.style.display = 'none');
+     document.querySelectorAll('.tile-modulo-fifa, .btn-modulo-match').forEach(btn => btn.classList.remove('activo'));
+     
+     // Muestra el módulo clickeado
+     const modActivo = document.getElementById(idModulo);
+     if (modActivo) modActivo.style.display = 'block';
+     if (botonPresionado) botonPresionado.classList.add('activo');
+
+     // Lógica de carga interna de cada sección
+     if (idModulo === 'modulo-album' && usuarioActual) cargarAlbumLocal();
+     if (idModulo === 'modulo-penales' && usuarioActual) iniciarDueloLocal();
+     
+     if (idModulo === 'modulo-timba' && usuarioActual) {
+          rotarPartidoTimba();
+          document.getElementById("select-tipo-apuesta").value = "monedas"; 
+          conmutarControlesTimbaUI();
+          actualizarTimbasRestantesUI();
+     }
+}
+
+function mostrarCarga(mensaje = "Conectando con la Arena...") {
+     document.getElementById("texto-carga-dinamico").innerText = mensaje;
+     document.getElementById("pantalla-carga").classList.add("activo");
+}
+
+function ocultarCarga() {
+     document.getElementById("pantalla-carga").classList.remove("activo");
+}
+
+/* ========================================================================
+   ⏱️ REGENERACIÓN DE TIROS - PENALES (REPARACIÓN DE BUG DE BLOQUEO)
+   ======================================================================== */
+function arrancarCronometroVisual(milisegundosFaltantes) {
+     clearInterval(intervaloCronometro);
+     const lblCronometro = document.getElementById("cronometro-tiros");
+     if (!lblCronometro) return;
+     
+     if (milisegundosFaltantes <= 0) {
+          lblCronometro.innerText = "🔋 ¡Energía al Máximo!";
+          document.querySelectorAll('.zona-disparo-target').forEach(z => z.style.pointerEvents = "auto");
+          return;
+     }
+
+     let tiempoRestante = milisegundosFaltantes;
+
+     intervaloCronometro = setInterval(() => {
+          tiempoRestante -= 1000;
+          if (tiempoRestante <= 0) {
+               clearInterval(intervaloCronometro);
+               lblCronometro.innerText = "⚡ ¡Tiro recargado! Actualizando...";
+               
+               document.querySelectorAll('.zona-disparo-target').forEach(z => z.style.pointerEvents = "auto");
+               if (usuarioActual) iniciarDueloLocal();
+               return;
+          }
+
+          const totalSegundos = Math.floor(tiempoRestante / 1000);
+          const horas = Math.floor(totalSegundos / 3600);
+          const minutos = Math.floor((totalSegundos % 3600) / 60);
+          const segundos = totalSegundos % 60;
+
+          let textoReloj = "";
+          if (horas > 0) textoReloj += `${horas}h `;
+          textoReloj += `${minutos.toString().padStart(2, '0')}m ${segundos.toString().padStart(2, '0')}s`;
+
+          lblCronometro.innerText = `⏱️ Próximo tiro en: ${textoReloj}`;
+     }, 1000);
+}
+
+/* ========================================================================
+   👤 2. AUTENTICACIÓN Y ESTADO DE USUARIO
+   ======================================================================== */
+async function autenticarUsuario(accion) {
+     const username = document.getElementById("input-usuario").value.trim();
+     const password = document.getElementById("input-pass").value;
+     
+     if (!username || !password) return alert("❌ Completá los datos.");
+
+     const textoSpinner = accion === 'login' ? "Iniciando sesión..." : "Creando tu cuenta en la Arena...";
+     const endpointFinal = accion === 'login' ? 'login' : 'registro';
+
+     mostrarCarga(textoSpinner);
+
+     try {
+          const res = await fetch(`${URL_BASE}/${endpointFinal}`, {
+               method: 'POST',
+               headers: { 'Content-Type': 'application/json' },
+               body: JSON.stringify({ username, password })
+          });
+          
+          const data = await res.json();
+          ocultarCarga();
+
+          if (data.error) {
+               alert(data.error);
+          } else {
+               usuarioActual = data.usuario;
+               document.getElementById("seccion-login").style.display = "none";
+               
+               const interfazJuego = document.getElementById("interfaz-juego");
+               interfazJuego.style.removeProperty("display");
+               interfazJuego.classList.add("mostrar");
+               
+               // 🔥 Reseteamos filtros a nivel lógico al iniciar sesión por primera vez
+               filtroEstadoActual = 'todas';
+               filtroRarezaActual = 'todas';
+               
+               actualizarInterfazUI();
+               cargarAlbumLocal();
+               actualizarTimbasRestantesUI();
+               
+               iniciarControladorAnunciosSeguro(); 
+               
+               if (accion === 'login') {
+                    alert(`⚔️ ¡Bienvenido de vuelta, ${usuarioActual.username}!`);
+               } else {
+                    alert(`🎉 ¡Cuenta creada con éxito! Bienvenido a la Arena, ${usuarioActual.username}. Empezás con 200 monedas.`);
+               }
+          }
+     } catch (err) {
+          console.error(err);
+          ocultarCarga();
+     }
+}
+
+function actualizarInterfazUI() {
+     if (!usuarioActual) return;
+     document.getElementById("lbl-usuario").innerText = usuarioActual.username.toUpperCase();
+     document.getElementById("lbl-monedas").innerText = usuarioActual.monedas;
+     document.getElementById("lbl-ranking").innerText = usuarioActual.puntos_ranking;
+     
+     const lblMundiales = document.getElementById("lbl-copas-mundiales");
+     if (lblMundiales) {
+          lblMundiales.innerText = usuarioActual.copas_mundiales || 0;
+     }
+}
+
+/* ========================================================================
+   📖 3. ÁLBUM MUNDIAL (SISTEMA PANINI CORREGIDO)
+   ======================================================================== */
+async function cargarAlbumLocal() {
+     if (!usuarioActual) return;
+     const contenedorPaises = document.getElementById("selector-paises");
+     
+     try {
+          const res = await fetch(`${URL_BASE}/album/${usuarioActual.id}`);
+          const data = await res.json();
+          
+          albumCompleto = data.album;
+          window.albumCompleto = data.album;
+
+          const totalJugadores = albumCompleto.length;
+          const obtenidosTotales = albumCompleto.filter(figu => figu.obtenido > 0).length;
+          const porcentajeGlobal = totalJugadores > 0 ? Math.round((obtenidosTotales / totalJugadores) * 100) : 0;
+
+          document.getElementById("lbl-progreso-numerico").innerText = `${obtenidosTotales} / ${totalJugadores} (${porcentajeGlobal}%)`;
+          document.getElementById("barra-progreso-llenado").style.width = `${porcentajeGlobal}%`;
+
+          const countriesMap = new Map();
+          albumCompleto.forEach(figu => {
+               if (!countriesMap.has(figu.pais)) {
+                    countriesMap.set(figu.pais, { bandera: figu.bandera, complete: true });
+               }
+          });
+
+          countriesMap.forEach((info, pais) => {
+               const figusDeEstePais = albumCompleto.filter(f => f.pais === pais);
+               const tieneTodas = figusDeEstePais.every(f => f.obtenido > 0);
+               info.complete = tieneTodas;
+          });
+
+          contenedorPaises.innerHTML = "";
+          if (!paisSeleccionado && countriesMap.size > 0) {
+               paisSeleccionado = countriesMap.keys().next().value;
+          }
+
+          countriesMap.forEach((info, pais) => {
+               const btn = document.createElement("button");
+               btn.className = `btn-pais ${pais === paisSeleccionado ? 'activo' : ''} ${info.complete ? 'pais-completo' : ''}`;
+               const textoCorona = info.complete ? " 👑" : "";
+               btn.innerHTML = `<span>${info.bandera}</span> ${pais.toUpperCase()}${textoCorona}`;
+               
+               btn.onclick = () => {
+                    paisSeleccionado = pais;
+                    document.querySelectorAll('.btn-pais').forEach(b => b.classList.remove('activo'));
+                    btn.classList.add('activo');
+                    btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                    
+                    // 🔥 Al cambiar de país, mantenemos los filtros activos de forma inteligente
+                    mostrarJugadoresPorPais();
+               };
+               contenedorPaises.appendChild(btn);
+          });
+
+          mostrarJugadoresPorPais();
+
+          if (document.getElementById("select-tipo-apuesta") && document.getElementById("select-tipo-apuesta").value === "cromo") {
+               cargarRepetidasEnDesplegableUI();
+          }
+     } catch (err) { console.error("Error al calcular progreso de álbum:", err); }
+}
+
+function mostrarJugadoresPorPais() {
+     const contenedorGrid = document.getElementById("contenedor-grid-album");
+     if (!contenedorGrid) return;
+     contenedorGrid.innerHTML = "";
+     const jugadoresFiltrados = albumCompleto.filter(figu => figu.pais === paisSeleccionado);
+
+     jugadoresFiltrados.forEach((figu, index) => {
+          const esObtenida = figu.obtenido > 0;
+          const card = document.createElement("div");
+          card.className = `carta-clash ${figu.rareza.toLowerCase()} ${esObtenida ? '' : 'bloqueada'}`;
+          card.style.animationDelay = `${(index % 12) * 30}ms`;
+          
+          card.innerHTML = `
+              ${figu.obtenido > 1 ? `<div class="badge-repetidas">x${figu.obtenido}</div>` : ''}
+              <img src="${figu.foto}" class="carta-foto" alt="${figu.nombre}">
+              <div class="rareza-vertical">${figu.rareza.toUpperCase()}</div>
+          `;
+          contenedorGrid.appendChild(card);
+     });
+
+     // 🔥 INYECCIÓN ESTRATÉGICA: Forza al HUD a evaluar el estado cruzado inmediatamente
+     aplicarFiltrosCruzadosUI();
+}
+
+/* ========================================================================
+   🍿 LOGICA CINEMÁTICA PACK OPENING ASÍNCRONO (NATIVA INTEGRADA)
+   ======================================================================== */
+let colaCartasPack = [];
+let indiceCartaActualPack = 0;
+let sobreAbiertoCompletoCache = []; 
+
+async function comprarSobreEspecifico(tipoCofre) {
+     if (!usuarioActual) return alert("❌ Error.");
+
+     mostrarCarga(`Adquiriendo derechos de pack ${tipoCofre.toUpperCase()}...`);
+
+     try {
+          const res = await fetch(`${URL_BASE}/comprar-sobre`, {
+               method: 'POST',
+               headers: { 'Content-Type': 'application/json' },
+               body: JSON.stringify({ usuario_id: usuarioActual.id, tipoCofre: tipoCofre })
+          });
+          
+          const data = await res.json();
+          ocultarCarga();
+
+          if (data.error_oro) return alert(data.mensaje);
+          if (data.error) return alert("❌ Error: " + data.error);
+
+          usuarioActual.monedas = data.monedas;
+          actualizarInterfazUI();
+
+          colaCartasPack = data.sobre;
+          sobreAbiertoCompletoCache = data.sobre;
+          indiceCartaActualPack = 0;
+
+          document.getElementById("grid-sobre-abierto").innerHTML = "";
+          
+          const contenedorOpening = document.getElementById("contenedor-pack-opening");
+          contenedorOpening.style.display = "flex";
+
+          contenedorOpening.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+          ejecutarSecuenciaReveladoCarta();
+          
+     } catch (err) {
+          console.error("Error en la apertura del pack:", err);
+          ocultarCarga();
+     }
+}
+
+let animacionCartaEnCurso = false; 
+
+async function ejecutarSecuenciaReveladoCarta() {
+    if (indiceCartaActualPack >= colaCartasPack.length) {
+        document.getElementById("contenedor-pack-opening").style.display = "none";
+        renderizarGrillaFinalSobres();
+        animacionCartaEnCurso = false; 
+        return;
+    }
+
+    animacionCartaEnCurso = true;
+    const btnSiguiente = document.getElementById("btn-siguiente-carta-pack");
+    if (btnSiguiente) btnSiguiente.disabled = true; 
+
+    const carta = colaCartasPack[indiceCartaActualPack];
+    const wrapper = document.getElementById("pantalla-carta-presentada");
+    
+    const pBandera = document.getElementById("pista-bandera");
+    const pPosicion = document.getElementById("pista-posicion");
+    const pRareza = document.getElementById("pista-rareza");
+    
+    pBandera.className = "pista-bloque"; pBandera.innerText = "⏳ ?";
+    pPosicion.className = "pista-bloque"; pPosicion.innerText = "⚽ ?";
+    pRareza.className = "pista-bloque"; pRareza.innerText = "🃏 ?";
+    wrapper.innerHTML = ""; 
+
+    await new Promise(r => setTimeout(r, 200));
+    pBandera.innerText = carta.bandera || "🃏";
+    pBandera.classList.add("revelada");
+
+    await new Promise(r => setTimeout(r, 600));
+    let posText = "DEL";
+    const posFiltro = carta.posicion ? carta.posicion.toUpperCase() : "";
+    if (posFiltro.includes("DEF") || posFiltro.includes("ARQ") || posFiltro.includes("POR")) posText = "DEF";
+    else if (posFiltro.includes("MED") || posFiltro.includes("VOL") || posFiltro.includes("CC")) posText = "MED";
+    pPosicion.innerText = posText;
+    pPosicion.classList.add("revelada");
+
+    await new Promise(r => setTimeout(r, 600));
+    
+    let rarezaTexto = carta.rareza.toUpperCase();
+    if (rarezaTexto === "ESPECIAL") rarezaTexto = "RARA";
+    pRareza.innerText = rarezaTexto;
+    pRareza.classList.add("revelada");
+
+    await new Promise(r => setTimeout(r, 500));
+    
+    let rarezaClase = carta.rareza.toLowerCase();
+    if (rarezaClase === "especial") rarezaClase = "rara";
+    
+    const divCarta = document.createElement("div");
+    divCarta.className = `carta-clash ${rarezaClase} caminante-entrada`;
+    
+    let rarezaColor = "#8e9bb0";
+    if (rarezaClase === "rara") rarezaColor = "#0074e8";
+    else if (rarezaClase === "epica") rarezaColor = "#a335ee";
+    else if (rarezaClase === "legendaria") rarezaColor = "#ffb100";
+
+    divCarta.innerHTML = `
+        ${carta.obtenido > 1 ? `<div class="badge-repetidas">x${carta.obtenido}</div>` : ''}
+        <img src="${carta.foto}" class="carta-foto" alt="${carta.nombre}">
+        <div style="position: absolute; top: 0; left: 0; width: 18px; height: 100%; background: linear-gradient(90deg, ${rarezaColor} 0%, rgba(0,0,0,0) 100%); opacity: 0.4; z-index: 3;"></div>
+        <div class="rareza-vertical">${rarezaTexto}</div>
+    `;
+    
+    wrapper.appendChild(divCarta);
+    await new Promise(r => setTimeout(r, 400));
+
+    animacionCartaEnCurso = false;
+    if (btnSiguiente) btnSiguiente.disabled = false; 
+}
+
+function mostrarSiguienteCartaSecuencia() {
+     if (animacionCartaEnCurso) return; 
+     indiceCartaActualPack++;
+     ejecutarSecuenciaReveladoCarta();
+}
+
+async function renderizarGrillaFinalSobres() {
+     const contenedorSobre = document.getElementById("grid-sobre-abierto");
+     contenedorSobre.innerHTML = "";
+
+     sobreAbiertoCompletoCache.forEach((figu, indice) => {
+          const itemContenedor = document.createElement("div");
+          itemContenedor.style.cssText = "display: flex; flex-direction: column; align-items: center; gap: 8px;";
+
+          let rarezaClaseFinal = figu.rareza.toLowerCase();
+          if (rarezaClaseFinal === "especial") rarezaClaseFinal = "rara";
+
+          let rarezaTextoFinal = figu.rareza.toUpperCase();
+          if (rarezaTextoFinal === "ESPECIAL") rarezaTextoFinal = "RARA";
+
+          const divCarta = document.createElement("div");
+          divCarta.className = `carta-clash ${rarezaClaseFinal}`;
+          divCarta.style.animationDelay = `${indice * 0.1}s`;
+          
+          divCarta.innerHTML = `
+              ${figu.obtenido > 1 ? `<div class="badge-repetidas">x${figu.obtenido}</div>` : ''}
+              <img src="${figu.foto}" class="carta-foto" alt="${figu.nombre}">
+              <div class="rareza-vertical">${rarezaTextoFinal}</div>
+          `;
+
+          itemContenedor.appendChild(divCarta);
+          contenedorSobre.appendChild(itemContenedor);
+     });
+
+     if (usuarioActual) {
+          await cargarAlbumLocal();
+     }
+}
+
+/* ========================================================================
+   ⚽ 5. DUELO DE PENALES (CONTROL DE CLICS RECALIBRADO)
+   ======================================================================== */
+async function iniciarDueloLocal() {
+     if (!usuarioActual) return alert("❌ Iniciá sesión.");
+     const resTexto = document.getElementById("resultado-penal");
+     const btnProximo = document.querySelector("button[onclick='iniciarDueloLocal()']");
+     const escenario = document.getElementById("escenario-penal");
+
+     cargarRankingLocal();
+
+     try {
+          const res = await fetch(`${URL_BASE}/tiros-restantes/${usuarioActual.id}`);
+          const data = await res.json();
+          
+          if (data.tiros <= 0) {
+               resTexto.style.color = "var(--rojo)";
+               resTexto.innerText = "❌ ¡NO TE QUEDAN TIROS! Esperá que recargue energía.";
+               if (btnProximo) btnProximo.disabled = true;
+               if (escenario) escenario.classList.add("bloqueado-energia");
+               direccionGanadora = "";
+          } else {
+               resTexto.style.color = "white";
+               resTexto.innerText = `⚽ ¡PREPARÁ EL DISPARO! — Te quedan ${data.tiros} tiros.`;
+               if (btnProximo) btnProximo.disabled = false;
+               if (escenario) escenario.classList.remove("bloqueado-energia");
+               document.querySelectorAll('.zona-disparo-target').forEach(z => z.style.pointerEvents = "auto");
+
+               const opciones = ['IZQUIERDA', 'CENTRO', 'DERECHA'];
+               direccionGanadora = opciones[Math.floor(Math.random() * opciones.length)];
+          }
+
+          arrancarCronometroVisual(data.siguienteIn);
+          
+     } catch (err) {
+          console.error("Error al verificar tiros iniciales:", err);
+     }
+     
+     const balon = document.getElementById('balon-animado');
+     const arquero = document.getElementById('arquero-animado');
+     if (balon && arquero) {
+          balon.style.transform = 'translate(0, 0) scale(1)';
+          arquero.style.transform = 'translateX(0px)';
+     }
+}
+
+async function ejecutarPenalLocal(direccionElegida) {
+     if (!usuarioActual || !direccionGanadora) return;
+
+     const esMovil = window.innerWidth <= 768;
+     const fX = esMovil ? 0.55 : 1.0; 
+     const fY = esMovil ? 0.65 : 1.0; 
+
+     const mapaAnimaciones = {
+          'SUP_IZQUIERDA': {
+               balon: `translate(${ -185 * fX }px, ${ -185 * fY }px)`,
+               arquero: `translate(${ -185 * fX }px, ${ -65 * fY }px) rotate(-25deg)`
+          },
+          'SUP_CENTRO': {
+               balon: `translate(0px, ${ -205 * fY }px)`,
+               arquero: `translate(0px, ${ -75 * fY }px) rotate(0deg)`
+          },
+          'SUP_DERECHA': {
+               balon: `translate(${ 185 * fX }px, ${ -185 * fY }px)`,
+               arquero: `translate(${ 185 * fX }px, ${ -65 * fY }px) rotate(25deg)`
+          },
+          'INF_IZQUIERDA': {
+               balon: `translate(${ -185 * fX }px, ${ -20 * fY }px)`,
+               arquero: `translate(${ -185 * fX }px, ${ 95 * fY }px) rotate(-15deg)`
+          },
+          'INF_CENTRO': {
+               balon: `translate(0px, ${ -35 * fY }px)`,
+               arquero: `translate(0px, ${ 85 * fY }px) rotate(0deg)`
+          },
+          'INF_DERECHA': {
+               balon: `translate(${ 185 * fX }px, ${ -20 * fY }px)`,
+               arquero: `translate(${ 185 * fX }px, ${ 95 * fY }px) rotate(15deg)`
+          }
+     };
+
+     const direccionesPosibles = Object.keys(mapaAnimaciones);
+     const direccionArquero = direccionesPosibles[Math.floor(Math.random() * direccionesPosibles.length)];
+
+     const arquero = document.getElementById('arquero-animado');
+     if (arquero) {
+          arquero.style.zIndex = "5"; 
+          arquero.style.transform = mapaAnimaciones[direccionArquero].arquero;
+     }
+
+     const balon = document.getElementById('balon-animado');
+     if (balon) {
+          balon.style.zIndex = "10"; 
+          balon.style.transform = mapaAnimaciones[direccionElegida].balon;
+     }
+
+     document.querySelectorAll('.zona-disparo-target').forEach(z => z.style.pointerEvents = "none");
+
+     await new Promise(r => setTimeout(r, 600));
+
+     const fueAtajado = direccionElegida === direccionArquero;
+     const esGol = !fueAtajado;
+
+     const resTexto = document.getElementById("resultado-penal");
+     if (fueAtajado) {
+          resTexto.style.color = "var(--rojo)";
+          resTexto.innerText = "¡ATAJADO POR EL ARQUERO! 🧤";
+     } else {
+          resTexto.style.color = "var(--celeste)";
+          resTexto.innerText = "¡GOOOL! 🪙 +100 Oro";
+     }
+     
+     direccionGanadora = "";
+
+     try {
+          const res = await fetch(`${URL_BASE}/jugar-penal`, {
+               method: 'POST',
+               headers: { 'Content-Type': 'application/json' },
+               body: JSON.stringify({ usuario_id: usuarioActual.id, gano: esGol })
+          });
+          const data = await res.json();
+          
+          if (data.error_limite) {
+               alert(data.mensaje);
+               resTexto.style.color = "var(--rojo)";
+               resTexto.innerText = "¡SIN ENERGÍA! ⏱️";
+               return;
+          }
+
+          usuarioActual.monedas = data.datos.monedas;
+          usuarioActual.puntos_ranking = data.datos.puntos_ranking;
+          actualizarInterfazUI();
+          cargarRankingLocal();
+          
+          resTexto.innerText += ` — Te quedan ${data.tiros_restantes} tiros.`;
+          const btnProximo = document.querySelector("button[onclick='iniciarDueloLocal()']");
+          
+          if (data.tiros_restantes <= 0) {
+               if (btnProximo) btnProximo.disabled = true;
+          } else {
+               document.querySelectorAll('.zona-disparo-target').forEach(z => z.style.pointerEvents = "auto");
+          }
+          
+          arrancarCronometroVisual(data.siguienteIn);
+
+     } catch (err) {
+          console.error(err);
+          document.querySelectorAll('.zona-disparo-target').forEach(z => z.style.pointerEvents = "auto");
+     }
+}
+
+/* ========================================================================
+   🏆 6. RANKING DE LA ARENA (LEADERBOARD)
+   ======================================================================== */
+async function cargarRankingLocal() {
+     cargarRankingMundialesLocal();
+     const tbody = document.getElementById("tabla-ranking-body");
+     if (!tbody) return;
+
+     try {
+          const res = await fetch(`${URL_BASE}/ranking`);
+          const data = await res.json();
+          tbody.innerHTML = "";
+
+          if (!data.ranking || data.ranking.length === 0) {
+               tbody.innerHTML = `<tr><td colspan="3" style="color:#777;">No hay jugadores en la arena</td></tr>`;
+               return;
+          }
+
+          data.ranking.forEach((user, index) => {
+               const tr = document.createElement("tr");
+               if (usuarioActual && user.username === usuarioActual.username) {
+                    tr.className = "fila-usuario-actual";
+               }
+
+               let posicionText = index + 1;
+               if (index === 0) posicionText = "🥇";
+               if (index === 1) posicionText = "🥈";
+               if (index === 2) posicionText = "🥉";
+
+               tr.innerHTML = `
+                    <td><b>${posicionText}</b></td>
+                    <td style="text-align: left; padding-left: 15px;">
+                         ${user.username} ${usuarioActual && user.username === usuarioActual.username ? '<span style="color:var(--celeste); font-size:0.8rem;">(Vos)</span>' : ''}
+                    </td>
+                    <td style="color: #ff4a4a; font-weight: bold;">${user.puntos_ranking}</td>
+               `;
+               tbody.appendChild(tr);
+          });
+     } catch (err) { console.error(err); }
+}
+
+/* ========================================================================
+   🏆 6B. RANKING EXCLUSIVO DE CAMPEONES MUNDIALES
+   ======================================================================== */
+async function cargarRankingMundialesLocal() {
+     const tbody = document.getElementById("tabla-ranking-mundiales-body");
+     if (!tbody) return;
+
+     try {
+          const res = await fetch(`${URL_BASE}/ranking-mundiales`);
+          const data = await res.json();
+          tbody.innerHTML = "";
+
+          if (!data.ranking || data.ranking.length === 0) {
+               tbody.innerHTML = `<tr><td colspan="3" style="color:#777; padding: 15px;">🌟 Todavía no hay campeones en la Arena. ¡Sé el primero! 👑</td></tr>`;
+               return;
+          }
+
+          data.ranking.forEach((user, index) => {
+               const tr = document.createElement("tr");
+               if (usuarioActual && user.username === usuarioActual.username) {
+                    tr.className = "fila-usuario-actual";
+               }
+
+               let posicionText = index + 1;
+               if (index === 0) posicionText = "🥇";
+               if (index === 1) posicionText = "🥈";
+               if (index === 2) posicionText = "🥉";
+
+               tr.innerHTML = `
+                    <td><b>${posicionText}</b></td>
+                    <td style="text-align: left; padding-left: 15px;">
+                         ${user.username.toUpperCase()} ${usuarioActual && user.username === usuarioActual.username ? '<span style="color:var(--celeste); font-size:0.8rem;">(Vos)</span>' : ''}
+                    </td>
+                    <td style="color: var(--dorado); font-weight: bold; font-size: 1.2rem;">🏆 ${user.copas_mundiales}</td>
+               `;
+               tbody.appendChild(tr);
+          });
+     } catch (err) { 
+          console.error("Error al cargar ranking de mundiales:", err); 
+     }
+}
+
+/* ========================================================================
+   🚪 7. CERRAR SESIÓN (CON AVISO AL SERVIDOR)
+   ======================================================================== */
+async function cerrarSesionLocal() {
+     if (!usuarioActual) return;
+
+     const confirmar = confirm(`¿Estás seguro de que querés salir, ${usuarioActual.username}?`);
+     if (!confirmar) return;
+
+     try {
+          await fetch(`${URL_BASE}/logout`, {
+               method: 'POST',
+               headers: { 'Content-Type': 'application/json' },
+               body: JSON.stringify({ username: usuarioActual.username })
+          });
+     } catch (err) { console.error("Error al avisar logout al servidor:", err); }
+
+     clearInterval(intervaloCronometro);
+     usuarioActual = null;
+     direccionGanadora = "";
+     albumCompleto = [];
+     window.albumCompleto = [];
+     paisSeleccionado = "";
+
+     document.getElementById("input-usuario").value = "";
+     document.getElementById("input-pass").value = "";
+
+     const interfazJuego = document.getElementById("interfaz-juego");
+     interfazJuego.classList.remove("mostrar");
+     interfazJuego.style.display = "none";
+     document.getElementById("seccion-login").style.display = "block";
+
+     alert("🚪 Sesión cerrada correctamente. Volviste al menú local.");
+}
+
+/* ========================================================================
+   🎰 8. SISTEMA DE TIMBA MULTI-APUESTA ( MONEDAS Y CROMOS )
+   ======================================================================== */
+const LISTA_SELECCIONES_TIMBA = [
+     { nombre: "ARGENTINA", bandera: "🇦🇷" }, { nombre: "BRASIL", bandera: "🇧🇷" },
+     { nombre: "URUGUAY", bandera: "🇺🇾" },     { nombre: "ALEMANIA", bandera: "🇩🇪" },
+     { nombre: "FRANCIA", bandera: "🇫🇷" },     { nombre: "ESPAÑA", bandera: "🇪🇸" },
+     { nombre: "ITALIA", bandera: "🇮🇹" },       { nombre: "INGLATERRA", bandera: "🏴" },
+     { nombre: "PORTUGAL", bandera: "🇵🇹" },     { nombre: "HOLANDA", bandera: "🇳🇱" },
+     { nombre: "COLOMBIA", bandera: "🇨🇴" },     { nombre: "CHILE", bandera: "🇨🇱" },
+     { nombre: "MÉXICO", bandera: "🇲🇽" },       { nombre: "JAPÓN", bandera: "🇯🇵" },
+     { nombre: "MARRUECOS", bandera: "🇲🇦" },    { nombre: "CROACIA", bandera: "🇭🇷" },
+     { nombre: "BÉLGICA", bandera: "🇧🇪" },      { nombre: "SENEGAL", bandera: "🇸🇳" },
+     { nombre: "ESTADOS UNIDOS", bandera: "🇺🇸" }, { nombre: "ARABIA SAUDITA", bandera: "🇸🇦" }
+];
+
+var historialPartidosSimulados = [];
+
+function rotarPartidoTimba() {
+     let local = LISTA_SELECCIONES_TIMBA[Math.floor(Math.random() * LISTA_SELECCIONES_TIMBA.length)];
+     let visitante = LISTA_SELECCIONES_TIMBA[Math.floor(Math.random() * LISTA_SELECCIONES_TIMBA.length)];
+     
+     while (local.nombre === visitante.nombre) {
+          visitante = LISTA_SELECCIONES_TIMBA[Math.floor(Math.random() * LISTA_SELECCIONES_TIMBA.length)];
+     }
+     
+     document.getElementById("timba-bandera-local").innerText = local.bandera;
+     document.getElementById("timba-local").innerText = local.nombre;
+     document.getElementById("timba-bandera-visitante").innerText = visitante.bandera;
+     document.getElementById("timba-visitante").innerText = visitante.nombre;
+}
+
+function conmutarControlesTimbaUI() {
+     const tipo = document.getElementById("select-tipo-apuesta").value;
+     if (tipo === "monedas") {
+          document.getElementById("wrapper-apuesta-monedas").style.display = "flex";
+          document.getElementById("wrapper-apuesta-cromo").style.display = "none";
+     } else {
+          document.getElementById("wrapper-apuesta-monedas").style.display = "none";
+          document.getElementById("wrapper-apuesta-cromo").style.display = "flex";
+          cargarRepetidasEnDesplegableUI();
+     }
+}
+
+function cargarRepetidasEnDesplegableUI() {
+     const select = document.getElementById("select-cromo-repetido");
+     if (!select) return;
+     select.innerHTML = "";
+
+     const miAlbumReal = window.albumCompleto || albumCompleto;
+
+     if (!miAlbumReal || !Array.isArray(miAlbumReal)) {
+          const opt = document.createElement("option");
+          opt.value = "";
+          opt.innerText = "⏳ Cargando inventario...";
+          select.appendChild(opt);
+          return;
+     }
+
+     const repetidas = miAlbumReal.filter(f => f && f.obtenido > 1);
+
+     if (repetidas.length === 0) {
+          const opt = document.createElement("option");
+          opt.value = "";
+          opt.innerText = "❌ No tenés cromos repetidos";
+          select.appendChild(opt);
+          return;
+     }
+
+     repetidas.forEach(figu => {
+          if (!figu) return;
+          
+          const nombrePlayer = figu.nombre || "Jugador";
+          const copas = figu.obtenido || 2;
+          const bandera = figu.bandera || "🃏";
+          const rareza = figu.rareza || "común";
+          const idCarta = figu.id;
+
+          const opt = document.createElement("option");
+          opt.value = idCarta;
+          opt.innerText = `${bandera} ${nombrePlayer.toUpperCase()} (x${copas}) [${rareza.toUpperCase()}]`;
+          select.appendChild(opt);
+     });
+}
+
+function actualizarHistorialUI(infoPartido) {
+     historialPartidosSimulados.unshift(infoPartido);
+     if (historialPartidosSimulados.length > 3) historialPartidosSimulados.pop();
+
+     const contenedorLista = document.getElementById("lista-historial-timba");
+     if (!contenedorLista) return;
+     contenedorLista.innerHTML = "";
+
+     historialPartidosSimulados.forEach(p => {
+          const li = document.createElement("li");
+          li.className = "item-historial-partido";
+          li.innerHTML = `<span>⚔️ ${p.local} vs ${p.visitante}</span> <b style="color: var(--celeste);">${p.res}</b>`;
+          contenedorLista.appendChild(li);
+     });
+}
+
+async function prepararOpcionesApuesta() {
+     if (!usuarioActual) return alert("❌ Iniciá sesión para timbear.");
+     
+     const tipoApuesta = document.getElementById("select-tipo-apuesta").value;
+     let montoApuesta = 0;
+     let jugadorIdApostado = null;
+
+     if (tipoApuesta === "monedas") {
+          montoApuesta = parseInt(document.getElementById("input-monto-apuesta").value);
+          if (isNaN(montoApuesta) || montoApuesta <= 0) {
+               return alert("❌ Ingresá un monto de oro válido.");
+          }
+          if (usuarioActual.monedas < montoApuesta) {
+               return alert("🪙 No tenés suficiente Oro.");
+          }
+     } else {
+          jugadorIdApostado = document.getElementById("select-cromo-repetido").value;
+          if (!jugadorIdApostado) {
+               return alert("❌ Debés seleccionar un cromo repetido válido de la lista.");
+          }
+     }
+
+     mostrarCarga("Estudiando probabilidades...");
+
+     try {
+          const res = await fetch(`${URL_BASE}/timba/preparar`, {
+               method: 'POST',
+               headers: { 'Content-Type': 'application/json' },
+               body: JSON.stringify({
+                    usuario_id: usuarioActual.id,
+                    tipoApuesta,
+                    montoApuesta,
+                    jugadorIdApostado: jugadorIdApostado ? parseInt(jugadorIdApostado) : null
+               })
+          });
+          const data = await res.json();
+          ocultarCarga();
+
+          if (data.error_limite) {
+               alert(data.mensaje);
+               actualizarTimbasRestantesUI();
+               return;
+          }
+
+          if (!data.ok) return alert(data.mensaje);
+
+          const contenedor = document.getElementById("contenedor-opciones-goles");
+          if (!contenedor) return;
+          contenedor.innerHTML = "";
+          contenedor.style.display = "grid";
+
+          data.opciones.forEach(opc => {
+               const btn = document.createElement("button");
+               btn.type = "button";
+               btn.className = "btn-estadio btn-opcion-resultado";
+               btn.style.margin = "5px";
+               btn.innerText = opc.label;
+               btn.onclick = () => procesarEleccionTimbaSegura(opc.idOpcion);
+               contenedor.appendChild(btn);
+          });
+
+          timbaPreparada = true;
+          actualizarTimbasRestantesUI();
+
+     } catch (err) {
+          console.error("Error al preparar opciones seguras:", err);
+          ocultarCarga();
+     }
+}
+
+async function procesarEleccionTimbaSegura(idOpcionElegida) {
+    if (!timbaPreparada) return;
+
+    const bandLoc = document.getElementById("timba-bandera-local").innerText;
+    const nomLoc = document.getElementById("timba-local").innerText;
+    const bandVis = document.getElementById("timba-bandera-visitante").innerText;
+    const nomVis = document.getElementById("timba-visitante").innerText;
+
+    mostrarCarga("Procesando tu jugada...");
+
+    try {
+        const res = await fetch(`${URL_BASE}/timba/procesar`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ usuario_id: usuarioActual.id, idOpcionElegida })
+        });
+        const data = await res.json();
+        ocultarCarga();
+
+        if (!data.ok) return alert(data.mensaje);
+
+        usuarioActual.monedas = data.datos.monedas;
+        usuarioActual.puntos_ranking = data.datos.puntos_ranking;
+        actualizarInterfazUI();
+
+        alert(`⚽ RESULTADO DE LA TIMBA ⚽\n\n${data.mensajeResultado}`);
+
+        document.getElementById("contenedor-opciones-goles").style.display = "none";
+        
+        await cargarAlbumLocal();
+        
+        if (document.getElementById("select-tipo-apuesta").value === "cromo") {
+            cargarRepetidasEnDesplegableUI();
+        }
+
+        actualizarHistorialUI({
+            local: `${bandLoc} ${nomLoc}`,
+            visitor: `${bandVis} ${nomVis}`,
+            res: `${data.golesLReal} - ${data.golesVReal}`
+        });
+
+        timbaPreparada = false;
+        rotarPartidoTimba();
+
+    } catch (err) {
+        console.error("Error al procesar jugada segura:", err);
+        ocultarCarga();
+    }
+}
+
+setTimeout(rotarPartidoTimba, 1000);
+
+/* ========================================================================
+   🏆 9. ENGINE INTERACTIVO DEL MINIMUNDIAL (COOLDOWN + DRAFT + GRUPOS EN VIVO)
+   ======================================================================== */
+let mundialTernaPaises = [];
+let mundialRivalClasif = "";
+let jugadoresSeleccionadosDraft = [];
+let intervaloCronometroMundial = null;
+
+const MAPA_PUNTOS_RAREZA = { 'comun': 60, 'especial': 68, 'rara': 75, 'epica': 85, 'legendaria': 96 };
+
+async function actualizarEstadoMundialUI() {
+     if (!usuarioActual) return;
+     try {
+          const res = await fetch(`${URL_BASE}/mundial/estado/${usuarioActual.id}`);
+          const data = await res.json();
+          
+          const lblCopas = document.getElementById("lbl-copas-mundiales");
+          if (lblCopas) lblCopas.innerText = data.copas || 0;
+
+          arrancarCronometroMundialVisual(data.siguienteIn);
+     } catch (err) { console.error("Error al pedir estado del Mundial:", err); }
+}
+
+function arrancarCronometroMundialVisual(ms) {
+     clearInterval(intervaloCronometroMundial);
+     const lblReloj = document.getElementById("cronometro-mundial");
+     const btnIniciar = document.getElementById("btn-preparar-mundial");
+     const contenedorOpcionesPaises = document.getElementById("zona-eleccion-pais-mundial");
+     if (!lblReloj) return;
+
+     if (ms <= 0) {
+          lblReloj.innerText = "🔋 ¡Inscripción abierta para el MiniMundial!";
+          lblReloj.style.color = "var(--verde-match)";
+          if (btnIniciar) btnIniciar.style.display = "inline-block";
+          return;
+     }
+
+     if (btnIniciar) btnIniciar.style.display = "none";
+     if (contenedorOpcionesPaises) contenedorOpcionesPaises.innerHTML = "";
+     
+     let tiempoRestante = ms;
+     intervaloCronometroMundial = setInterval(() => {
+          tiempoRestante -= 1000;
+          if (tiempoRestante <= 0) {
+               clearInterval(intervaloCronometroMundial);
+               lblReloj.innerText = "⚡ ¡Vestuarios listos! Actualizando...";
+               if (btnIniciar) btnIniciar.style.display = "inline-block";
+               return;
+          }
+          const totalSegundos = Math.floor(tiempoRestante / 1000);
+          const horas = Math.floor(totalSegundos / 3600);
+          const minutos = Math.floor((totalSegundos % 3600) / 60);
+          const segundos = totalSegundos % 60;
+          lblReloj.innerText = `⏱️ Próximo torneo en: ${horas}h ${minutos.toString().padStart(2,'0')}m ${segundos.toString().padStart(2,'0')}s`;
+          lblReloj.style.color = "var(--rojo)";
+     }, 1000);
+}
+
+async function prepararInscripcionMundial() {
+     if (!usuarioActual) return;
+     mostrarCarga("Inscribiendo equipo y debitando arancel de la FIFA...");
+
+     try {
+          const res = await fetch(`${URL_BASE}/mundial/preparar`, {
+               method: 'POST',
+               headers: { 'Content-Type': 'application/json' },
+               body: JSON.stringify({ usuario_id: usuarioActual.id })
+          });
+          const data = await res.json();
+          ocultarCarga();
+
+          if (!data.ok) return alert(data.mensaje);
+
+          if (data.monedasActualizadas !== undefined) {
+               usuarioActual.monedas = data.monedasActualizadas;
+               actualizarInterfazUI();
+          } else {
+               usuarioActual.monedas -= 500;
+               actualizarInterfazUI();
+          }
+
+          const barraNavegacion = document.querySelector(".nav-modulos-estadio");
+          if (barraNavegacion) {
+               barraNavegacion.style.display = "none"; 
+          }
+          const btnSalir = document.querySelector(".btn-logout-kick");
+          if (btnSalir) btnSalir.style.display = "none";
+
+          mundialTernaPaises = data.terna;
+          mundialRivalClasif = data.rivalClasificacion;
+          jugadoresSeleccionadosDraft = [];
+
+          const contenedorTerna = document.getElementById("zona-eleccion-pais-mundial");
+          contenedorTerna.innerHTML = "";
+          
+          document.getElementById("fase-inscripcion-mundial").style.display = "block";
+          document.getElementById("fase-draft-mundial").style.display = "none";
+          document.getElementById("fase-fixture-mundial").style.display = "none";
+
+          data.terna.forEach(pais => {
+               const btn = document.createElement("button");
+               btn.className = "btn-estadio btn-modulo-match";
+               btn.style.margin = "8px";
+               btn.innerText = `⚽ ${pais.toUpperCase()}`;
+               btn.onclick = () => iniciarDraftJugadoresMundial(pais);
+               contenedorTerna.appendChild(btn);
+          });
+
+     } catch (err) { 
+          console.error(err); 
+          ocultarCarga(); 
+     }
+}
+
+function iniciarDraftJugadoresMundial(paisElegido) {
+     window.mundialSeleccionUsuario = paisElegido;
+     
+     document.getElementById("fase-inscripcion-mundial").style.display = "none";
+     document.getElementById("fase-draft-mundial").style.display = "block";
+     
+     document.getElementById("lbl-tu-seleccion-mundial").innerText = paisElegido.toUpperCase();
+     document.getElementById("lbl-rival-clasificacion-mundial").innerText = mundialRivalClasif.toUpperCase();
+
+     actualizarEstrellasVisualesDraft();
+     renderizarGridCartasDisponiblesDraft(paisElegido);
+}
+
+function renderizarGridCartasDisponiblesDraft(paisElegido) {
+     const grid = document.getElementById("grid-cartas-draft-mundial");
+     if (!grid) return;
+     grid.innerHTML = "";
+
+     const cartasFiltradas = albumCompleto.filter(f => f.obtenido > 0 && f.pais.toLowerCase() === paisElegido.toLowerCase());
+
+     cartasFiltradas.forEach(carta => {
+          const card = document.createElement("div");
+          const estaElegida = jugadoresSeleccionadosDraft.includes(carta.id);
+          
+          card.className = `carta-clash ${carta.rareza.toLowerCase()} ${estaElegida ? 'activo-draft' : ''}`;
+
+          card.innerHTML = `
+              <img src="${carta.foto}" class="carta-foto" alt="${carta.nombre}">
+              <div class="rareza-vertical">${carta.rareza.toUpperCase()}</div>
+          `;
+
+          card.onclick = () => {
+               if (jugadoresSeleccionadosDraft.includes(carta.id)) {
+                    jugadoresSeleccionadosDraft = jugadoresSeleccionadosDraft.filter(id => id !== carta.id);
+               } else {
+                    if (jugadoresSeleccionadosDraft.length >= 3) {
+                         return alert("❌ Alineación completa (Máximo 3).");
+                    }
+                    jugadoresSeleccionadosDraft.push(carta.id);
+               }
+               renderizarGridCartasDisponiblesDraft(paisElegido);
+               actualizarEstrellasVisualesDraft();
+          };
+
+          grid.appendChild(card);
+     });
+}
+
+function actualizarEstrellasVisualesDraft() {
+     const lblEstrellas = document.getElementById("lbl-estrellas-equipo-mundial");
+     if (!lblEstrellas) return;
+
+     if (jugadoresSeleccionadosDraft.length !== 3) {
+          lblEstrellas.innerText = "⚠️ Alineá 3 jugadores para calcular poder";
+          return;
+     }
+
+     const cartasElegidas = albumCompleto.filter(f => jugadoresSeleccionadosDraft.includes(f.id));
+     const suma = cartasElegidas.reduce((acc, c) => acc + MAPA_PUNTOS_RAREZA[c.rareza.toLowerCase()], 0);
+     const promedio = suma / 3;
+
+     let numEstrellas = 1;
+     if (promedio >= 90) numEstrellas = 5;
+     else if (promedio >= 79) numEstrellas = 4;
+     else if (promedio >= 70) numEstrellas = 3;
+     else if (promedio >= 62) numEstrellas = 2;
+
+     lblEstrellas.innerText = "⭐".repeat(numEstrellas) + ` (${numEstrellas}/5 Estrellas)`;
+}
+
+async function ejecutarTorneoMundial() {
+    // 🔥 PARCHE DE BIEN CLAVADO EN EL ENTORNO ONLINE:
+    const faseDraftOnline = document.getElementById("multi-fase-draft");
+    if (faseDraftOnline && faseDraftOnline.style.display === "block") {
+        if (jugadoresSeleccionadosDraft.length !== 3) {
+            return alert("❌ Completá la alineación de 3 jugadores.");
+        }
+        confirmarInscripcionMultiServidor(window.mundialSeleccionUsuario, jugadoresSeleccionadosDraft);
+        return; // Frenamos acá para no tocar el torneo un jugador
+    }
+     if (jugadoresSeleccionadosDraft.length !== 3) {
+          return alert("❌ Completá la alineación de 3 jugadores.");
+     }
+
+     mostrarCarga("Pidiendo autorización de planilla a la FIFA...");
+
+     try {
+          const res = await fetch(`${URL_BASE}/mundial/jugar`, {
+               method: 'POST',
+               headers: { 'Content-Type': 'application/json' },
+               body: JSON.stringify({
+                    usuario_id: usuarioActual.id,
+                    seleccionElegida: window.mundialSeleccionUsuario,
+                    rivalClasificacion: mundialRivalClasif,
+                    jugadorIds: jugadoresSeleccionadosDraft
+               })
+          });
+          const data = await res.json();
+          ocultarCarga();
+
+          if (!data.ok) return alert(data.mensaje);
+
+          document.getElementById("fase-draft-mundial").style.display = "none";
+          document.getElementById("fase-fixture-mundial").style.display = "block";
+
+          const contenedorLista = document.getElementById("lista-cruces-mundial-simulacion");
+          contenedorLista.innerHTML = "";
+
+          if (!data.progreso.ganoClasificacion) {
+               contenedorLista.innerHTML = `
+                    <div class="item-historial-partido" style="color:var(--rojo); border-color:var(--rojo); text-align:center;">
+                         <span>❌ Quedaste afuera del torneo por falta de puntos en las eliminatorias mundialistas. Volvé a intentarlo en 3hs.</span>
+                    </div>
+               `;
+               usuarioActual.monedas = data.datosActualizados?.monedas || usuarioActual.monedas;
+               actualizarInterfazUI();
+               actualizarEstadoMundialUI();
+               
+               liberarNavegacionArenaUI();
+               return;
+          }
+
+          const wrapperTabla = document.createElement("div");
+          wrapperTabla.style.cssText = "background:rgba(0,0,0,0.4); padding:15px; border-radius:12px; margin-bottom:20px; border:1px solid #1a2436;";
+          wrapperTabla.innerHTML = `
+              <h4 style="color:var(--dorado); margin:0 0 10px 0; font-family:'Oswald'; text-align:center;">📊 TABLA EN VIVO - GRUPO</h4>
+              <table style="width:100%; border-collapse:collapse; text-align:center; font-weight:bold; font-size:1.1rem;">
+                  <thead>
+                      <tr style="color:#64748b; font-size:0.85rem;"><th>POS</th><th style="text-align:left;">SELECCIÓN</th><th>GF</th><th>GC</th><th>PTS</th></tr>
+                  </thead>
+                  <tbody id="tbody-tabla-grupo-live"></tbody>
+              </table>
+          `;
+          contenedorLista.appendChild(wrapperTabla);
+
+          const renderizarTablaGrupoLive = (tablaEstado) => {
+               const tbody = document.getElementById("tbody-tabla-grupo-live");
+               if (!tbody) return;
+               
+               let listaOrdenada = Object.values(tablaEstado).sort((a,b) => {
+                    if (b.pts !== a.pts) return b.pts - a.pts;
+                    return (b.gf - b.gc) - (a.gf - a.gc);
+               });
+
+               tbody.innerHTML = "";
+               listaOrdenada.forEach((fila, idx) => {
+                    const esTuPais = fila.pais === window.mundialSeleccionUsuario;
+                    const tr = document.createElement("tr");
+                    tr.style.color = esTuPais ? "var(--verde-match)" : "#fff";
+                    if (idx < 2) tr.style.background = "rgba(0,255,136,0.03)"; 
+                    
+                    tr.innerHTML = `
+                        <td style="padding:6px 0; color:${idx < 2 ? 'var(--verde-match)':'var(--rojo)'};">${idx + 1}</td>
+                        <td style="text-align:left;">⚽ ${fila.pais.toUpperCase()}</td>
+                        <td>${fila.gf}</td>
+                        <td>${fila.gc}</td>
+                        <td style="color:var(--dorado); font-size:1.2rem;">${fila.pts}</td>
+                    `;
+                    tbody.appendChild(tr);
+               });
+          };
+
+          let estadoTablaMundial = {};
+          data.progreso.integrantesGrupo.forEach(p => {
+               estadoTablaMundial[p] = { pais: p, pts: 0, gf: 0, gc: 0 };
+          });
+          renderizarTablaGrupoLive(estadoTablaMundial);
+
+          for (let f = 0; f < data.progreso.bitacoraGrupo.length; f++) {
+               const fechaData = data.progreso.bitacoraGrupo[f];
+               
+               const divFecha = document.createElement("div");
+               divFecha.style.cssText = "background:#0b111e; padding:12px; border-radius:8px; border-left:4px solid var(--celeste); margin-bottom:15px;";
+               divFecha.innerHTML = `
+                    <div style="color:var(--celeste); font-size:0.9rem; font-weight:bold; margin-bottom:6px;">📅 FECHA ${fechaData.fecha} DEL GRUPO</div>
+                    <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                        <span>🇦🇷 ${fechaData.local} vs ${fechaData.visitante}</span>
+                        <span id="goles-m1-f${f}" style="color:var(--verde-match); font-family:'Oswald';">0 - 0</span>
+                    </div>
+                    <div style="display:flex; justify-content:space-between;">
+                        <span>🤖 ${fechaData.botL} vs ${fechaData.botV}</span>
+                        <span id="goles-m2-f${f}" style="color:#aaa; font-family:'Oswald';">0 - 0</span>
+                    </div>
+                    <div id="reloj-f${f}" style="text-align:center; font-size:0.8rem; margin-top:5px; color:#64748b;">⏱️ 00:00</div>
+               `;
+               contenedorLista.appendChild(divFecha);
+               divFecha.scrollIntoView({ behavior: 'smooth' });
+
+               await new Promise((resolveFecha) => {
+                    let segV = 0;
+                    let g1_L = 0; let g1_V = 0;
+                    let g2_L = 0; let g2_V = 0;
+
+                    const tGroup = setInterval(() => {
+                         segV += 9; 
+                         if (segV > 90) segV = 90;
+
+                         if (g1_L < fechaData.gL && Math.random() < 0.2) g1_L++;
+                         if (g1_V < fechaData.gV && Math.random() < 0.2) g1_V++;
+                         if (g2_L < fechaData.gBL && Math.random() < 0.2) g2_L++;
+                         if (g2_V < fechaData.gBV && Math.random() < 0.2) g2_V++;
+
+                         if (segV === 90) {
+                             g1_L = fechaData.gL; g1_V = fechaData.gV;
+                             g2_L = fechaData.gBL; g2_V = fechaData.gBV;
+                         }
+
+                         document.getElementById(`goles-m1-f${f}`).innerText = `${g1_L} - ${g1_V}`;
+                         document.getElementById(`goles-m2-f${f}`).innerText = `${g2_L} - ${g2_V}`;
+                         document.getElementById(`reloj-f${f}`).innerText = `⏱️ MINUTO ${segV}:00`;
+
+                         if (segV >= 90) {
+                              clearInterval(tGroup);
+                              
+                              const acumLive = (loc, vis, gl, gv) => {
+                                  estadoTablaMundial[loc].gf += gl; estadoTablaMundial[loc].gc += gv;
+                                  estadoTablaMundial[vis].gf += gv; estadoTablaMundial[vis].gc += gl;
+                                  if (gl > gv) estadoTablaMundial[loc].pts += 3;
+                                  else if (gl < gv) estadoTablaMundial[vis].pts += 3;
+                                  else { estadoTablaMundial[loc].pts += 1; estadoTablaMundial[vis].pts += 1; }
+                              };
+                              acumLive(fechaData.local, fechaData.visitante, fechaData.gL, fechaData.gV);
+                              acumLive(fechaData.botL, fechaData.botV, fechaData.gBL, fechaData.gBV);
+                              
+                              renderizarTablaGrupoLive(estadoTablaMundial);
+                              resolveFecha();
+                         }
+                    }, 1000);
+               });
+          }
+
+          if (!data.progreso.clasifico) {
+               const cartelEliminado = document.createElement("div");
+               cartelEliminado.style.cssText = "text-align:center; padding:15px; border:2px solid var(--rojo); color:var(--rojo); font-weight:bold; border-radius:8px; margin-top:10px;";
+               cartelEliminado.innerText = `❌ Quedaste fuera del Mundial en Fase de Grupos (Puesto #${data.progreso.posicionFinalGrupo}). Volvé a intentarlo en 3hs.`;
+               contenedorLista.appendChild(cartelEliminado);
+
+               usuarioActual.monedas = data.datosActualizados?.monedas || usuarioActual.monedas;
+               actualizarInterfazUI();
+               actualizarEstadoMundialUI();
+
+               liberarNavegacionArenaUI();
+               return;
+          }
+
+          const tituloPlayoffs = document.createElement("h3");
+          tituloPlayoffs.style.cssText = "color:var(--dorado); text-align:center; font-family:'Oswald'; margin:20px 0 10px 0;";
+          tituloPlayoffs.innerText = "🔥 ¡CLASIFICASTE! EMPIEZAN LAS LLAVES DE PLAY-OFFS";
+          contenedorLista.appendChild(tituloPlayoffs);
+
+          for (let i = 0; i < data.progreso.bitacoraPlayoffs.length; i++) {
+               const partido = data.progreso.bitacoraPlayoffs[i];
+               const ganoEsteCruce = partido.resultado.includes("Ganaste");
+               
+               await simularMarcadorPantalla(contenedorLista, partido.ronda, window.mundialSeleccionUsuario, partido.rival, ganoEsteCruce);
+               if (!ganoEsteCruce) break; 
+          }
+
+          if (data.progreso.campeon) {
+               const corona = document.createElement("div");
+               corona.style.cssText = "text-align:center; margin-top:20px; color:var(--dorado); font-size:1.4rem; font-weight:bold;";
+               corona.innerText = "🏆 ¡CAMPEÓN DEL MUNDO! 🏆\n🎁 ¡Premio de 5.000 de Oro depositado!";
+               corona.scrollIntoView({ behavior: 'smooth' });
+               contenedorLista.appendChild(corona);
+          }
+
+          if (data.datosActualizados) {
+               usuarioActual.monedas = data.datosActualizados.monedas;
+               usuarioActual.puntos_ranking = data.datosActualizados.puntos_ranking;
+               usuarioActual.copas_mundiales = data.datosActualizados.copas_mundiales;
+               actualizarInterfazUI();
+               cargarRankingMundialesLocal();
+          }
+
+          actualizarEstadoMundialUI();
+          liberarNavegacionArenaUI();
+
+     } catch (err) { 
+          console.error(err); 
+          ocultarCarga();
+          liberarNavegacionArenaUI();
+     }
+}
+
+function liberarNavegacionArenaUI() {
+     const barraNavegacion = document.querySelector(".nav-modulos-estadio");
+     if (barraNavegacion) {
+          barraNavegacion.style.removeProperty("display");
+     }
+     const btnSalir = document.querySelector(".btn-logout-kick");
+     if (btnSalir) {
+          btnSalir.style.removeProperty("display");
+     }
+}
+
+function simularMarcadorPantalla(contenedor, ronda, tuPais, rival, ganoUsuario) {
+    return new Promise(async (resolve) => {
+        const esFinal = ronda.toLowerCase().includes("final") && !ronda.toLowerCase().includes("octavos") && !ronda.toLowerCase().includes("cuartos") && !ronda.toLowerCase().includes("semi");
+        const duracionTotalSegundos = esFinal ? 30 : 10;
+
+        const filaPartido = document.createElement("div");
+        filaPartido.className = "item-historial-partido";
+        filaPartido.style.flexDirection = "column";
+        filaPartido.style.alignItems = "stretch";
+        filaPartido.style.background = "#0b111e";
+        
+        filaPartido.innerHTML = `
+            <div style="display:flex; justify-content:space-between; color:var(--dorado); font-size:0.9rem; border-bottom:1px solid #1a2436; padding-bottom:4px;">
+                <span>📋 ${ronda.toUpperCase()}</span>
+                <span id="reloj-vivo-${ronda.replace(/ /g,'')}">⏱️ 00:00</span>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
+                <span style="font-size:1.1rem; width:40%; text-align:left;">🇦🇷 ${tuPais}</span>
+                <span id="score-vivo-${ronda.replace(/ /g,'')}" style="font-family:'Oswald'; font-size:1.4rem; background:#000; padding:2px 12px; border-radius:4px; color:var(--verde-match);">0 - 0</span>
+                <span style="font-size:1.1rem; width:40%; text-align:right;">${rival} 🤖</span>
+            </div>
+        `;
+        contenedor.appendChild(filaPartido);
+        filaPartido.scrollIntoView({ behavior: 'smooth' });
+
+        let golesTu = Math.floor(Math.random() * 3);
+        let golesRival = Math.floor(Math.random() * 3);
+        
+        if (ganoUsuario && golesTu <= golesRival) {
+            golesTu = golesRival + Math.floor(Math.random() * 2) + 1;
+        } else if (!ganoUsuario && golesRival <= golesTu) {
+            golesRival = golesTu + Math.floor(Math.random() * 2) + 1;
+        }
+
+        let golesTuActuales = 0;
+        let golesRivalActuales = 0;
+        let segundoVirtual = 0;
+
+        const incrementoSegundos = 90 / (duracionTotalSegundos * 2); 
+
+        const timer = setInterval(() => {
+            segundoVirtual += incrementoSegundos;
+            if (segundoVirtual > 90) segundoVirtual = 90;
+
+            if (golesTuActuales < golesTu && Math.random() < 0.15) golesTuActuales++;
+            if (golesRivalActuales < golesRival && Math.random() < 0.15) golesRivalActuales++;
+
+            if (segundoVirtual === 90) {
+                golesTuActuales = golesTu;
+                golesRivalActuales = golesRival;
+            }
+
+            document.getElementById(`reloj-vivo-${ronda.replace(/ /g,'')}`).innerText = `⏱️ ${Math.floor(segundoVirtual).toString().padStart(2,'0')}:00`;
+            document.getElementById(`score-vivo-${ronda.replace(/ /g,'')}`).innerText = `${golesTuActuales} - ${golesRivalActuales}`;
+
+            if (segundoVirtual >= 90) {
+                clearInterval(timer);
+                filaPartido.style.borderColor = ganoUsuario ? "var(--verde-match)" : "var(--rojo)";
+                const finLabel = document.createElement("div");
+                finLabel.style.cssText = `text-align:right; font-size:0.85rem; font-weight:bold; margin-top:5px; color:${ganoUsuario ? 'var(--verde-match)' : 'var(--rojo)'};`;
+                finLabel.innerText = ganoUsuario ? "FINALIZADO - AVANZAS ✅" : "FINALIZADO - ELIMINADO ❌";
+                filaPartido.appendChild(finLabel);
+                resolve();
+            }
+        }, 500);
+    });
+}
+
+// 🔥 Se ejecuta de forma segura al seleccionar pestañas de torneos
+const cambiarModuloOriginal = cambiarModulo;
+cambiarModulo = function(idModulo, botonPresionado) {
+     cambiarModuloOriginal(idModulo, botonPresionado);
+     if (idModulo === 'modulo-minimundial' && usuarioActual) {
+          actualizarEstadoMundialUI();
+          cargarRankingMundialesLocal(); 
+          document.getElementById("fase-inscripcion-mundial").style.display = "block";
+          document.getElementById("fase-draft-mundial").style.display = "none";
+          document.getElementById("fase-fixture-mundial").style.display = "none";
+     }
+};
+
+/* ========================================================================
+   ❓ 10. CONTROL DEL MODAL DE AYUDA Y REGLAS
+   ======================================================================== */
+function abrirModalAyuda() {
+     const modal = document.getElementById("modal-ayuda-juego");
+     if (modal) modal.style.display = "flex";
+}
+
+function cerrarModalAyuda() {
+     const modal = document.getElementById("modal-ayuda-juego");
+     if (modal) modal.style.display = "none";
+}
+
+/* ========================================================================
+   🚨 CONTROLADOR SEGURO DE ANUNCIOS GLOBAL (ANTI-F12)
+   ======================================================================== */
+async function iniciarControladorAnunciosSeguro() {
+    try {
+        const res = await fetch(`${URL_BASE}/anuncio-actual`);
+        const anuncio = await res.json();
+
+        if (!anuncio || !anuncio.activo) return;
+
+        const modal = document.getElementById('modalAnuncioGlobal');
+        const tituloHtml = document.getElementById('anuncioTitulo');
+        const cuerpoHtml = document.getElementById('anuncioCuerpo');
+
+        if (!modal || !tituloHtml || !cuerpoHtml) return;
+
+        tituloHtml.textContent = anuncio.titulo.toUpperCase();
+        cuerpoHtml.innerHTML = ""; 
+
+        if (anuncio.texto) {
+            const p = document.createElement('p');
+            p.textContent = anuncio.texto;
+            cuerpoHtml.appendChild(p);
+        }
+
+        if (anuncio.tipo === "imagen" && anuncio.urlImagen) {
+            const img = document.createElement('img');
+            img.src = anuncio.urlImagen;
+            img.className = "anuncio-media";
+            img.alt = "Novedades de la Arena";
+            cuerpoHtml.appendChild(img);
+        } 
+        else if (anuncio.tipo === "video" && anuncio.urlVideo) {
+            const containerVideo = document.createElement('div');
+            containerVideo.className = "anuncio-video-container";
+            
+            const iframe = document.createElement('iframe');
+            iframe.src = anuncio.urlVideo;
+            iframe.setAttribute('allowfullscreen', 'true');
+            iframe.style.border = "none";
+
+            containerVideo.appendChild(iframe);
+            cuerpoHtml.appendChild(containerVideo);
+        }
+
+        modal.style.display = "flex";
+
+    } catch (err) {
+        console.error("Error al validar el banner de novedades de la Arena:", err);
+    }
+}
+
+function cerrarAnuncioGlobal() {
+    const modal = document.getElementById('modalAnuncioGlobal');
+    if (modal) {
+        modal.style.display = "none";
+        document.getElementById('anuncioCuerpo').innerHTML = "";
+    }
+}
+
+/* ========================================================================
+   🔍 11. MÓDULO DE FILTRADO DE ÁLBUM INTERACTIVO (SISTEMA CRUZADO HUD)
+   ======================================================================== */
+function filtrarAlbumPorEstado(estado, boton) {
+     filtroEstadoActual = estado;
+     actualizarVisualBotonesFiltro(boton, 'estado');
+     aplicarFiltrosCruzadosUI();
+}
+
+function filtrarAlbumPorRareza(rareza, boton) {
+     filtroRarezaActual = rareza;
+     actualizarVisualBotonesFiltro(boton, 'rareza');
+     aplicarFiltrosCruzadosUI();
+}
+
+function aplicarFiltrosCruzadosUI() {
+     const contenedor = document.getElementById("contenedor-grid-album");
+     if (!contenedor) return;
+     
+     const cartas = contenedor.getElementsByClassName("carta-clash");
+     let contadorVisibles = 0;
+
+     for (let divCarta of cartas) {
+          const estaBloqueada = divCarta.classList.contains("bloqueada");
+          
+          let rarezaCarta = 'comun';
+          if (divCarta.classList.contains("rara")) rarezaCarta = 'rara';
+          else if (divCarta.classList.contains("epica")) rarezaCarta = 'epica';
+          else if (divCarta.classList.contains("legendaria")) rarezaCarta = 'legendaria';
+
+          let cumpleEstado = false;
+          if (filtroEstadoActual === 'todas') cumpleEstado = true;
+          else if (filtroEstadoActual === 'desbloqueadas' && !estaBloqueada) cumpleEstado = true;
+          else if (filtroEstadoActual === 'pendientes' && estaBloqueada) cumpleEstado = true;
+
+          let cumpleRareza = false;
+          if (filtroRarezaActual === 'todas') cumpleRareza = true;
+          else if (filtroRarezaActual === rarezaCarta) cumpleRareza = true;
+
+          if (cumpleEstado && cumpleRareza) {
+               divCarta.style.display = "block";
+               contadorVisibles++;
+          } else {
+               divCarta.style.display = "none";
+          }
+     }
+     
+     console.log(`🔎 Filtro aplicado: Estado [${filtroEstadoActual}] | Rareza [${filtroRarezaActual}]. Mostrando ${contadorVisibles} figuras.`);
+}
+
+function actualizarVisualBotonesFiltro(botonClasificado, tipoGrupo) {
+     const botonesHermanos = botonClasificado.parentElement.getElementsByClassName("btn-filtro-tv");
+     for (let btn of botonesHermanos) {
+          btn.classList.remove("activo");
+     }
+     botonClasificado.classList.add("activo");
+}
+
+/* ========================================================================
+   ⚽ 9B. ENGINE MULTIJUGADOR ONLINE (CARRIL 100% INDEPENDIENTE Y SEGURO)
+   ======================================================================== */
+
+// Variable global de control para saber si la sala actual cuesta oro o es gratis
+window.multiTipoApuestaActual = 'amistoso';
+
+// 1. Abre el selector de países exclusivo del Multijugador (ADAPTADO ANTI-TRAMPAS)
+async function abrirDraftMulti(esCreador) {
+    multiEsCreador = esCreador;
+    
+    if (!esCreador) {
+        const cod = document.getElementById("multi-input-codigo").value.trim().toUpperCase();
+        if (cod.length !== 6) return alert("❌ Código inválido. Debe tener 6 caracteres.");
+        multiCodigoSala = cod;
+
+        // 🔍 EL INVITADO LE PREGUNTA A LA SALA QUÉ SE ESTÁ APOSTANDO ANTES DE ENTRAR
+        mostrarCarga("Validando credenciales de la sala...");
+        try {
+            const res = await fetch(`${URL_BASE}/multijugador/sala/${cod}`);
+            const data = await res.json();
+            ocultarCarga();
+
+            if (!data.ok) return alert(data.mensaje);
+            
+            window.multiTipoApuestaActual = data.tipo_apuesta ? data.tipo_apuesta.toLowerCase() : 'amistoso';
+            multiSalaId = data.sala_id;
+        } catch (e) {
+            ocultarCarga();
+            return alert("Error de conexión con la sala.");
+        }
+    } else {
+        const inputApuesta = document.getElementById("multi-input-apuesta");
+        multiApuestaFijada = inputApuesta ? (parseInt(inputApuesta.value) || 0) : 0;
+        
+        const selectTipo = document.getElementById("multi-select-tipo-apuesta");
+        window.multiTipoApuestaActual = selectTipo ? selectTipo.value.toLowerCase() : 'amistoso';
+    }
+
+    document.getElementById("multi-menu-inicial").style.display = "none";
+    document.getElementById("multi-fase-inscripcion").style.display = "block";
+    
+    prepararInscripcionMundialMulti();
+}
+
+// 2. Trae la terna de países desde Neon usando el bypass libre de cobros individuales
+async function prepararInscripcionMundialMulti() {
+     if (!usuarioActual) return;
+     mostrarCarga("Conectando con la central de la Arena Online...");
+
+     try {
+          const res = await fetch(`${URL_BASE}/multijugador/preparar-draft`, {
+               method: 'POST',
+               headers: { 'Content-Type': 'application/json' },
+               body: JSON.stringify({ usuario_id: usuarioActual.id })
+          });
+          const data = await res.json();
+          ocultarCarga();
+
+          if (!data.ok) {
+               document.getElementById("multi-menu-inicial").style.display = "block";
+               document.getElementById("multi-fase-inscripcion").style.display = "none";
+               return alert(data.mensaje);
+          }
+
+          // 🛡️ Ocultamos la barra superior para centrar la atención en el Draft, sin romper sesión
+          const barraNavegacion = document.querySelector(".nav-modulos-estadio");
+          if (barraNavegacion) barraNavegacion.style.display = "none"; 
+          const btnSalir = document.querySelector(".btn-logout-kick");
+          if (btnSalir) btnSalir.style.display = "none";
+
+          mundialTernaPaises = data.terna;
+          jugadoresSeleccionadosDraft = [];
+
+          const contenedorTerna = document.getElementById("multi-zona-eleccion-pais");
+          if (!contenedorTerna) return;
+          contenedorTerna.innerHTML = "";
+          
+          data.terna.forEach(pais => {
+               const btn = document.createElement("button");
+               btn.className = "btn-estadio btn-modulo-match";
+               btn.style.margin = "8px";
+               btn.innerText = `⚽ ${pais.toUpperCase()}`;
+               btn.onclick = () => iniciarDraftJugadoresMundialMulti(pais);
+               contenedorTerna.appendChild(btn);
+          });
+
+     } catch (err) { 
+          console.error("Error en draft multi frontend:", err); 
+          ocultarCarga(); 
+     }
+}
+
+// 3. Inicializa el tablero gráfico de descarte sin romper la Grid de selección
+function iniciarDraftJugadoresMundialMulti(paisElegido) {
+     window.mundialSeleccionUsuario = paisElegido;
+     
+     document.getElementById("multi-fase-inscripcion").style.display = "none";
+     document.getElementById("multi-fase-draft").style.display = "block";
+     document.getElementById("multi-lbl-tu-seleccion").innerText = paisElegido.toUpperCase();
+
+     const wrapperApuestaInvitado = document.getElementById("multi-wrapper-apuesta-invitado");
+
+     // 🎰 Si la sala es modalidad cartas y es el invitado, mostramos el contenedor fijo
+     if (window.multiTipoApuestaActual === 'carta' && !multiEsCreador) {
+          if (wrapperApuestaInvitado) wrapperApuestaInvitado.style.display = "block";
+
+          const selectCromo = document.getElementById("multi-select-carta-apuesta-invitado");
+          if (selectCromo) {
+              selectCromo.innerHTML = "";
+              // Filtramos las repetidas del álbum real del usuario
+              const repetidas = albumCompleto.filter(f => f.obtenido > 1);
+              
+              if (repetidas.length === 0) {
+                  const opt = document.createElement("option");
+                  opt.value = "";
+                  opt.innerText = "❌ No tenés cartas repetidas para arriesgar";
+                  selectCromo.appendChild(opt);
+              } else {
+                  repetidas.forEach(figu => {
+                      const opt = document.createElement("option");
+                      opt.value = figu.id;
+                      opt.innerText = `🃏 ${figu.nombre.toUpperCase()} (Tenes ${figu.obtenido})`;
+                      selectCromo.appendChild(opt);
+                  });
+              }
+          }
+     } else {
+          // Si es amistoso, oro o es el creador, ocultamos el selector del invitado
+          if (wrapperApuestaInvitado) wrapperApuestaInvitado.style.display = "none";
+     }
+     
+     // Lanzamos el renderizado normal de jugadores de la selección elegida sin bloqueos
+     actualizarEstrellasVisualesDraftMulti();
+     renderizarGridCartasDisponiblesDraftMulti(paisElegido);
+}
+
+// 4. Pinta tu inventario real filtrado en el contenedor multi exclusivo
+function renderizarGridCartasDisponiblesDraftMulti(paisElegido) {
+     const grid = document.getElementById("multi-grid-cartas-draft");
+     if (!grid) return;
+     grid.innerHTML = "";
+
+     const cartasFiltradas = albumCompleto.filter(f => f.obtenido > 0 && f.pais.toLowerCase() === paisElegido.toLowerCase());
+
+     if (cartasFiltradas.length === 0) {
+          grid.innerHTML = `<div style="color:var(--rojo); padding:15px; text-align:center; font-weight:bold;">❌ No tenés jugadores de este país en tu álbum colector.</div>`;
+          return;
+     }
+
+     cartasFiltradas.forEach(carta => {
+          const card = document.createElement("div");
+          const estaElegida = jugadoresSeleccionadosDraft.includes(carta.id);
+          card.className = `carta-clash ${carta.rareza.toLowerCase()} ${estaElegida ? 'activo-draft' : ''}`;
+
+          card.innerHTML = `
+              <img src="${carta.foto}" class="carta-foto" alt="${carta.nombre}">
+              <div class="rareza-vertical">${carta.rareza.toUpperCase()}</div>
+          `;
+
+          card.onclick = () => {
+               if (jugadoresSeleccionadosDraft.includes(carta.id)) {
+                    jugadoresSeleccionadosDraft = jugadoresSeleccionadosDraft.filter(id => id !== carta.id);
+               } else {
+                    if (jugadoresSeleccionadosDraft.length >= 3) return alert("❌ La alineación ya está completa (Máximo 3).");
+                    jugadoresSeleccionadosDraft.push(carta.id);
+               }
+               renderizarGridCartasDisponiblesDraftMulti(paisElegido);
+               actualizarEstrellasVisualesDraftMulti();
+          };
+          grid.appendChild(card);
+     });
+}
+
+// 5. Mide el poder de las cartas en el entorno multi
+function actualizarEstrellasVisualesDraftMulti() {
+     const lblEstrellas = document.getElementById("multi-lbl-estrellas-equipo");
+     if (!lblEstrellas) return;
+
+     if (jugadoresSeleccionadosDraft.length !== 3) {
+          lblEstrellas.innerText = "⚠️ Alineá 3 jugadores para calcular poder";
+          return;
+     }
+
+     const cartasElegidas = albumCompleto.filter(f => jugadoresSeleccionadosDraft.includes(f.id));
+     const promedio = cartasElegidas.reduce((acc, c) => acc + MAPA_PUNTOS_RAREZA[c.rareza.toLowerCase()], 0) / 3;
+
+     let numEstrellas = 1;
+     if (promedio >= 90) numEstrellas = 5;
+     else if (promedio >= 79) numEstrellas = 4;
+     else if (promedio >= 70) numEstrellas = 3;
+     else if (promedio >= 62) numEstrellas = 2;
+
+     lblEstrellas.innerText = "⭐".repeat(numEstrellas) + ` (${numEstrellas}/5 Estrellas)`;
+}
+
+// 6. Impacta la planilla mandando la carta seleccionada
+async function confirmarInscripcionMultiServidor(paisElegido, arrayIdsJugadores) {
+    if (arrayIdsJugadores.length !== 3) return alert("❌ Debés alinear exactamente 3 jugadores.");
+
+     let cartaIdSeleccionada = null;
+     if (window.multiTipoApuestaActual === 'carta') {
+     const idSelect = multiEsCreador ? "multi-select-carta-apuesta" : "multi-select-carta-apuesta-invitado";
+     const selectElement = document.getElementById(idSelect);
+     
+     cartaIdSeleccionada = selectElement ? selectElement.value : null;
+     if (!cartaIdSeleccionada) return alert("❌ Debés elegir tu cromo a arriesgar.");
+
+     // 🔥 CAPTURAMOS EL TEXTO (Ej: "🃏 MESSI (Tienes x2)") PARA EL CARTEL
+     window.multiMiCartaApostadaTexto = selectElement.options[selectElement.selectedIndex].text;
+     } else {
+     window.multiMiCartaApostadaTexto = null;
+     }
+
+    mostrarCarga("Enviando planilla de vestuarios a la Arena Online...");
+    
+    let url = `${URL_BASE}/multijugador/crear`;
+    let cuerpo = {
+        usuario_id: usuarioActual.id,
+        seleccion: paisElegido,
+        jugador_ids: arrayIdsJugadores,
+        tipo_apuesta: window.multiTipoApuestaActual,
+        apuesta_oro: multiApuestaFijada,
+        carta_apuesta_id: cartaIdSeleccionada ? parseInt(cartaIdSeleccionada) : null
+    };
+
+    if (!multiEsCreador) {
+        url = `${URL_BASE}/multijugador/unirse`;
+        cuerpo = {
+            usuario_id: usuarioActual.id,
+            seleccion: paisElegido,
+            jugador_ids: arrayIdsJugadores,
+            codigo_sala: multiCodigoSala,
+            carta_apuesta_id: cartaIdSeleccionada ? parseInt(cartaIdSeleccionada) : null
+        };
+    }
+
+    try {
+        const res = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(cuerpo)
+        });
+        const data = await res.json();
+
+        if (!data.ok) {
+            ocultarCarga();
+            return alert(data.mensaje);
+        }
+
+        if (data.monedasActualizadas !== undefined) {
+            usuarioActual.monedas = data.monedasActualizadas;
+            if (typeof actualizarInterfazUI === "function") actualizarInterfazUI();
+        }
+
+        multiSalaId = data.sala_id;
+        if (data.codigo_sala) multiCodigoSala = data.codigo_sala;
+
+        document.getElementById("multi-fase-draft").style.display = "none";
+        document.getElementById("multi-lobby-espera").style.display = "block";
+        document.getElementById("lobby-txt-codigo").innerText = multiCodigoSala;
+        ocultarCarga();
+
+        multiIntervaloLobby = setInterval(actualizarLobbyEnVivo, 3000);
+        actualizarLobbyEnVivo(); 
+
+    } catch (err) {
+        console.error(err);
+        ocultarCarga();
+    }
+}
+
+// 7. Loop de refresco del Lobby de Espera (Polling) - SINCRONIZADO CON INFO DE APUESTAS
+async function actualizarLobbyEnVivo() {
+    if (!multiCodigoSala) return;
+
+    try {
+        const res = await fetch(`${URL_BASE}/multijugador/sala/${multiCodigoSala}`);
+        const data = await res.json();
+
+        if (!data.ok) {
+            clearInterval(multiIntervaloLobby);
+            return console.log(data.mensaje);
+        }
+
+        // Sincronizamos dinámicamente el tipo de apuesta real desde la base de datos
+        if (data.tipo_apuesta) {
+            window.multiTipoApuestaActual = data.tipo_apuesta.toLowerCase();
+        }
+
+        if (data.estado === 'finalizado' || data.estado === 'jugando') {
+            clearInterval(multiIntervaloLobby);
+            if (!multiEsCreador) {
+                 // 🔥 Nos aseguramos de sincronizar el ID de sala real antes de consultar
+                 multiSalaId = data.sala_id; 
+                 consultarResultadoInvitado();
+            }
+            return;
+        }
+
+        // ========================================================================
+        // 🎨 CARD INFORMATIVA DE APUESTAS EN VIVO (Muerte Súbita o Torneo)
+        // ========================================================================
+        const contenedorListado = document.getElementById("lobby-lista-participantes");
+        
+        // Buscamos si ya existe nuestra barra informativa, si no, la creamos arriba de la lista
+        let infoSalaBox = document.getElementById("multi-info-sala-dinamica");
+        if (!infoSalaBox && contenedorListado) {
+            infoSalaBox = document.createElement("div");
+            infoSalaBox.id = "multi-info-sala-dinamica";
+            contenedorListado.parentNode.insertBefore(infoSalaBox, contenedorListado);
+        }
+
+          if (infoSalaBox) {
+          let detalle = `🪙 MODALIDAD: TIMBA POR ORO`;
+          
+          if (window.multiTipoApuestaActual === 'carta') {
+               // 🔥 Tomamos la carta guardada en el Paso 1
+               let miCartaInfo = window.multiMiCartaApostadaTexto || "Seleccionada en Vestuario";
+               
+               detalle = `🃏 MODALIDAD: DUELO DE CARTAS REPETIDAS\n⚠️ ¡Muerte Súbita! El perdedor descarta.\n\n🔒 TÚ APUESTA FIJADA: ${miCartaInfo.toUpperCase()}`;
+          } else if (window.multiTipoApuestaActual === 'amistoso') {
+               detalle = `🤝 MODALIDAD: AMISTOSO ONLINE`;
+          }
+          
+          infoSalaBox.innerHTML = `
+               <div style="background:rgba(11,17,30,0.8); padding:12px; border-radius:8px; border:1px solid var(--dorado); text-align:center; font-weight:bold; color:var(--dorado); margin-bottom:15px; font-family:'Oswald'; white-space:pre-line;">
+                    ${detalle}
+               </div>
+          `;
+          }
+
+        // Renderizado del HUD estándar del lobby
+        const txtPozo = document.getElementById("lobby-txt-pozo");
+        if (txtPozo) {
+            // Si es por cartas o amistoso, no tiene sentido matemático mostrar "Pozo: 0 Oro", queda mejor adaptado
+            if (window.multiTipoApuestaActual === 'carta') {
+                txtPozo.innerText = `🎰 Pozo: 1 Cromo Épico/Leg Mínimo`;
+            } else if (window.multiTipoApuestaActual === 'amistoso') {
+                txtPozo.innerText = `⚽ Modo de Práctica`;
+            } else {
+                txtPozo.innerText = `💰 Pozo Actual: ${data.pozo_total} Oro`;
+            }
+        }
+        
+        document.getElementById("lobby-cnt-jugadores").innerText = data.participantes.length;
+
+        // Limpiamos y re-pintamos la lista de jugadores conectados
+        contenedorListado.innerHTML = "";
+
+        data.participantes.forEach(p => {
+            const div = document.createElement("div");
+            div.style.cssText = "background:rgba(255,255,255,0.05); padding:10px 15px; border-radius:8px; display:flex; justify-content:space-between; align-items:center; border-left:4px solid var(--verde-match); margin-bottom:6px;";
+            
+            const esHost = p.usuario_id === data.creador_id;
+            div.innerHTML = `
+                <span style="font-weight:bold; color:#fff;">${esHost ? '👑 ' : ''}${p.username}</span>
+                <span style="color:var(--dorado); font-family:'Oswald';">⚽ ${p.seleccion.toUpperCase()}</span>
+            `;
+            contenedorListado.appendChild(div);
+        });
+
+        if (multiEsCreador) {
+            document.getElementById("multi-btn-iniciar-fixture").style.display = "block";
+            document.getElementById("multi-txt-espera-host").style.display = "none";
+        } else {
+            document.getElementById("multi-btn-iniciar-fixture").style.display = "none";
+            document.getElementById("multi-txt-espera-host").style.display = "block";
+        }
+
+    } catch (err) {
+        console.error("Error en loop del lobby:", err);
+    }
+}
+
+// 8. Disparador del Creador (Lanza la simulación en Neon)
+async function lanzarSimulacionMulti() {
+    mostrarCarga("Sorteando las llaves y cerrando las planillas online...");
+    clearInterval(multiIntervaloLobby);
+
+    try {
+        const res = await fetch(`${URL_BASE}/multijugador/jugar`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                sala_id: multiSalaId,
+                usuario_id: usuarioActual.id
+            })
+        });
+        const data = await res.json();
+        ocultarCarga();
+
+        if (!data.ok) {
+            alert(data.mensaje);
+            multiIntervaloLobby = setInterval(actualizarLobbyEnVivo, 3000);
+            return;
+        }
+
+        window.renderizarFixturePasoAPaso(data.bitacora, data.premio);
+
+    } catch (err) {
+        console.error(err);
+        ocultarCarga();
+    }
+}
+
+// 9. Conexión del invitado: Consulta el fixture con sistema anti-desincronización (REINTENTO SEGURO)
+async function consultarResultadoInvitado(intento = 1) {
+     if (intento === 1) {
+         mostrarCarga("¡El Torneo comenzó! Recibiendo transmisión oficial del fixture...");
+     }
+     
+     try {
+          // Usamos el ID de sala global que guardaste al unirte
+          const res = await fetch(`${URL_BASE}/multijugador/resultado-invitado/${multiSalaId}`);
+          const data = await res.json();
+          
+          // 🛡️ CONTROL DE CACHÉ CALIENTE: Si el servidor responde ok pero la bitácora no se asentó todavía...
+          if (data.ok && (!data.bitacora || data.bitacora.length <= 1)) {
+               if (intento <= 3) {
+                   console.log(`⏳ Bitácora en proceso de cálculo en Neon. Reintentando pase en 800ms (Intento ${intento}/3)...`);
+                   setTimeout(() => consultarResultadoInvitado(intento + 1), 800);
+                   return;
+               }
+          }
+
+          ocultarCarga();
+          
+          if (!data.ok) {
+               alert(data.mensaje || "Error al sincronizar el torneo.");
+               cancelarMundialMultiLobby();
+               return;
+          }
+          
+          // 🔥 Lanza la cinemática definitiva idéntica al host
+          window.renderizarFixturePasoAPaso(data.bitacora, data.premio);
+
+     } catch(e) {
+          console.error("Error crítico al consultar fixture el invitado:", e);
+          ocultarCarga();
+     }
+}
+
+// 🔥 10. FUNCIÓN MAESTRA MULTIJUGADOR: TRANSMISIÓN 100% SINCRONIZADA CON TEXTO DE APUESTAS SIMPLES
+window.renderizarFixturePasoAPaso = function(bitacora, premio, apuestasTexto) {
+    document.getElementById("multi-lobby-espera").style.display = "none";
+    document.getElementById("multi-pantalla-fixture").style.display = "block";
+
+    const tablero = document.getElementById("multi-cronologia-goles");
+    if (!tablero) return;
+    tablero.innerHTML = ""; 
+
+    // ========================================================================
+    // 🃏 DETALLE TEXTUAL DE LAS CARTAS REPETIDAS EN JUEGO (SIMPLE)
+    // ========================================================================
+    if (apuestasTexto && Array.isArray(apuestasTexto) && apuestasTexto.length > 0) {
+        const bloqueTextoApuestas = document.createElement("div");
+        bloqueTextoApuestas.style.cssText = "background: rgba(255, 0, 0, 0.05); border: 1px solid var(--rojo); padding: 12px; border-radius: 8px; margin-bottom: 20px; font-weight: bold; color: #fff; font-size: 0.95rem; text-align: center; font-family: sans-serif; line-height: 1.5; box-shadow: 0 0 10px rgba(239, 68, 68, 0.1);";
+        bloqueTextoApuestas.innerHTML = `⚠️ <span style="color: var(--rojo); font-family: 'Oswald';">CROMOS ARRIESGADOS EN ESTA ARENA:</span><br>${apuestasTexto.join('<br>')}`;
+        tablero.appendChild(bloqueTextoApuestas);
+    }
+
+    if (!bitacora || !Array.isArray(bitacora) || bitacora.length === 0) {
+        console.warn("⚠️ No se recibió bitácora válida.");
+        return;
+    }
+
+    let secuenciaPromesas = Promise.resolve();
+
+    bitacora.forEach((partido, index) => {
+        const loc = partido.local || "Local";
+        const vis = partido.visitante || "Rival";
+        const rondaNombre = partido.ronda || `PARTIDO #${index + 1}`;
+        
+        const golesLocalDefinitivos = partido.golesLocal || 0;
+        const golesVisitanteDefinitivos = partido.golesVisitante || 0;
+
+        secuenciaPromesas = secuenciaPromesas.then(() => {
+            return new Promise((resolveCruce) => {
+                const bloquePartido = document.createElement("div");
+                bloquePartido.className = "item-historial-partido";
+                bloquePartido.style.cssText = "flex-direction: column; align-items: stretch; background: #0b111e; margin-bottom:15px; border-left:4px solid var(--dorado);";
+                
+                bloquePartido.innerHTML = `
+                    <div style="display:flex; justify-content:space-between; color:var(--dorado); font-size:0.9rem; border-bottom:1px solid #1a2436; padding-bottom:4px;">
+                        <span>📋 ${rondaNombre.toUpperCase()}</span>
+                        <span id="multi-reloj-${index}">⏱️ 00:00</span>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
+                        <span style="font-size:1.1rem; width:40%; text-align:left;">⚽ ${loc.toUpperCase()}</span>
+                        <span id="multi-score-${index}" style="font-family:'Oswald'; font-size:1.4rem; background:#000; padding:2px 12px; border-radius:4px; color:var(--verde-match);">0 - 0</span>
+                        <span style="font-size:1.1rem; width:40%; text-align:right;">${vis.toUpperCase()} ⚽</span>
+                    </div>
+                    <div id="multi-penales-box-${index}" style="display:none; text-align:center; color:var(--rojo); font-weight:bold; font-size:0.9rem; margin-top:5px;"></div>
+                `;
+                tablero.appendChild(bloquePartido);
+                bloquePartido.scrollIntoView({ behavior: 'smooth' });
+
+                let minVirtual = 0;
+                let gL_act = 0;
+                let gV_act = 0;
+
+                const timerMulti = setInterval(() => {
+                    minVirtual += 15; 
+                    if (minVirtual > 90) minVirtual = 90;
+
+                    if (minVirtual >= 30 && gL_act < golesLocalDefinitivos && golesLocalDefinitivos > 0) gL_act++;
+                    if (minVirtual >= 60 && gV_act < golesVisitanteDefinitivos && golesVisitanteDefinitivos > 0) gV_act++;
+
+                    if (minVirtual === 90) {
+                        gL_act = golesLocalDefinitivos;
+                        gV_act = golesVisitanteDefinitivos;
+                    }
+
+                    const relojElement = document.getElementById(`multi-reloj-${index}`);
+                    const scoreElement = document.getElementById(`multi-score-${index}`);
+                    
+                    if (relojElement) relojElement.innerText = `⏱️ MINUTO ${minVirtual}:00`;
+                    if (scoreElement) scoreElement.innerText = `${gL_act} - ${gV_act}`;
+
+                    if (minVirtual >= 90) {
+                        clearInterval(timerMulti);
+                        
+                        if (partido.definicionPenales) {
+                            const pBox = document.getElementById(`multi-penales-box-${index}`);
+                            if (pBox) {
+                                pBox.style.display = "block";
+                                pBox.innerText = `💥 TANDA DE PENALES: (${partido.penalesLocal} - ${partido.penalesVisitante})`;
+                            }
+                        }
+
+                        bloquePartido.style.borderColor = "var(--verde-match)";
+                        const finTexto = document.createElement("div");
+                        finTexto.style.cssText = "text-align:right; font-size:0.85rem; font-weight:bold; margin-top:5px; color:var(--verde-match);";
+                        finTexto.innerText = ` GANADOR: ${partido.ganadorUsername.toUpperCase()} ✅`;
+                        bloquePartido.appendChild(finTexto);
+                        
+                        resolveCruce(); 
+                    }
+                }, 400);
+            });
+        });
+    });
+
+    secuenciaPromesas.then(() => {
+         const bloquePremio = document.createElement("div");
+         bloquePremio.style.cssText = "text-align:center; margin-top:25px; padding:15px; background:rgba(0,255,136,0.05); border:2px dashed var(--dorado); border-radius:10px;";
+         
+         let textoPremio = `👑 ¡Fin de la transmisión de la Arena!\n🎁 El torneo ha concluido exitosamente.`;
+         
+         if (premio && !premio.ganoBot) {
+              if (premio.tipo_apuesta === 'oro') {
+                   textoPremio = `🏆 ¡FIN DEL TORNEO! 🏆\n👑 Campeón: ${premio.ganador_username.toUpperCase()}\n🎁 ¡Se lleva el pozo acumulado de 🪙 ${premio.pozo} de Oro!`;
+              } else if (premio.tipo_apuesta === 'carta') {
+                   textoPremio = `🏆 ¡FIN DEL TORNEO! 🏆\n👑 Campeón: ${premio.ganador_username.toUpperCase()}\n\n🎉 ¡Conservás tu cromo apostado y ganaste un nuevo crack:\n🌟 [ ${premio.nombreCartaPremio || 'Jugador Épico'} ] transferido al inventario!\n\n💀 Los competidores derrotados perdieron su cromo permanentemente.`;
+              }
+         } else if (premio && premio.ganoBot) {
+              if (premio.tipo_apuesta === 'carta') {
+                   textoPremio = `🤖 ¡El torneo fue conquistado por un Bot (${premio.ganador_username.toUpperCase()})!\n\n💀 ¡CRÍTICO! Ningún usuario real ganó. Ambos jugadores perdieron sus cartas apostadas de forma permanente.`;
+              } else {
+                   textoPremio = `🤖 ¡El torneo fue conquistado por un Bot!\n👑 Campeón: ${premio.ganador_username.toUpperCase()}\n💸 El pozo de la Arena se ha disuelto.`;
+              }
+         }
+         
+         bloquePremio.innerHTML = `
+              <h3 style="color:var(--dorado); font-family:'Oswald'; margin:0 0 10px 0;">🏁 CRÓNICA DEFINITIVA</h3>
+              <p style="color:#fff; font-weight:bold; white-space:pre-line; font-size:1.05rem;">${textoPremio}</p>
+              <button type="button" id="btn-regresar-limpio-multi" class="btn-estadio btn-next-shot" style="width:80%; margin:15px auto 0; background:var(--celeste); border-color:var(--celeste);">
+                   🔄 REGRESAR A LA HOME DE LA ARENA
+              </button>
+         `;
+         tablero.appendChild(bloquePremio);
+         bloquePremio.scrollIntoView({ behavior: 'smooth' });
+
+         document.getElementById("btn-regresar-limpio-multi").onclick = () => {
+             document.getElementById("multi-pantalla-fixture").style.display = "none";
+             document.getElementById("multi-menu-inicial").style.display = "block";
+             
+             const moduloMulti = document.getElementById("modulo-mundial-multi");
+             if (moduloMulti) moduloMulti.style.display = "block";
+
+             const barraNavegacion = document.querySelector(".nav-modulos-estadio");
+             if (barraNavegacion) barraNavegacion.style.removeProperty("display");
+             
+             const btnSalir = document.querySelector(".btn-logout-kick");
+             if (btnSalir) btnSalir.style.removeProperty("display");
+
+             multiSalaId = null;
+             multiCodigoSala = null;
+             multiEsCreador = false;
+
+             if (typeof cambiarModulo === "function") {
+                 const btnTienda = document.querySelector("button[onclick*='modulo-sobres']");
+                 cambiarModulo('modulo-sobres', btnTienda);
+             }
+         };
+    });
+};
+
+// 🛠️ CONTROLADOR VISUAL: Alterna los inputs de Oro y Cartas según la modalidad seleccionada
+function conmutarInputsMultiUI() {
+    const selector = document.getElementById("multi-select-tipo-apuesta");
+    if (!selector) return;
+
+    const tipo = selector.value;
+    const divOro = document.getElementById("multi-wrapper-oro");
+    const divCarta = document.getElementById("multi-wrapper-carta");
+
+    if (tipo === 'oro') {
+        if (divOro) divOro.style.display = "block";
+        if (divCarta) divCarta.style.display = "none";
+    } else if (tipo === 'carta') {
+        if (divOro) divOro.style.display = "none";
+        if (divCarta) divCarta.style.display = "block";
+        // Cargamos las cartas repetidas reales usando la función del juego colector
+        if (typeof cargarRepetidasEnDesplegableUI === 'function') {
+            // Adaptamos la lista al input del multi
+            const selectCromoMulti = document.getElementById("multi-select-carta-apuesta");
+            if (selectCromoMulti) {
+                selectCromoMulti.innerHTML = "";
+                const miAlbumReal = window.albumCompleto || albumCompleto || [];
+                const repetidas = miAlbumReal.filter(f => f && f.obtenido > 1);
+
+                if (repetidas.length === 0) {
+                    const opt = document.createElement("option");
+                    opt.value = "";
+                    opt.innerText = "❌ Sin cromos repetidos en el álbum";
+                    selectCromoMulti.appendChild(opt);
+                } else {
+                    repetidas.forEach(figu => {
+                        const opt = document.createElement("option");
+                        opt.value = figu.id;
+                        opt.innerText = `${figu.bandera || '🃏'} ${figu.nombre.toUpperCase()} (x${figu.obtenido})`;
+                        selectCromoMulti.appendChild(opt);
+                    });
+                }
+            }
+        }
+    } else {
+        // Modo Amistoso / Gratis: Ocultamos ambos campos
+        if (divOro) divOro.style.display = "none";
+        if (divCarta) divCarta.style.display = "none";
+    }
+}
+
+// 🚪 FUNCIÓN DE ESCAPE: Resetea el flujo multijugador y vuelve a prender el HUD de navegación
+function cancelarMundialMultiLobby() {
+    // Apagamos los intervalos de consulta del lobby si estaban corriendo
+    if (multiIntervaloLobby) clearInterval(multiIntervaloLobby);
+
+    // Ocultamos las fases avanzadas de juego
+    document.getElementById("multi-fase-inscripcion").style.display = "none";
+    document.getElementById("multi-fase-draft").style.display = "none";
+    document.getElementById("multi-lobby-espera").style.display = "none";
+    document.getElementById("multi-pantalla-fixture").style.display = "none";
+
+    // Regresamos al menú inicial limpio de salas
+    document.getElementById("multi-menu-inicial").style.display = "block";
+
+    // 🔥 PRENDEMOS DE VUELTA EL LOGOUT Y LA NAVEGACIÓN SUPERIOR
+    const barraNavegacion = document.querySelector(".nav-modulos-estadio");
+    if (barraNavegacion) barraNavegacion.style.removeProperty("display");
+    
+    const btnSalir = document.querySelector(".btn-logout-kick");
+    if (btnSalir) btnSalir.style.removeProperty("display");
+
+    // Limpieza lógica de variables de control
+    multiSalaId = null;
+    multiCodigoSala = null;
+    multiEsCreador = false;
+    jugadoresSeleccionadosDraft = [];
+    
+    console.log("🚪 Salida de la sala confirmada. Interfaz unificada restablecida.");
+}
