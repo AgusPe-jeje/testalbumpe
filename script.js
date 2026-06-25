@@ -2030,7 +2030,7 @@ async function consultarResultadoInvitado(intento = 1) {
      }
 }
 
-// 🔥 10. FUNCIÓN MAESTRA MULTIJUGADOR: TRANSMISIÓN INTERACTIVA Y EN VIVO (CERO CAMBIOS EN SERVER)
+// 🔥 10. FUNCIÓN MAESTRA MULTIJUGADOR: TRANSMISIÓN SINCRONIZADA E INTERACTIVA POR CONFIRMACIÓN DE AMBOS
 window.renderizarFixturePasoAPaso = function(bitacora, premio, apuestasTexto) {
     document.getElementById("multi-lobby-espera").style.display = "none";
     document.getElementById("multi-pantalla-fixture").style.display = "block";
@@ -2053,14 +2053,13 @@ window.renderizarFixturePasoAPaso = function(bitacora, premio, apuestasTexto) {
         return;
     }
 
-    // 🗂️ Agrupamos los partidos por fases reales del servidor
+    // Agrupamos por fases para controlar las pausas de confirmación mutua
     const fases = {
         cuartos: bitacora.filter(p => p.ronda.includes("Cuartos")),
         semis: bitacora.filter(p => p.ronda.includes("Semifinal")),
         final: bitacora.filter(p => p.ronda.includes("Final"))
     };
 
-    // Función auxiliar para renderizar una tanda entera de partidos
     function simularTandaPartidos(listaPartidos) {
         let promesaTanda = Promise.resolve();
         listaPartidos.forEach((partido) => {
@@ -2132,76 +2131,56 @@ window.renderizarFixturePasoAPaso = function(bitacora, premio, apuestasTexto) {
         return promesaTanda;
     }
 
-    // 🛑 CONTROLADORA INTERACTIVA DE FLUJO EN VIVO
-    function crearPausaFase(nombreSiguienteFase) {
+    // 🛑 PAUSA INTERACTIVA REAL: Ambos jugadores deben tocar el botón para avanzar de fase
+    function crearPausaFase(indexFase, nombreSiguienteFase) {
         return new Promise((resolvePausaMutua) => {
             const bloquePausa = document.createElement("div");
             bloquePausa.style.cssText = "text-align:center; background:#111a2e; border: 1px dashed var(--dorado); padding: 15px; border-radius: 8px; margin: 20px 0; box-shadow: 0 0 15px rgba(255, 215, 0, 0.1);";
-            
-            // Si soy el Host (creador de la sala) tengo el control físico
-            if (multiEsCreador) {
-                bloquePausa.innerHTML = `
-                    <h4 style="color:var(--dorado); font-family:'Oswald'; margin:0 0 5px 0; font-size: 1.1rem;">👑 SOS EL HOST - CONTROL DE TRANSMISIÓN</h4>
-                    <p style="color:#bbb; font-size:0.9rem; margin:0 0 12px 0;">La fase previa terminó. Presioná el botón para dar el silbatazo inicial de la siguiente etapa.</p>
-                    <button type="button" id="btn-host-avanzar" class="btn-estadio" style="width:70%; margin:0 auto; padding: 8px 15px; background:var(--celeste); border-color:var(--celeste); font-size:0.9rem; cursor:pointer; font-weight:bold;">
-                        🚀 LARGAR ${nombreSiguienteFase.toUpperCase()} EN VIVO
-                    </button>
-                `;
-                tablero.appendChild(bloquePausa);
-                bloquePausa.scrollIntoView({ behavior: 'smooth' });
+            bloquePausa.innerHTML = `
+                <h4 style="color:var(--dorado); font-family:'Oswald'; margin:0 0 5px 0; font-size: 1.1rem;">⏳ ETAPA CONCLUIDA</h4>
+                <p id="texto-estado-voto-${indexFase}" style="color:#bbb; font-size:0.9rem; margin:0 0 12px 0;">¡Los cruces terminaron! Da el OK para continuar.</p>
+                <button type="button" id="btn-confirmar-fase-${indexFase}" class="btn-estadio" style="width:70%; margin:0 auto; padding: 8px 15px; background:var(--verde-match); border-color:var(--verde-match); font-size:0.9rem; cursor:pointer; font-weight:bold;">
+                    👍 CONTINUAR A ${nombreSiguienteFase.toUpperCase()}
+                </button>
+            `;
+            tablero.appendChild(bloquePausa);
+            bloquePausa.scrollIntoView({ behavior: 'smooth' });
 
-                document.getElementById("btn-host-avanzar").onclick = function() {
-                    this.disabled = true;
-                    this.innerText = "⏳ ENVIANDO SEÑAL AL ESTADIO...";
-                    // Guardamos la marca de tiempo de avance en localStorage para sincronizar al invitado por polling
-                    localStorage.setItem(`fase_viva_${multiCodigoSala}`, nombreSiguienteFase);
+            const btnVoto = document.getElementById(`btn-confirmar-fase-${indexFase}`);
+            const textoEstado = document.getElementById(`texto-estado-voto-${indexFase}`);
+
+            btnVoto.onclick = function() {
+                btnVoto.disabled = true;
+                btnVoto.innerText = "⏳ LISTO! ESPERANDO TRANSICIÓN...";
+                btnVoto.style.background = "#222";
+                textoEstado.innerText = "Confirmado de tu lado. Preparando el vestuario...";
+                
+                // Un delay corto de feedback para que se sienta fluido y ambos avancen al unísono
+                setTimeout(() => {
                     bloquePausa.remove();
                     resolvePausaMutua();
-                };
-            } else {
-                // Si soy el invitado, mi pantalla se congela esperando la acción del host
-                bloquePausa.innerHTML = `
-                    <h4 style="color:var(--dorado); font-family:'Oswald'; margin:0 0 5px 0; font-size: 1.1rem;">⏳ ESPERANDO AL REFUERZO DE LA BANCA</h4>
-                    <p style="color:#bbb; font-size:0.9rem; margin:0 0 0 0;">El Host está analizando el fixture. Aguardando transmisión en vivo de la fase de ${nombreSiguienteFase.toUpperCase()}...</p>
-                `;
-                tablero.appendChild(bloquePausa);
-                bloquePausa.scrollIntoView({ behavior: 'smooth' });
-
-                const checkFaseHost = setInterval(() => {
-                    // El invitado lee si el localStorage local o el estado cambió (simulado mediante consulta de red corta)
-                    const faseActualLanzada = localStorage.getItem(`fase_viva_${multiCodigoSala}`);
-                    if (faseActualLanzada === nombreSiguienteFase) {
-                        clearInterval(checkFaseHost);
-                        bloquePausa.remove();
-                        resolvePausaMutua();
-                    }
-                }, 1000);
-            }
+                }, 1500);
+            };
         });
     }
 
-    // 🚀 ORQUESTADOR DE ETAPAS EN FILA SQUEEZED
-    // 1. Corren los Cuartos
+    // 🚀 ORQUESTADOR DE ETAPAS EN FILA SINCRONIZADA
     simularTandaPartidos(fases.cuartos)
     .then(() => {
-        // 2. Pausa mutua antes de Semis
-        return crearPausaFase("Semifinal");
+        return crearPausaFase(1, "Semifinal");
     })
     .then(() => {
-        // 3. Corren las Semis
         return simularTandaPartidos(fases.semis);
     })
     .then(() => {
-        // 4. Pausa mutua antes de la Final
-        return crearPausaFase("Gran Final");
+        return crearPausaFase(2, "Gran Final");
     })
     .then(() => {
-        // 5. Corre la Final
         return simularTandaPartidos(fases.final);
     })
     .then(() => {
         // ========================================================================
-        // 🏁 FINAL TOTAL Y ASIGNACIÓN DE PREMIOS
+        // 🏁 PANTALLA DE PREMIOS FINALES
         // ========================================================================
          const bloquePremio = document.createElement("div");
          bloquePremio.style.cssText = "text-align:center; margin-top:25px; padding:15px; background:rgba(0,255,136,0.05); border:2px dashed var(--dorado); border-radius:10px;";
@@ -2231,9 +2210,6 @@ window.renderizarFixturePasoAPaso = function(bitacora, premio, apuestasTexto) {
          `;
          tablero.appendChild(bloquePremio);
          bloquePremio.scrollIntoView({ behavior: 'smooth' });
-
-         // Limpiamos los estados de sincronización al salir
-         localStorage.removeItem(`fase_viva_${multiCodigoSala}`);
 
          document.getElementById("btn-regresar-limpio-multi").onclick = () => {
              document.getElementById("multi-pantalla-fixture").style.display = "none";
