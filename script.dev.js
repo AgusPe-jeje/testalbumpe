@@ -3,7 +3,7 @@
    ======================================================================== */
 
 const URL_RENDER_SERVICIO = "https://testalbumpe-5feo.onrender.com/";
-const URL_BASE = `${URL_RENDER_SERVICIO}/api`;
+const URL_BASE = `${URL_RENDER_SERVICIO}/api`; // 👈 El problema está en la barra final de arriba
 
 let usuarioActual = null;
 let direccionGanadora = "";
