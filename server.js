@@ -89,7 +89,7 @@ async function inicializarTablas() {
 
         await pool.query(`CREATE TABLE IF NOT EXISTS usuario_progreso (
             usuario_id INTEGER REFERENCES usuarios(id),
-            jogador_id INTEGER REFERENCES jugadores(id),
+            jugador_id INTEGER REFERENCES jugadores(id),
             cantidad INTEGER DEFAULT 1,
             PRIMARY KEY (usuario_id, jugador_id)
         )`);
