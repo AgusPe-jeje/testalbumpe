@@ -1,0 +1,651 @@
+/* ========================================================================
+   🏆 MUNDIAL ARENA - ESTILO DE TRANSMISIÓN OFICIAL (STADIUM PREMIUM)
+   ======================================================================== */
+:root {
+    --bg-principal: #070a0f;
+    --bg-card: rgba(18, 24, 38, 0.72);
+    --bg-card-solid: #121826;
+    --dorado: #ffb100;
+    --celeste: #00ccff;
+    --rojo: #ff3344;
+    --verde-match: #00ff88;
+    --texto: #ffffff;
+    
+    --color-comun: #a2b4cc;
+    --color-rara: #0066ff;
+    --color-epica: #aa00ff;
+    --color-legendaria: #ff9900;
+
+    --shadow-comun: 0 0 15px rgba(162, 180, 204, 0.3), 0 8px 16px rgba(0,0,0,0.6);
+    --shadow-rara: 0 0 20px rgba(0, 102, 255, 0.4), 0 8px 16px rgba(0,0,0,0.6);
+    --shadow-epica: 0 0 25px rgba(170, 0, 255, 0.5), 0 8px 16px rgba(0,0,0,0.6);
+    --shadow-legendaria: 0 0 30px rgba(255, 153, 0, 0.6), 0 8px 20px rgba(0,0,0,0.7);
+}
+
+body.ambiente-mundial {
+    background: linear-gradient(rgba(7, 10, 15, 0.85), rgba(7, 10, 15, 0.85)), url('./static/fondo.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: var(--texto);
+    font-family: 'Khand', 'Oswald', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    margin: 0; 
+    padding: 20px;
+    display: flex; 
+    flex-direction: column; 
+    align-items: center;
+    letter-spacing: 0.5px;
+}
+
+.banner-tienda { background: url('./static/sobres.jpg') no-repeat center center; background-size: cover; }
+.banner-penales { background: url('./static/penales.jpg') no-repeat center center; background-size: cover; }
+.banner-casino { background: url('./static/casino.jpg') no-repeat center center; background-size: cover; }
+.banner-mundial { background: url('./static/mundial.jpg') no-repeat center center; background-size: cover; }
+
+.header-principal-mundial { margin-bottom: 15px; text-align: center; }
+.titulo-copa-pe { font-family: 'Oswald', sans-serif; font-size: 3rem; font-weight: 700; text-transform: uppercase; margin: 0; color: #ffffff; text-shadow: 0 4px 0 #000, 0 0 25px rgba(0, 204, 255, 0.4); }
+
+input, .select-estadio-custom, .input-estadio-numeric { background: #0b0f19; border: 2px solid #232d45; padding: 12px; border-radius: 8px; color: #fff; font-family: inherit; font-size: 1.1rem; font-weight: 700; width: 100%; box-sizing: border-box; transition: all 0.2s ease; }
+input:focus, .select-estadio-custom:focus { border-color: var(--celeste); outline: none; box-shadow: 0 0 10px rgba(0, 204, 255, 0.3); }
+
+.btn-estadio { background: var(--dorado); color: #000; border: none; padding: 12px 24px; font-size: 1.1rem; font-weight: 700; border-radius: 8px; cursor: pointer; font-family: 'Oswald', sans-serif; text-transform: uppercase; box-shadow: 0 4px 0 #b37e00; transition: transform 0.1s, box-shadow 0.1s; }
+.btn-estadio:active { transform: translateY(3px); box-shadow: 0 1px 0 #b37e00; }
+.btn-estadio:disabled { background: #2a3142 !important; color: #5d6b88 !important; box-shadow: 0 4px 0 #151922 !important; cursor: not-allowed !important; transform: none !important; }
+
+#interfaz-juego { display: none; flex-direction: column !important; align-items: center !important; width: 100% !important; max-width: 1000px; margin: 0 auto; box-sizing: border-box; gap: 15px; }
+#interfaz-juego.mostrar { display: flex !important; }
+
+.nav-modulos-estadio { display: flex !important; flex-direction: row !important; gap: 10px; width: 100%; max-width: 900px; margin-bottom: 10px; }
+.header-status-scoreboard { display: flex !important; flex-direction: row !important; align-items: center; justify-content: space-around; width: 100%; max-width: 900px; padding: 12px 25px; background: linear-gradient(90deg, rgba(9, 13, 22, 0.85) 0%, rgba(18, 24, 38, 0.85) 100%) !important; border: 1px solid rgba(255, 255, 255, 0.08) !important; border-radius: 12px; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important; margin-bottom: 20px; }
+
+.login-card-estadio { background: linear-gradient(135deg, rgba(18, 24, 38, 0.85) 0%, rgba(10, 14, 23, 0.95) 100%); border: 1px solid rgba(255, 255, 255, 0.08); padding: 30px; border-radius: 16px; width: 100%; max-width: 400px; text-align: center; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: 0 20px 45px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.1); margin: 20px auto; }
+.login-card-estadio h2 { font-family: 'Oswald', sans-serif; color: var(--dorado); margin-top: 0; letter-spacing: 1px; }
+.wrapper-inputs-estadio { display: flex; flex-direction: column; gap: 12px; margin-bottom: 15px; }
+.contenedor-botones-login { display: flex; gap: 10px; }
+.btn-login-match { flex: 1; }
+.btn-registro-match { flex: 1; background: var(--verde-match); box-shadow: 0 4px 0 #00b35f; }
+
+.stat-box-tv { display: flex; flex-direction: column; align-items: center; }
+.stat-label { font-size: 0.8rem; color: #64748b; font-weight: 700; letter-spacing: 1px; }
+.stat-valor { font-family: 'Oswald', sans-serif; font-size: 1.5rem; font-weight: 700; text-shadow: 2px 2px 0px #000; }
+.valor-celeste { color: var(--celeste); }
+.valor-dorado { color: var(--dorado); }
+.valor-rojo { color: var(--rojo); }
+
+.btn-logout-kick { background: rgba(26, 34, 51, 0.6); color: var(--rojo); border: 1px solid rgba(255, 51, 68, 0.4); padding: 6px 14px; font-family: inherit; font-weight: 700; border-radius: 6px; cursor: pointer; transition: all 0.2s; }
+.btn-logout-kick:hover { background: var(--rojo); color: #fff; box-shadow: 0 0 10px rgba(255, 51, 68, 0.4); }
+
+.btn-modulo-match { flex: 1; background: linear-gradient(180deg, rgba(25, 35, 56, 0.6) 0%, rgba(18, 24, 38, 0.8) 100%); color: #64748b; border: 1px solid rgba(255, 255, 255, 0.05); padding: 14px; font-family: 'Oswald', sans-serif; font-size: 1.2rem; font-weight: 700; border-radius: 10px; cursor: pointer; text-transform: uppercase; box-shadow: 0 4px 10px rgba(0,0,0,0.3); transition: all 0.15s ease; }
+.btn-modulo-match:hover { color: #fff; background: rgba(26, 34, 51, 0.8); }
+.btn-modulo-match.activo { background: var(--celeste); color: #000; border-color: #fff; box-shadow: 0 4px 0 #0088cc, 0 0 15px rgba(0, 204, 255, 0.4); }
+
+.modulo-contenido { display: none; width: 100%; max-width: 900px; }
+.modulo-contenido.activo { display: block; }
+
+.caja-modulo-estadio { background: linear-gradient(135deg, rgba(14, 22, 38, 0.75) 0%, rgba(8, 12, 20, 0.9) 100%) !important; border-radius: 20px; padding: 25px; border: 1px solid rgba(255, 255, 255, 0.08) !important; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-sizing: border-box; width: 100%; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important; }
+
+.banner-modulo-imagen { width: 100%; height: 140px; border-radius: 14px; position: relative; overflow: hidden; margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.15); box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+.overlay-banner-texto { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, rgba(7, 10, 15, 0.95) 30%, rgba(7, 10, 15, 0.3) 100%); display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding-left: 30px; box-sizing: border-box; }
+.overlay-banner-texto h2 { font-family: 'Oswald', sans-serif; font-size: 2rem; margin: 0; color: #fff; text-shadow: 2px 2px 4px rgba(0,0,0,0.8); }
+.overlay-banner-texto p { margin: 4px 0 0 0; color: #94a3b8; font-size: 1.1rem; }
+
+.contenedor-tienda-cofres { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
+.tarjeta-cofre-match { background: linear-gradient(180deg, rgba(16, 24, 43, 0.5) 0%, rgba(9, 13, 22, 0.85) 100%) !important; border: 1px solid rgba(255, 255, 255, 0.05) !important; border-radius: 14px; padding: 20px; width: 240px; text-align: center; position: relative; overflow: hidden; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.05) !important; transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.25s, box-shadow 0.25s; }
+.tarjeta-cofre-match:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6) !important; }
+
+.tarjeta-cofre-match.plata:hover { border-color: #cbd5e1 !important; box-shadow: 0 0 15px rgba(203, 213, 225, 0.15) !important; }
+.tarjeta-cofre-match.oro:hover { border-color: var(--dorado) !important; box-shadow: 0 0 15px rgba(255, 177, 0, 0.2) !important; }
+.tarjeta-cofre-match.legendario:hover { border-color: #f97316 !important; box-shadow: 0 0 15px rgba(249, 115, 22, 0.2) !important; }
+
+.tarjeta-cofre-match h3 { font-family: 'Oswald', sans-serif; margin: 0 0 10px 0; font-size: 1.3rem; }
+.cofre-icono-pack { font-family: 'Oswald', sans-serif; font-size: 2rem; font-weight: 700; color: #fff; margin: 15px 0; text-shadow: 0 0 10px rgba(255,255,255,0.2); }
+.desc-prob-text { font-size: 0.95rem; color: #64748b; min-height: 45px; margin: 0 0 15px 0; }
+.btn-comprar-pack { width: 100%; background: var(--verde-match); color: #000; border: none; padding: 10px; font-family: 'Oswald', sans-serif; font-size: 1.1rem; font-weight: 700; border-radius: 6px; cursor: pointer; box-shadow: 0 3px 0 #00b35f; }
+.btn-comprar-pack:active { transform: translateY(3px); box-shadow: none; }
+
+.tarjeta-cofre-match.plata h3 { color: #cbd5e1; }
+.tarjeta-cofre-match.oro h3 { color: var(--dorado); }
+.tarjeta-cofre-match.legendario h3 { color: #f97316; }
+.tarjeta-cofre-match.legendario .btn-comprar-pack { background: #f97316; box-shadow: 0 3px 0 #c2410c; }
+
+.seccion-sobre-abierto-arena { margin-top: 30px; padding: 20px; background: rgba(5, 8, 14, 0.6); border-radius: 16px; border: 2px dashed #1f293d; }
+.titulo-sobre-loot { font-family: 'Oswald', sans-serif; color: var(--dorado); font-size: 1.5rem; text-transform: uppercase; text-shadow: 2px 2px 0px #000; margin-bottom: 15px; }
+#grid-sobre-abierto { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+
+.grid-album-match, .grid-album, .grid-sobre { display: grid !important; grid-template-columns: repeat(auto-fill, minmax(145px, 1fr)) !important; justify-content: center; gap: 20px; margin-top: 15px; width: 100%; box-sizing: border-box; }
+.carta-clash { width: 145px !important; height: 205px !important; border-radius: 12px; position: relative; box-sizing: border-box; background: #04060a; cursor: pointer; overflow: visible; transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.25s; animation: aparecerCarta 0.4s ease-out backwards; margin: 0 auto; }
+.carta-clash:hover { transform: translateY(-8px) scale(1.03); z-index: 10; }
+.carta-foto { width: 100%; height: 100%; object-fit: fill; border-radius: 12px; display: block; }
+.carta-clash.bloqueada { filter: grayscale(100%) brightness(25%); opacity: 0.5; box-shadow: none !important; border-color: #1f293d !important; }
+
+.rareza-vertical { position: absolute; bottom: 12px; left: 6px; writing-mode: vertical-rl; transform: rotate(180deg); font-size: 0.65rem; font-weight: 900; text-transform: uppercase; letter-spacing: 1.2px; color: #fff; background: rgba(0, 0, 0, 0.8); padding: 6px 3px; border-radius: 4px; border-left: 2px solid transparent; z-index: 5; pointer-events: none; line-height: 1 !important; white-space: nowrap; }
+
+.carta-clash.comun { border: 2px solid var(--color-comun); box-shadow: var(--shadow-comun); }
+.carta-clash.comun .rareza-vertical { border-left-color: var(--color-comun); }
+.carta-clash.rara { border: 2px solid var(--color-rara); box-shadow: var(--shadow-rara); }
+.carta-clash.rara .rareza-vertical { border-left-color: var(--color-rara); text-shadow: 0 0 5px var(--color-rara); }
+.carta-clash.epica { border: 2px solid var(--color-epica); box-shadow: var(--shadow-epica); }
+.carta-clash.epica .rareza-vertical { border-left-color: var(--color-epica); text-shadow: 0 0 5px var(--color-epica); }
+.carta-clash.legendaria { border: 2px solid var(--color-legendaria); box-shadow: var(--shadow-legendaria); }
+.carta-clash.legendaria .rareza-vertical { border-left-color: var(--color-legendaria); text-shadow: 0 0 8px var(--color-legendaria); }
+
+.badge-repetidas { position: absolute; top: -6px; right: -6px; background: #ff0055; color: #fff; font-family: 'Oswald', sans-serif; font-size: 0.85rem; font-weight: 700; padding: 2px 8px; border-radius: 10px; border: 2px solid #fff; box-shadow: 0 4px 8px rgba(0,0,0,0.4); z-index: 12; }
+
+.custom-scrollbar-paises { display: flex; gap: 6px; overflow-x: auto; padding: 5px 5px 12px 5px; margin-bottom: 15px; width: 100%; }
+.custom-scrollbar-paises::-webkit-scrollbar { height: 6px; }
+.custom-scrollbar-paises::-webkit-scrollbar-track { background: rgba(0,0,0,0.3); border-radius: 10px; }
+.custom-scrollbar-paises::-webkit-scrollbar-thumb { background: #232d45; border-radius: 10px; }
+
+.btn-pais { display: inline-flex; align-items: center; gap: 6px; background: rgba(15, 19, 34, 0.6); color: #64748b; border: 1px solid rgba(255, 255, 255, 0.05); padding: 8px 14px; font-size: 0.95rem; font-weight: 700; border-radius: 20px; cursor: pointer; font-family: inherit; flex-shrink: 0; transition: all 0.15s; }
+.btn-pais:hover { background: rgba(22, 28, 48, 0.8); color: #fff; }
+.btn-pais.activo { background: var(--celeste); color: #000; border-color: #fff; box-shadow: 0 0 12px rgba(0,204,255,0.4); }
+.btn-pais.pais-completo { border: 1px solid var(--dorado) !important; background: linear-gradient(180deg, rgba(36, 29, 8, 0.8) 0%, rgba(15, 13, 5, 0.9) 100%) !important; color: var(--dorado) !important; animation: brilloOro 2s infinite ease-in-out; }
+
+.progreso-album-scoreboard { background: rgba(5, 8, 14, 0.6); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 15px; margin-bottom: 20px; width: 100%; box-sizing: border-box; }
+.progreso-texto-tv { display: flex; justify-content: space-between; font-family: 'Oswald', sans-serif; font-size: 1.1rem; color: #fff; margin-bottom: 8px; text-transform: uppercase; }
+.progreso-barra-estadio-fondo { background: #161c30; height: 14px; border-radius: 10px; padding: 2px; }
+.progreso-barra-estadio-llenado { background: linear-gradient(90deg, #00ff66 0%, #00aa44 100%); height: 100%; width: 0%; border-radius: 10px; transition: width 0.5s ease-out; }
+
+.contenedor-penales-layout-estadio { display: flex; gap: 20px; width: 100%; }
+.juego-penales-principal { flex: 2; }
+.panel-lateral-ranking-tv { flex: 1; background: linear-gradient(135deg, rgba(14, 22, 38, 0.75) 0%, rgba(8, 12, 20, 0.9) 100%); border: 1px solid rgba(255, 255, 255, 0.08); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-radius: 20px; padding: 20px; box-sizing: border-box; box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5); }
+.titulo-tabla-tv { font-family: 'Oswald', sans-serif; color: var(--dorado); margin: 0 0 15px 0; text-align: center; font-size: 1.3rem; letter-spacing: 0.5px; }
+.tabla-ranking-stadium { width: 100%; border-collapse: collapse; font-size: 1.05rem; }
+.tabla-ranking-stadium th { background: rgba(0,0,0,0.3); color: #64748b; padding: 10px; font-weight: 700; text-transform: uppercase; }
+.tabla-ranking-stadium td { padding: 12px 10px; border-bottom: 1px solid rgba(255,255,255,0.05); text-align: center; font-weight: 700; }
+.tabla-ranking-stadium tr:nth-child(1) td:nth-child(1) { color: #ffcc00; font-size: 1.4rem; }
+.tabla-ranking-stadium tr:nth-child(2) td:nth-child(1) { color: #cbd5e1; font-size: 1.3rem; }
+.tabla-ranking-stadium tr:nth-child(3) td:nth-child(1) { color: #ff7733; font-size: 1.2rem; }
+.fila-usuario-actual { background: rgba(0, 204, 255, 0.1) !important; color: var(--celeste); }
+
+/* ⚽ REFACTORIZACIÓN ARCO PROFESIONAL GIGANTE (6 DIRECCIONES REALES) */
+.arco-futbol-stadium { 
+    position: relative; 
+    width: 100%; 
+    max-width: 650px; 
+    height: 280px;    
+    border: 7px solid #fff; 
+    border-bottom: none; 
+    margin: 25px auto; 
+    background: radial-gradient(circle at 50% 100%, #173526 0%, #070a0f 100%); 
+    border-radius: 12px 12px 0 0; 
+    box-shadow: inset 0 -30px 60px rgba(0,0,0,0.8), 0 10px 25px rgba(0,0,0,0.5); 
+    overflow: hidden; 
+}
+
+.zona-disparo-target { position: absolute; width: 33.33%; height: 50%; z-index: 6; cursor: crosshair; transition: background 0.2s; }
+.zona-disparo-target:hover { background: rgba(0, 204, 255, 0.15); box-shadow: inset 0 0 15px rgba(0, 204, 255, 0.2); }
+.sup-izq { top: 0; left: 0; }
+.sup-cen { top: 0; left: 33.33%; }
+.sup-der { top: 0; left: 66.66%; }
+.inf-izq { bottom: 0; left: 0; }
+.inf-cen { bottom: 0; left: 33.33%; }
+.inf-der { bottom: 0; left: 66.66%; }
+
+#balon-animado {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    font-size: 1.5rem; 
+    margin-left: -12px; 
+    z-index: 10;
+    transition: transform 0.5s ease-out;
+}
+
+#arquero-animado {
+    position: absolute;
+    top: 90px;
+    left: 50%;
+    font-size: 2rem; 
+    margin-left: -16px; 
+    z-index: 5;
+    transition: transform 0.5s ease-out;
+}
+
+.marcador-alerta-tv { font-family: 'Oswald', sans-serif; font-size: 1.5rem; margin: 15px 0 5px 0; }
+.badge-reloj-energia { color: var(--dorado); font-weight: 700; font-size: 1.1rem; margin: 0; }
+
+.arena-versus-scoreboard { display: flex; justify-content: space-between; align-items: center; background: rgba(5, 8, 14, 0.6); border: 1px solid rgba(255, 177, 0, 0.3); border-radius: 16px; padding: 20px; width: 100%; max-width: 550px; margin: 0 auto; box-sizing: border-box; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+.bando-equipo-stadium { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.bandera-flag { font-size: 3.5rem; line-height: 1; }
+.nombre-seleccion { font-family: 'Oswald', sans-serif; font-size: 1.4rem; font-weight: 700; color: #fff; letter-spacing: 0.5px; }
+.vs-circulo-match { background: var(--rojo); color: #fff; font-family: 'Oswald', sans-serif; font-size: 1.3rem; font-weight: 700; width: 46px; height: 46px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 3px solid #fff; box-shadow: 0 0 15px rgba(255, 51, 68, 0.4); }
+
+.inputs-apuesta-timba-stadium { display: flex; flex-direction: column; align-items: center; gap: 15px; margin-top: 20px; width: 100%; }
+.monto-apuesta-row { display: flex; flex-direction: column; align-items: center; gap: 6px; width: 100%; max-width: 300px; }
+.get-label-tv { font-size: 1rem; font-weight: 700; color: var(--dorado); letter-spacing: 0.5px; }
+
+.grid-opciones-goles-match { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; width: 100%; max-width: 550px; margin-top: 15px; }
+.btn-opcion-resultado { background: rgba(15, 19, 34, 0.6); color: #fff; border: 1px solid var(--celeste) !important; font-family: 'Oswald', sans-serif; font-size: 1.4rem !important; padding: 8px !important; border-radius: 8px; box-shadow: 0 4px 0 #0088cc !important; }
+.btn-opcion-resultado:hover { background: rgba(22, 30, 48, 0.8); box-shadow: 0 0 12px rgba(0,204,255,0.4) !important; }
+
+.historial-timba-banca-tv { margin-top: 25px; background: rgba(5, 8, 14, 0.6); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 15px; width: 100%; box-sizing: border-box; }
+.historial-timba-banca-tv h4 { margin: 0 0 10px 0; color: var(--dorado); font-family: 'Oswald', sans-serif; font-size: 1rem; letter-spacing: 0.5px; }
+.item-historial-partido { list-style: none; font-size: 1.05rem; font-weight: 700; padding: 8px 12px; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center; }
+
+#pantalla-carga { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(4, 6, 10, 0.95); backdrop-filter: blur(4px); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 99999; opacity: 0; pointer-events: none; transition: opacity 0.2s ease; }
+#pantalla-carga.activo { opacity: 1; pointer-events: auto; }
+.spinner-arena { width: 55px; height: 55px; border: 5px solid rgba(255, 255, 255, 0.05); border-top: 5px solid var(--celeste); border-radius: 50%; animation: girarSpinner 0.7s linear infinite; }
+@keyframes girarSpinner { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+.texto-carga { color: #fff; font-family: 'Oswald', sans-serif; font-size: 1.2rem; margin-top: 15px; text-transform: uppercase; letter-spacing: 1px; }
+
+/* 🎬 PACK OPENING ADDITIONAL SECTIONS */
+.pack-opening-escenario { background: radial-gradient(circle at 50% 50%, #0c152b 0%, #040712 100%); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 30px; min-height: 400px; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; overflow: hidden; box-shadow: inset 0 0 100px rgba(0,0,0,0.8); }
+.luces-estadio-efecto { position: absolute; width: 200%; height: 200%; background: conic-gradient(from 0deg at 50% 50%, transparent, rgba(0, 204, 255, 0.15), transparent, rgba(255, 177, 0, 0.15), transparent); animation: rotarLucesSobre 12s linear infinite; z-index: 1; pointer-events: none; }
+.pistas-pack-container { display: flex; gap: 15px; margin-bottom: 25px; z-index: 2; }
+.pista-bloque { background: rgba(4, 6, 12, 0.9); border: 2px solid #232d45; color: #fff; font-family: 'Oswald', sans-serif; font-size: 1.6rem; font-weight: 700; padding: 10px 20px; border-radius: 8px; min-width: 70px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.5); text-transform: uppercase; opacity: 0; transform: translateY(-20px); transition: all 0.5s ease-out; }
+.pista-bloque.revelada { opacity: 1; transform: translateY(0); border-color: var(--celeste); text-shadow: 0 0 10px var(--celeste); }
+.carta-presentada-wrapper { z-index: 2; min-height: 220px; display: flex; align-items: center; justify-content: center; margin-bottom: 25px; }
+.carta-clash.caminante-entrada { animation: entradaFIFA 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.1) forwards !important; }
+.btn-next-pack-card { z-index: 3; max-width: 250px; }
+
+@keyframes rotarLucesSobre { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+@keyframes entradaFIFA { 0% { opacity: 0; transform: translateX(-150px) scale(0.6) rotate(-15deg); filter: blur(5px) brightness(2); } 100% { opacity: 1; transform: translateX(0) scale(1.1) rotate(0deg); filter: blur(0) brightness(1); } }
+
+/* ========================================================================
+   🏆 ESTILOS PREMIUM PARA EL COLISEO DEL MINIMUNDIAL
+   ======================================================================== */
+#grid-cartas-draft-mundial {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)) !important;
+    gap: 15px !important;
+    scrollbar-width: thin;
+    scrollbar-color: var(--celeste) rgba(0, 0, 0, 0.3);
+}
+
+#grid-cartas-draft-mundial::-webkit-scrollbar { width: 6px; }
+#grid-cartas-draft-mundial::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.3); border-radius: 4px; }
+#grid-cartas-draft-mundial::-webkit-scrollbar-thumb { background: var(--celeste); border-radius: 4px; }
+
+.carta-clash.activo-draft {
+    transform: scale(0.96) translateY(2px);
+    filter: brightness(1.15);
+    box-shadow: 0 0 20px var(--verde-match), inset 0 0 15px rgba(0, 255, 136, 0.3) !important;
+    animation: pulsoDraft 1.5s infinite ease-in-out;
+}
+
+#grid-cartas-draft-mundial .carta-clash:not(.activo-draft):hover {
+    border-color: var(--celeste) !important;
+    box-shadow: 0 0 15px rgba(0, 204, 255, 0.3) !important;
+}
+
+#lista-cruces-mundial-simulacion .item-historial-partido {
+    background: linear-gradient(90deg, rgba(16, 24, 43, 0.6) 0%, rgba(9, 13, 22, 0.8) 100%);
+    border-left: 5px solid #232d45;
+    padding: 14px 20px;
+    border-radius: 8px;
+    margin-bottom: 4px;
+    font-size: 1.1rem;
+    transition: all 0.25s ease;
+    animation: entradaFixture 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+}
+
+#lista-cruces-mundial-simulacion .item-historial-partido:nth-child(1) { animation-delay: 0.1s; }
+#lista-cruces-mundial-simulacion .item-historial-partido:nth-child(2) { animation-delay: 0.3s; }
+#lista-cruces-mundial-simulacion .item-historial-partido:nth-child(3) { animation-delay: 0.5s; }
+#lista-cruces-mundial-simulacion .item-historial-partido:nth-child(4) { animation-delay: 0.7s; }
+
+@keyframes pulsoDraft {
+    0%, 100% { border-color: var(--verde-match); }
+    50% { border-color: #ffffff; box-shadow: 0 0 25px var(--verde-match), inset 0 0 10px rgba(0, 255, 136, 0.5) !important; }
+}
+
+@keyframes entradaFixture {
+    from { opacity: 0; transform: translateX(-25px); filter: blur(4px); }
+    to { opacity: 1; transform: translateX(0); filter: blur(0); }
+}
+
+@keyframes abrirSobre { from { opacity: 0; transform: translateY(20px) scale(0.9); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes brilloOro { 0%, 100% { box-shadow: 0 0 5px rgba(255,177,0,0.2); } 50% { box-shadow: 0 0 20px rgba(255,177,0,0.55); } }
+
+/* 🚪 Botón Salir Premium */
+.btn-logout-premium {
+    padding: 10px 22px !important;
+    font-size: 1.1rem !important;
+    font-family: 'Oswald', sans-serif !important;
+    letter-spacing: 0.5px;
+    border-width: 2px !important;
+    border-radius: 8px !important;
+    font-weight: 700 !important;
+    box-shadow: 0 4px 10px rgba(255, 51, 68, 0.15);
+}
+
+/* ========================================================================
+   ❓ BOTÓN DE AYUDA PREMIUM (ESTILO TRANSMISIÓN TV)
+   ======================================================================== */
+.btn-ayuda-arena {
+    background: #0f172a !important; 
+    border: 1px solid var(--celeste) !important; 
+    color: var(--celeste) !important; 
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 8px 24px !important;
+    border-radius: 12px !important; 
+    font-family: 'Oswald', sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 1rem !important;
+    letter-spacing: 1px !important;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out !important;
+    box-shadow: 0 0 10px rgba(14, 165, 233, 0.15) !important; 
+}
+
+.btn-ayuda-arena:hover {
+    background: rgba(14, 165, 233, 0.1) !important; 
+    box-shadow: 0 0 20px rgba(14, 165, 233, 0.4) !important; 
+    transform: scale(1.02);
+}
+
+.btn-ayuda-arena:active {
+    transform: scale(0.98);
+}
+
+/* ========================================================================
+   🚨 CONTENEDOR ANUNCIOS FULLSCREEN (RESPONSIVO Y CALIBRADO)
+   ======================================================================== */
+.modal-anuncio-overlay {
+    display: none; 
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(10px);
+    z-index: 99999;
+    align-items: center;
+    justify-content: center;
+    padding: 20px; 
+}
+
+.modal-anuncio-content {
+    background: #0b0f19;
+    border: 2px solid var(--celeste);
+    box-shadow: 0 0 30px rgba(14, 165, 233, 0.3);
+    width: 100%;
+    max-width: 520px; 
+    padding: 25px;
+    border-radius: 14px;
+    position: relative;
+    animation: popInAnuncio 0.3s ease-out forwards;
+    color: #fff;
+    font-family: 'Oswald', sans-serif;
+    text-align: center;
+    max-height: 90vh; 
+    overflow-y: auto;  
+}
+
+@keyframes popInAnuncio {
+    from { transform: scale(0.95); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.btn-cerrar-anuncio {
+    position: absolute;
+    top: 15px; 
+    right: 15px;
+    background: #ef4444 !important;
+    color: white !important;
+    border: none;
+    padding: 6px 12px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(239, 68, 68, 0.3);
+    transition: all 0.2s ease-in-out;
+    z-index: 10;
+}
+
+.btn-cerrar-anuncio:hover {
+    background: #dc2626 !important;
+    transform: scale(1.05);
+}
+
+.anuncio-titulo {
+    color: var(--celeste);
+    font-size: 1.8rem;
+    letter-spacing: 1px;
+    margin-top: 15px; 
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+
+.anuncio-cuerpo p {
+    font-size: 1.1rem;
+    line-height: 1.5;
+    color: #cbd5e1;
+    margin-bottom: 15px;
+}
+
+.anuncio-video-container {
+    position: relative;
+    padding-bottom: 56.25%; 
+    height: 0;
+    width: 100%;
+    margin-top: 12px;
+    border-radius: 8px;
+    overflow: hidden; 
+    border: 1px solid rgba(14, 165, 233, 0.5);
+}
+
+.anuncio-video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.anuncio-media {
+    max-width: 100%;
+    max-height: 260px;
+    object-fit: contain;
+    border-radius: 8px;
+    margin-top: 12px;
+    border: 1px solid rgba(14, 165, 233, 0.3);
+}
+
+/* Control de tamaño para los emojis renderizados por Twemoji */
+img.emoji {
+    height: 1.2em;
+    width: 1.2em;
+    margin: 0 .05em 0 .1em;
+    vertical-align: -0.1em;
+    display: inline-block;
+}
+
+/* ========================================================================
+   📊 FILTROS AVANZADOS DEL ÁLBUM (ESTILO HUD ARENA)
+   ======================================================================== */
+.contenedor-filtros-album {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background: rgba(5, 8, 14, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 12px 16px;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.grupo-filtro {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.filtro-label {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.9rem;
+    color: #64748b;
+    font-weight: 700;
+    min-width: 65px;
+}
+
+.btn-filtro-tv {
+    background: #111827;
+    border: 1px solid #232d45;
+    color: #94a3b8;
+    padding: 6px 12px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    border-radius: 6px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all 0.15s ease;
+}
+
+.btn-filtro-tv:hover {
+    color: #fff;
+    border-color: #475569;
+}
+
+.btn-filtro-tv.activo {
+    background: var(--celeste);
+    color: #000;
+    border-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 204, 255, 0.3);
+}
+
+/* Colores temáticos sutiles para los botones de rareza activos */
+.btn-filtro-tv.f-comun.activo { background: #a2b4cc; color: #000; }
+.btn-filtro-tv.f-rara.activo { background: #0066ff; color: #fff; }
+.btn-filtro-tv.f-epica.activo { background: #aa00ff; color: #fff; }
+.btn-filtro-tv.f-legendaria.activo { background: #ff9900; color: #000; }
+
+/* Adaptación para celulares */
+@media (max-width: 768px) {
+    .contenedor-filtros-album { padding: 10px; gap: 10px; }
+    .grupo-filtro { gap: 6px; }
+    .btn-filtro-tv { padding: 5px 8px; font-size: 0.8rem; }
+    .filtro-label { width: 100%; margin-bottom: 2px; }
+}
+
+/* ========================================================================
+   📱 REINGENIERÍA EXCLUSIVA RESPONSIVA PARA CELULARES (MÁXIMO 768px) - FIXED
+   ======================================================================== */
+@media (max-width: 768px) {
+    body { padding: 8px; }
+    .titulo-copa-pe { font-size: 2rem; }
+    
+    /* 📊 MARCADOR DE ESTADO: Ahora es un Grid limpio de 2x2 para que no se pise nada */
+    .header-status-scoreboard { 
+        display: grid !important; 
+        grid-template-columns: repeat(2, 1fr) !important; 
+        gap: 12px !important; 
+        padding: 12px !important; 
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+    
+    /* Cada estadística ocupa su celda prolija con contenido justificado */
+    .stat-box-tv { 
+        width: 100% !important; 
+        flex-direction: column !important; 
+        align-items: center !important;
+        justify-content: center !important; 
+        border-bottom: none !important;
+        background: rgba(15, 23, 42, 0.5);
+        padding: 6px !important;
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        box-sizing: border-box !important;
+    }
+    .stat-label { font-size: 0.75rem; margin-bottom: 2px; }
+    .stat-valor { font-size: 1.25rem !important; }
+    
+    /* 🧭 MENÚ MODULAR: Cambia a Flex con Scroll Horizontal Infinito. 
+       ¡Ideal para que entren los 5 botones prolijos en una sola fila deslizable! */
+    .nav-modulos-estadio { 
+        display: flex !important; 
+        flex-direction: row !important; 
+        overflow-x: auto !important; 
+        white-space: nowrap !important;
+        gap: 8px !important; 
+        width: 100% !important;
+        padding: 5px 0 10px 0 !important;
+        -webkit-overflow-scrolling: touch;
+    }
+    .nav-modulos-estadio::-webkit-scrollbar { display: none; } /* Oculta barra molesta */
+    
+    .btn-modulo-match { 
+        flex: 0 0 auto !important; /* Evita que el celular achique los botones */
+        padding: 10px 16px !important; 
+        font-size: 0.95rem !important; 
+    }
+    
+    /* 🛍️ TIENDA Y CONTENEDORES */
+    .contenedor-tienda-cofres { flex-direction: column; align-items: center; width: 100%; }
+    .tarjeta-cofre-match { width: 100%; max-width: 100%; box-sizing: border-box; }
+    
+    /* Ajuste de Banners para que respiren los textos */
+    .banner-modulo-imagen { height: 160px !important; }
+    .overlay-banner-texto { padding-left: 15px !important; padding-right: 15px !important; }
+    .overlay-banner-texto h2 { font-size: 1.6rem !important; }
+    .overlay-banner-texto p { font-size: 0.95rem !important; }
+
+    /* 🎬 APERTURA DE SOBRES */
+    .pack-opening-escenario { min-height: 320px; padding: 15px; }
+    .pistas-pack-container { gap: 6px !important; width: 100% !important; box-sizing: border-box !important; justify-content: center !important; }
+    .pista-bloque { min-width: 0 !important; flex: 1 !important; max-width: 85px !important; font-size: 1.1rem !important; padding: 6px 8px !important; white-space: nowrap !important; }
+    .carta-presentada-wrapper { min-height: 180px; margin-bottom: 15px; }
+    .carta-clash.caminante-entrada { animation: entradaFIFAMovil 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.1) forwards !important; }
+
+    /* 🃏 GRILLAS DE CROMOS (Álbum e Inventario) */
+    .grid-album-match, .grid-album, .grid-sobre, #grid-sobre-abierto, #grid-cartas-draft-mundial { 
+        grid-template-columns: repeat(3, 1fr) !important; 
+        gap: 8px !important; 
+        display: grid !important; 
+    }
+    .carta-clash { width: 100% !important; height: auto !important; aspect-ratio: 2 / 3 !important; }
+    .rareza-vertical { font-size: 0.5rem; left: 3px; bottom: 6px; padding: 3px 1px; }
+    .badge-repetidas { font-size: 0.75rem; padding: 1px 5px; }
+
+    /* ⚽ ARCO DE PENALES */
+    .contenedor-penales-layout-estadio { flex-direction: column; gap: 15px; }
+    .arco-futbol-stadium { width: 100% !important; max-width: 340px !important; height: 160px !important; border-width: 4px !important; margin: 15px auto !important; }
+    #arquero-animado { font-size: 1.6rem !important; top: 45px !important; margin-left: -13px !important; }
+    #balon-animado { font-size: 1.3rem !important; bottom: 10px !important; margin-left: -10px !important; }
+
+    /* 🎰 TIMBA Y FIXTURE */
+    .grid-opciones-goles-match { grid-template-columns: repeat(2, 1fr); }
+    #lista-cruces-mundial-simulacion .item-historial-partido { font-size: 0.95rem; padding: 10px 12px; flex-direction: column; align-items: flex-start; gap: 6px; }
+    #lista-cruces-mundial-simulacion .item-historial-partido b { align-self: flex-end; }
+    
+    /* 🚪 BOTÓN SALIR RESPONSIVO */
+    .btn-logout-premium { width: 100% !important; padding: 12px !important; font-size: 1.1rem !important; margin-top: 5px; }
+}
+
+@keyframes entradaFIFAMovil { 
+    0% { opacity: 0; transform: translateX(-80px) scale(0.6) rotate(-10deg); filter: blur(3px) brightness(2); } 
+    100% { opacity: 1; transform: translateX(0) scale(1) rotate(0deg); filter: blur(0) brightness(1); } 
+}
+
+/* Adaptación para celulares */
+@media (max-width: 768px) {
+    .contenedor-filtros-album { padding: 10px; gap: 10px; }
+    .grupo-filtro { gap: 6px; }
+    .btn-filtro-tv { padding: 5px 8px; font-size: 0.8rem; }
+    .filtro-label { width: 100%; margin-bottom: 2px; }
+}
+
+.grid-cartas-draft-mundial {
+    display: flex;
+    flex-wrap: wrap;       /* 🔥 Esto es lo que rompe la verticalidad */
+    justify-content: center;
+    gap: 10px;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+}
+
+.carta-clash {
+    width: 80px;           /* Ajustá el ancho a tu gusto */
+    flex: 0 0 auto;        /* Evita que se estiren */
+}
