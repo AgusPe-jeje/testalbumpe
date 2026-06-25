@@ -730,6 +730,53 @@ cambiarModulo = function(idModulo, botonPresionado) {
      }
 };
 
+async function prepararInscripcionMundialMulti() {
+     if (!usuarioActual) return;
+     mostrarCarga("Conectando con la central de la Arena Online...");
+
+     try {
+          // ✨ Aseguramos que sea un POST explícito, con cabeceras y body JSON
+          const res = await fetch(`${URL_BASE}/multijugador/preparar-draft`, {
+               method: 'POST',
+               headers: { 'Content-Type': 'application/json' },
+               body: JSON.stringify({ usuario_id: usuarioActual.id })
+          });
+          const data = await res.json();
+          ocultarCarga();
+
+          if (!data.ok) {
+               document.getElementById("multi-menu-inicial").style.display = "block";
+               document.getElementById("multi-fase-inscripcion").style.display = "none";
+               return alert(data.mensaje);
+          }
+
+          const barraNavegacion = document.querySelector(".nav-modulos-estadio");
+          if (barraNavegacion) barraNavegacion.style.display = "none"; 
+          const btnSalir = document.querySelector(".btn-logout-kick");
+          if (btnSalir) btnSalir.style.display = "none";
+
+          mundialTernaPaises = data.terna;
+          jugadoresSeleccionadosDraft = [];
+
+          const contenedorTerna = document.getElementById("multi-zona-eleccion-pais");
+          if (!contenedorTerna) return;
+          contenedorTerna.innerHTML = "";
+          
+          data.terna.forEach(pais => {
+               const btn = document.createElement("button");
+               btn.className = "btn-estadio btn-modulo-match";
+               btn.style.margin = "8px";
+               btn.innerText = `⚽ ${pais.toUpperCase()}`;
+               btn.onclick = () => iniciarDraftJugadoresMundialMulti(pais);
+               contenedorTerna.appendChild(btn);
+          });
+
+     } catch (err) { 
+          console.error("Error en draft multi frontend:", err); 
+          ocultarCarga(); 
+     }
+}
+
 /* ========================================================================
    🚨 ANUNCIOS GLOBAL & MODALS
    ======================================================================== */
@@ -795,30 +842,6 @@ async function abrirDraftMulti(esCreador) {
     document.getElementById("multi-menu-inicial").style.display = "none";
     document.getElementById("multi-fase-inscripcion").style.display = "block";
     prepararInscripcionMundialMulti();
-}
-
-async function prepararInscripcionMundialMulti() {
-     if (!usuarioActual) return;
-     mostrarCarga("Conectando con la central Online...");
-     try {
-          const res = await fetch(`${URL_BASE}/multijugador/preparar-draft`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ usuario_id: usuarioActual.id }) });
-          const data = await res.json(); ocultarCarga();
-
-          if (!data.ok) {
-               document.getElementById("multi-menu-inicial").style.display = "block";
-               document.getElementById("multi-fase-inscripcion").style.display = "none";
-               return alert(data.mensaje);
-          }
-          document.querySelector(".nav-modulos-estadio").style.display = "none"; document.querySelector(".btn-logout-kick").style.display = "none";
-
-          mundialTernaPaises = data.terna; jugadoresSeleccionadosDraft = [];
-          const cont = document.getElementById("multi-zona-eleccion-pais"); cont.innerHTML = "";
-          
-          data.terna.forEach(pais => {
-               const btn = document.createElement("button"); btn.className = "btn-estadio btn-modulo-match"; btn.innerText = `⚽ ${pais.toUpperCase()}`;
-               btn.onclick = () => iniciarDraftJugadoresMundialMulti(pais); cont.appendChild(btn);
-          });
-     } catch (err) { ocultarCarga(); }
 }
 
 function iniciarDraftJugadoresMundialMulti(paisElegido) {
