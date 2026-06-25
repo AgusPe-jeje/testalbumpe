@@ -87,13 +87,16 @@ async function actualizarTimbasRestantesUI() {
    🎛️ 1. CONTROL DE MÓDULOS DE LA UI
    ======================================================================== */
 function cambiarModulo(idModulo, botonPresionado) {
+     // Oculta tanto los módulos comunes como el multijugador
      document.querySelectorAll('.modulo-contenido, #modulo-mundial-multi').forEach(mod => mod.style.display = 'none');
      document.querySelectorAll('.tile-modulo-fifa, .btn-modulo-match').forEach(btn => btn.classList.remove('activo'));
      
+     // Muestra el módulo clickeado
      const modActivo = document.getElementById(idModulo);
      if (modActivo) modActivo.style.display = 'block';
      if (botonPresionado) botonPresionado.classList.add('activo');
 
+     // Lógica de carga interna de cada sección
      if (idModulo === 'modulo-album' && usuarioActual) cargarAlbumLocal();
      if (idModulo === 'modulo-penales' && usuarioActual) iniciarDueloLocal();
      
@@ -101,7 +104,7 @@ function cambiarModulo(idModulo, botonPresionado) {
           rotarPartidoTimba();
           document.getElementById("select-tipo-apuesta").value = "monedas"; 
           conmutarControlesTimbaUI();
-          allTimbasRestantesUI();
+          actualizarTimbasRestantesUI(); // ✨ Corregido: antes decía allTimbasRestantesUI
      }
 }
 
