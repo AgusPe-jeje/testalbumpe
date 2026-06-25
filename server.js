@@ -246,6 +246,34 @@ async function inicializarTablas() {
 
         )`);
 
+        // 🚀 4. Tabla de Salas Multijugador (Aseguramos columnas de fase)
+        await pool.query(`CREATE TABLE IF NOT EXISTS mundial_salas (
+            id SERIAL PRIMARY KEY,
+            codigo_sala VARCHAR(6) UNIQUE NOT NULL,
+            creador_id INTEGER REFERENCES usuarios(id),
+            tipo_apuesta VARCHAR(50) DEFAULT 'amistoso',
+            apuesta_oro INTEGER DEFAULT 0,
+            pozo_total INTEGER DEFAULT 0,
+            estado VARCHAR(20) DEFAULT 'esperando',
+            fase_actual VARCHAR(50) DEFAULT 'CUARTOS' -- <-- Columna de control de fase activa
+        )`);
+        
+        // Parches automáticos por si la tabla ya existía de antes en Neon:
+        await pool.query(`ALTER TABLE mundial_salas ADD COLUMN IF NOT EXISTS fase_actual VARCHAR(50) DEFAULT 'CUARTOS';`);
+        await pool.query(`ALTER TABLE mundial_salas DROP COLUMN IF EXISTS nombre;`);
+        
+        // 🚀 5. Tabla de Participantes (Aseguramos columna de check interactivo)
+        await pool.query(`CREATE TABLE IF NOT EXISTS sala_participantes (
+            id SERIAL PRIMARY KEY,
+            sala_id INTEGER REFERENCES mundial_salas(id) ON DELETE CASCADE,
+            usuario_id INTEGER REFERENCES usuarios(id),
+            seleccion VARCHAR(50) NOT NULL,
+            jugador_ids INTEGER[] NOT NULL,
+            listo_proxima_fase BOOLEAN DEFAULT FALSE -- <-- Columna para el OK de cada DT
+        )`);
+
+await pool.query(`ALTER TABLE sala_participantes ADD COLUMN IF NOT EXISTS listo_proxima_fase BOOLEAN DEFAULT FALSE;`);
+
 
 
         const checkJugadores = await pool.query("SELECT COUNT(*) as count FROM jugadores");
@@ -4319,6 +4347,29 @@ function simularPartidoEliminatorio(equipo1, equipo2) {
     };
 
 }
+
+// Endpoints interactivos para sincronizar confirmaciones en vivo
+app.post('/api/multijugador/voto-listo', async (req, res) => {
+    const { usuario_id, sala_id } = req.body;
+    try {
+        await pool.query("UPDATE sala_participantes SET listo_proxima_fase = TRUE WHERE sala_id = $1 AND usuario_id = $2", [sala_id, usuario_id]);
+        
+        // Verificamos si ambos jugadores de la sala ya dieron el OK
+        const check = await pool.query("SELECT id FROM sala_participantes WHERE sala_id = $1 AND listo_proxima_fase = FALSE", [sala_id]);
+        
+        // Si ya nadie falta dar el OK, avanzamos de fase la sala de forma global en la DB
+        if (check.rows.length === 0) {
+            const sala = await pool.query("SELECT fase_actual FROM mundial_salas WHERE id = $1", [sala_id]);
+            let proximaFase = 'FINALIZADO';
+            if (sala.rows[0].fase_actual === 'CUARTOS') proximaFase = 'SEMIFINAL';
+            else if (sala.rows[0].fase_actual === 'SEMIFINAL') proximaFase = 'FINAL';
+
+            await pool.query("UPDATE mundial_salas SET fase_actual = $1 WHERE id = $2", [proximaFase, sala_id]);
+            await pool.query("UPDATE sala_participantes SET listo_proxima_fase = FALSE WHERE sala_id = $1", [sala_id]); // reseteamos votos
+        }
+        return res.json({ ok: true });
+    } catch (e) { return res.status(500).json({ ok: false, error: e.message }); }
+});
 
 
 
