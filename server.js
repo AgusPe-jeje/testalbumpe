@@ -1924,14 +1924,19 @@ app.post('/api/mundial/jugar', async (req, res) => {
 app.post('/api/multijugador/preparar-draft', async (req, res) => {
     const { usuario_id } = req.body;
     try {
+        // ✨ Corregido: j.id = up.jugador_id (antes decía jogador_id)
         const pValidos = await pool.query(`
             SELECT j.pais FROM usuario_progreso up JOIN jugadores j ON up.jugador_id = j.id 
             WHERE up.usuario_id = $1 AND up.cantidad > 0 GROUP BY j.pais HAVING COUNT(j.id) >= 3
         `, [usuario_id]);
+        
         const candidatos = pValidos.rows.map(r => r.pais);
         if (candidatos.length === 0) return res.json({ ok: false, mensaje: "❌ Requisito insuficiente: Necesitás al menos 3 jugadores de un mismo país desbloqueados." });
         return res.json({ ok: true, terna: mezclarArray([...candidatos]).slice(0, 3) });
-    } catch (err) { return res.status(500).json({ ok: false, error: err.message }); }
+    } catch (err) { 
+        console.error("❌ Error en preparar-draft:", err.message); // Esto te va a tirar el log exacto en Render si pasa algo más
+        return res.status(500).json({ ok: false, error: err.message }); 
+    }
 });
 
 app.post('/api/multijugador/crear', async (req, res) => {
