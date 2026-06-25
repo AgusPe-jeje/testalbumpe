@@ -109,8 +109,11 @@ async function inicializarTablas() {
             ultima_timba_mundial TIMESTAMP WITH TIME ZONE DEFAULT NULL
         )`);
 
-        // 2. Tabla de Jugadores
-        await pool.query(`CREATE TABLE IF NOT EXISTS jugadores (
+        // 🔥 PARCHE RECONSTRUCTOR: Si la tabla vieja no tenía el UNIQUE, la tiramos y la creamos bien
+        await pool.query(`DROP TABLE IF EXISTS jugadores CASCADE`);
+
+        // 2. Tabla de Jugadores con UNIQUE real en el motor de Neon
+        await pool.query(`CREATE TABLE jugadores (
             id SERIAL PRIMARY KEY,
             nombre VARCHAR(100) UNIQUE NOT NULL,
             pais VARCHAR(50) NOT NULL,
@@ -218,13 +221,12 @@ async function inicializarTablas() {
                     [j[0], j[1], j[2], j[3], j[4], j[5]]
                 );
             }
-            console.log(`✅ Base de datos inicializada: ${granListaJugadores.length} jugadores cargados.`);
+            console.log(`✅ Base de datos inicializada correctamente con índices UNIQUE.`);
         }
     } catch (err) {
         console.error("❌ Error al inicializar estructuras en Neon:", err.message);
     }
 }
-
 inicializarTablas();
 
 /* ========================================================================
