@@ -2,8 +2,8 @@
    ===         🏆 VIRTUAL ALBUM MUNDIAL - ENGINE CORREGIDO 🏆           ===
    ======================================================================== */
 
-const URL_RENDER_SERVICIO = "https://testalbumpe-5feo.onrender.com/"; // 👈 Fíjate que tiene una barra al final
-const URL_BASE = `${URL_RENDER_SERVICIO}/api`; // 👈 Al sumarle otra barra acá, se arma el "//api"
+const URL_RENDER_SERVICIO = "https://testalbumpe-5feo.onrender.com"; // 👈 SIN LA BARRA AL FINAL
+const URL_BASE = `${URL_RENDER_SERVICIO}/api`; // 👈 Ahora sí va a quedar limpio: https://testalbumpe-5feo.onrender.com/api
 
 let usuarioActual = null;
 let direccionGanadora = "";
