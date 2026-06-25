@@ -45,10 +45,12 @@ app.use((req, res, next) => {
     next();
 });
 
+app.use(express.static(path.join(__dirname)));
+
 /* ========================================================================
    📦 BASE DE DATOS E INICIALIZACIÓN
    ======================================================================== */
-// 1️⃣ PRIMERO DEFINIMOS EL POOL
+// 1️⃣ PRIMERO DEFINIMOS EL POOL (Corregido arriba para que no dé undefined)
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
     ssl: { rejectUnauthorized: false }
@@ -97,7 +99,7 @@ async function inicializarTablas() {
             PRIMARY KEY (usuario_id, jugador_id)
         )`);
 
-        // 🚀 4. NUEVA: Tabla de Salas Multijugador (Sincronizada sin la columna 'nombre')
+        // 🚀 4. Tabla de Salas Multijugador (Sincronizada sin la columna 'nombre')
         await pool.query(`CREATE TABLE IF NOT EXISTS mundial_salas (
             id SERIAL PRIMARY KEY,
             codigo_sala VARCHAR(6) UNIQUE NOT NULL,
@@ -109,7 +111,7 @@ async function inicializarTablas() {
             fase_actual VARCHAR(50) DEFAULT 'GRUPOS'
         )`);
 
-        // 🚀 5. NUEVA: Tabla de Participantes en las Salas
+        // 🚀 5. Tabla de Participantes en las Salas
         await pool.query(`CREATE TABLE IF NOT EXISTS sala_participantes (
             id SERIAL PRIMARY KEY,
             sala_id INTEGER REFERENCES mundial_salas(id) ON DELETE CASCADE,
@@ -120,37 +122,25 @@ async function inicializarTablas() {
             listo_proxima_fase BOOLEAN DEFAULT FALSE
         )`);
 
-        // Bloque de carga de lista inicial de jugadores (Opcional según tu lógica)
+        // Bloque de carga de lista inicial de jugadores
         const checkJugadores = await pool.query("SELECT COUNT(*) as count FROM jugadores");
         if (parseInt(checkJugadores.rows[0].count) === 0) {
             const granListaJugadores = [
-                   // --- AUSTRALIA ---
+                // --- AUSTRALIA ---
+                ['Aiden O\'Neill', 'Australia', '🇦🇺', 'Mediocampista', 'fotos/aus_oneill.jpg', 'comun'],
+                ['Alessandro Circati', 'Australia', '🇦🇺', 'Defensor', 'fotos/aus_circa.jpg', 'comun'],
+                ['Aziz Behich', 'Australia', '🇦🇺', 'Defensor', 'fotos/aus_behich.jpg', 'rara'],
+                ['Cameron Burgess', 'Australia', '🇦🇺', 'Defensor', 'fotos/aus_burges.jpg', 'comun'],
+                ['Craig Goodwin', 'Australia', '🇦🇺', 'Delantero', 'fotos/aus_goodwin.jpg', 'rara'],
+                ['Harry Souttar', 'Australia', '🇦🇺', 'Defensor', 'fotos/aus_souttar.jpg', 'rara'],
+                ['Jackson Irvine', 'Australia', '🇦🇺', 'Mediocampista', 'fotos/aus_irvine.jpg', 'rara'],
+                ['Jordan Bos', 'Australia', '🇦🇺', 'Defensor', 'fotos/aus_bos.jpg', 'comun'],
+                ['Kusini Yengi', 'Australia', '🇦🇺', 'Delantero', 'fotos/aus_yengi.jpg', 'comun'],
+                ['Lewis Miller', 'Australia', '🇦🇺', 'Defensor', 'fotos/aus_miller.jpg', 'comun'],
+                ['Mathew Ryan', 'Australia', '🇦🇺', 'Arquero', 'fotos/aus_ryan.jpg', 'epica'],
+                ['Milos Degenek', 'Australia', '🇦🇺', 'Defensor', 'fotos/aus_degenek.jpg', 'comun'],
+                ['Nestory Irankunda', 'Australia', '🇦🇺', 'Delantero', 'fotos/aus_irankun.jpg', 'legendaria']
 
-                    ['Aiden O\'Neill', 'Australia', '🇦🇺', 'Mediocampista', 'fotos/aus_oneill.jpg', 'comun'],
-
-                    ['Alessandro Circati', 'Australia', '🇦🇺', 'Defensor', 'fotos/aus_circa.jpg', 'comun'],
-
-                    ['Aziz Behich', 'Australia', '🇦🇺', 'Defensor', 'fotos/aus_behich.jpg', 'rara'],
-
-                    ['Cameron Burgess', 'Australia', '🇦🇺', 'Defensor', 'fotos/aus_burges.jpg', 'comun'],
-
-                    ['Craig Goodwin', 'Australia', '🇦🇺', 'Delantero', 'fotos/aus_goodwin.jpg', 'rara'],
-
-                    ['Harry Souttar', 'Australia', '🇦🇺', 'Defensor', 'fotos/aus_souttar.jpg', 'rara'],
-
-                    ['Jackson Irvine', 'Australia', '🇦🇺', 'Mediocampista', 'fotos/aus_irvine.jpg', 'rara'],
-
-                    ['Jordan Bos', 'Australia', '🇦🇺', 'Defensor', 'fotos/aus_bos.jpg', 'comun'],
-
-                    ['Kusini Yengi', 'Australia', '🇦🇺', 'Delantero', 'fotos/aus_yengi.jpg', 'comun'],
-
-                    ['Lewis Miller', 'Australia', '🇦🇺', 'Defensor', 'fotos/aus_miller.jpg', 'comun'],
-
-                    ['Mathew Ryan', 'Australia', '🇦🇺', 'Arquero', 'fotos/aus_ryan.jpg', 'epica'],
-
-                    ['Milos Degenek', 'Australia', '🇦🇺', 'Defensor', 'fotos/aus_degenek.jpg', 'comun'],
-
-                    ['Nestory Irankunda', 'Australia', '🇦🇺', 'Delantero', 'fotos/aus_irankun.jpg', 'legendaria'],
 
 
 
@@ -1467,7 +1457,6 @@ async function inicializarTablas() {
                     ['Francis de Vries', 'Nueva Zelanda', '🇳🇿', 'Defensor', 'fotos/zel_vries.jpg', 'comun'], //
 
                     ['Chris Wood', 'Nueva Zelanda', '🇳🇿', 'Delantero', 'fotos/zel_wood.jpg', 'legendaria'], //
-
             ];
 
             for (const j of granListaJugadores) {
@@ -1486,6 +1475,9 @@ async function inicializarTablas() {
         console.error("❌ Error al inicializar estructuras en Neon:", err.message);
     }
 }
+
+// 3️⃣ DISPARAMOS LA INICIALIZACIÓN
+inicializarTablas();
 
 /* ========================================================================
    👤 ENDPOINTS DE AUTENTICACIÓN Y USUARIOS
@@ -1751,7 +1743,7 @@ app.post('/api/timba/preparar', async (req, res) => {
             combinacionesUsadas.add(combo); poolOpciones.push({ label: combo.replace('-', ' - '), tipo: 'error' });
         }
 
-        apuestasActivasServidor[usuario_id] = { golesLReal, golesVReal, tipoApuesta, montoApuesta, jugadorIdApostado, mapeoOpciones: poolOpciones };
+        puestasActivasServidor[usuario_id] = { golesLReal, golesVReal, tipoApuesta, montoApuesta, jugadorIdApostado, mapeoOpciones: poolOpciones };
         return res.json({ ok: true, opciones: poolOpciones.map((opc, idx) => ({ idOpcion: idx, label: opc.label })).sort(() => Math.random() - 0.5), timbas_restantes: nuevasTimbas, siguienteIn: nuevasTimbas >= MAX_TIMBAS ? 0 : MILISEGUNDOS_POR_TIMBA });
     } catch (err) { return res.status(500).json({ ok: false, mensaje: "Error en preparación." }); }
 });
@@ -1930,12 +1922,9 @@ app.post('/api/mundial/jugar', async (req, res) => {
 /* ========================================================================
    🏆 MÓDULO MULTIJUGADOR CORE - REFORMADO CON FASES EN VIVO & INTERACTIVO
    ======================================================================== */
-
-// Sincronizado dinámicamente con tu columna real up.cantidad
 app.post('/api/multijugador/preparar-draft', async (req, res) => {
     const { usuario_id } = req.body;
     try {
-        // ✨ Corregido: j.id = up.jugador_id (antes decía jogador_id)
         const pValidos = await pool.query(`
             SELECT j.pais FROM usuario_progreso up JOIN jugadores j ON up.jugador_id = j.id 
             WHERE up.usuario_id = $1 AND up.cantidad > 0 GROUP BY j.pais HAVING COUNT(j.id) >= 3
@@ -1945,7 +1934,7 @@ app.post('/api/multijugador/preparar-draft', async (req, res) => {
         if (candidatos.length === 0) return res.json({ ok: false, mensaje: "❌ Requisito insuficiente: Necesitás al menos 3 jugadores de un mismo país desbloqueados." });
         return res.json({ ok: true, terna: mezclarArray([...candidatos]).slice(0, 3) });
     } catch (err) { 
-        console.error("❌ Error en preparar-draft:", err.message); // Esto te va a tirar el log exacto en Render si pasa algo más
+        console.error("❌ Error en preparar-draft:", err.message);
         return res.status(500).json({ ok: false, error: err.message }); 
     }
 });
@@ -1970,7 +1959,6 @@ app.post('/api/multijugador/crear', async (req, res) => {
             await pool.query("UPDATE usuario_progreso SET cantidad = cantidad - 1 WHERE usuario_id = $1 AND jugador_id = $2", [usuario_id, rep.rows[0].jugador_id]);
         }
 
-        // Tabla real: mundial_salas. Seteamos por defecto fase_actual = 'GRUPOS'
         const sRes = await pool.query(`INSERT INTO mundial_salas (codigo_sala, creador_id, tipo_apuesta, apuesta_oro, pozo_total, estado, fase_actual) VALUES ($1, $2, $3, $4, $5, 'esperando', 'GRUPOS') RETURNING id`, [codigo, usuario_id, mod, monto, pozo]);
         await pool.query(`INSERT INTO sala_participantes (sala_id, usuario_id, seleccion, jugador_ids, sigue_competencia, listo_proxima_fase) VALUES ($1, $2, $3, $4::INTEGER[], TRUE, FALSE)`, [sRes.rows[0].id, usuario_id, seleccion, `{${jugador_ids.join(',')}}`]);
 
@@ -2027,7 +2015,7 @@ app.post('/api/multijugador/voto-listo', async (req, res) => {
 app.post('/api/multijugador/avanzar-fase', async (req, res) => {
     const { sala_id } = req.body;
     try {
-        const pend = await pool.query("SELECT id FROM sala_participantes WHERE sala_id = $1 AND sigue_competencia = TRUE AND listo_proxima_fase = FALSE", [sala_id]);
+        const pend = await pool.query("SELECT id FROM sala_participantes WHERE sala_id = $1 && sigue_competencia = TRUE && listo_proxima_fase = FALSE", [sala_id]);
         if (pend.rows.length > 0) return res.json({ ok: false, mensaje: "Quedan usuarios pendientes." });
 
         const s = await pool.query("SELECT fase_actual FROM mundial_salas WHERE id = $1", [sala_id]);
@@ -2088,7 +2076,7 @@ app.post('/api/multijugador/jugar', async (req, res) => {
                 premio = { tipo_apuesta: 'carta', ganador_username: champ.username, nombreCartaPremio: "Cromo Rival Transferido", ganoBot: false };
             }
         } else {
-            await pool.query("UPDATE mundial_salas SET estado = 'esperando_votos' WHERE id = $1", [sala_id]);
+            await pool.query("UPDATE mundial_salas SET estado = 'esperando_votos' WHERE id = $1");
         }
 
         BITACORAS_SALA_CACHE[sala_id] = { bitacora, premio, fase };
@@ -2114,7 +2102,6 @@ function simCruceLg(c1, c2, rLabel) {
 /* ========================================================================
    🎛️ FUNCIONES AUXILIARES: GENERADOR DE CÓDIGO Y MEZCLADOR
    ======================================================================== */
-
 // 🎲 1. Genera el código alfanumérico único de 6 caracteres para la sala
 function generarCodigoSala() {
     const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
