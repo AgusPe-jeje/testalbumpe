@@ -2030,7 +2030,7 @@ async function consultarResultadoInvitado(intento = 1) {
      }
 }
 
-// 🔥 10. FUNCIÓN MAESTRA MULTIJUGADOR: TRANSMISIÓN SINCRONIZADA E INTERACTIVA POR CONFIRMACIÓN DE AMBOS
+// 🔥 10. FUNCIÓN MAESTRA MULTIJUGADOR: TRANSMISIÓN 100% EN VIVO SINCRONIZADA POR NEON DB
 window.renderizarFixturePasoAPaso = function(bitacora, premio, apuestasTexto) {
     document.getElementById("multi-lobby-espera").style.display = "none";
     document.getElementById("multi-pantalla-fixture").style.display = "block";
@@ -2043,21 +2043,18 @@ window.renderizarFixturePasoAPaso = function(bitacora, premio, apuestasTexto) {
 
     if (apuestasTexto && Array.isArray(apuestasTexto) && apuestasTexto.length > 0) {
         const bloqueTextoApuestas = document.createElement("div");
-        bloqueTextoApuestas.style.cssText = "background: rgba(255, 0, 0, 0.05); border: 1px solid var(--rojo); padding: 12px; border-radius: 8px; margin-bottom: 20px; font-weight: bold; color: #fff; font-size: 0.95rem; text-align: center; font-family: sans-serif; line-height: 1.5; box-shadow: 0 0 10px rgba(239, 68, 68, 0.1);";
+        bloqueTextoApuestas.style.cssText = "background: rgba(255, 0, 0, 0.05); border: 1px solid var(--rojo); padding: 12px; border-radius: 8px; margin-bottom: 20px; font-weight: bold; color: #fff; font-size: 0.95rem; text-align: center; font-family: sans-serif; line-height: 1.5;";
         bloqueTextoApuestas.innerHTML = `⚠️ <span style="color: var(--rojo); font-family: 'Oswald';">CROMOS ARRIESGADOS EN ESTA ARENA:</span><br>${apuestasTexto.join('<br>')}`;
         tablero.appendChild(bloqueTextoApuestas);
     }
 
-    if (!bitacora || !Array.isArray(bitacora) || bitacora.length === 0) {
-        console.warn("⚠️ No se recibió bitácora válida.");
-        return;
-    }
+    if (!bitacora || !Array.isArray(bitacora) || bitacora.length === 0) return;
 
-    // Agrupamos por fases para controlar las pausas de confirmación mutua
+    // Dividimos la bitácora según las fases que devuelve el backend
     const fases = {
-        cuartos: bitacora.filter(p => p.ronda.includes("Cuartos")),
-        semis: bitacora.filter(p => p.ronda.includes("Semifinal")),
-        final: bitacora.filter(p => p.ronda.includes("Final"))
+        'CUARTOS': bitacora.filter(p => p.ronda.toLowerCase().includes("cuartos")),
+        'SEMIFINAL': bitacora.filter(p => p.ronda.toLowerCase().includes("semifinal")),
+        'FINAL': bitacora.filter(p => p.ronda.toLowerCase().includes("final") || p.ronda.toLowerCase().includes("gran final"))
     };
 
     function simularTandaPartidos(listaPartidos) {
@@ -2068,23 +2065,19 @@ window.renderizarFixturePasoAPaso = function(bitacora, premio, apuestasTexto) {
                     const index = bitacora.indexOf(partido);
                     const loc = partido.local || "Local";
                     const vis = partido.visitante || "Rival";
-                    const rondaNombre = partido.ronda || "Partido";
                     
-                    const golesLocalDefinitivos = partido.golesLocal || 0;
-                    const golesVisitanteDefinitivos = partido.golesVisitante || 0;
-
                     const bloquePartido = document.createElement("div");
                     bloquePartido.className = "item-historial-partido";
                     bloquePartido.style.cssText = "flex-direction: column; align-items: stretch; background: #0b111e; margin-bottom:15px; border-left:4px solid var(--dorado); padding: 10px;";
                     
                     const esLocalPropio = loc.trim().toLowerCase() === miSeleccionUsuario.trim().toLowerCase();
                     const esVisitantePropio = vis.trim().toLowerCase() === miSeleccionUsuario.trim().toLowerCase();
-                    const estiloLocal = esLocalPropio ? "color: var(--dorado); font-weight: bold; background: rgba(255,215,0,0.12); padding: 2px 6px; border-radius: 4px; border: 1px solid rgba(255,215,0,0.3);" : "";
-                    const estiloVisitante = esVisitantePropio ? "color: var(--dorado); font-weight: bold; background: rgba(255,215,0,0.12); padding: 2px 6px; border-radius: 4px; border: 1px solid rgba(255,215,0,0.3);" : "";
+                    const estiloLocal = esLocalPropio ? "color: var(--dorado); font-weight: bold; background: rgba(255,215,0,0.12); padding: 2px 6px; border-radius: 4px;" : "";
+                    const estiloVisitante = esVisitantePropio ? "color: var(--dorado); font-weight: bold; background: rgba(255,215,0,0.12); padding: 2px 6px; border-radius: 4px;" : "";
 
                     bloquePartido.innerHTML = `
                         <div style="display:flex; justify-content:space-between; color:var(--dorado); font-size:0.9rem; border-bottom:1px solid #1a2436; padding-bottom:4px;">
-                            <span>📋 ${rondaNombre.toUpperCase()}</span>
+                            <span>📋 ${partido.ronda.toUpperCase()}</span>
                             <span id="multi-reloj-${index}">⏱️ 00:00</span>
                         </div>
                         <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
@@ -2101,10 +2094,10 @@ window.renderizarFixturePasoAPaso = function(bitacora, premio, apuestasTexto) {
                     const timerMulti = setInterval(() => {
                         minVirtual += 15;
                         if (minVirtual > 90) minVirtual = 90;
-                        if (minVirtual >= 30 && gL_act < golesLocalDefinitivos && golesLocalDefinitivos > 0) gL_act++;
-                        if (minVirtual >= 60 && gV_act < golesVisitanteDefinitivos && golesVisitanteDefinitivos > 0) gV_act++;
+                        if (minVirtual >= 30 && gL_act < partido.golesLocal && partido.golesLocal > 0) gL_act++;
+                        if (minVirtual >= 60 && gV_act < partido.golesVisitante && partido.golesVisitante > 0) gV_act++;
 
-                        if (minVirtual === 90) { gL_act = golesLocalDefinitivos; gV_act = golesVisitanteDefinitivos; }
+                        if (minVirtual === 90) { gL_act = partido.golesLocal; gV_act = partido.golesVisitante; }
 
                         const relojElement = document.getElementById(`multi-reloj-${index}`);
                         const scoreElement = document.getElementById(`multi-score-${index}`);
@@ -2131,6 +2124,80 @@ window.renderizarFixturePasoAPaso = function(bitacora, premio, apuestasTexto) {
         return promesaTanda;
     }
 
+    function esperarFaseSincronizada(faseCompletada, proximaFaseNombre) {
+        return new Promise((resolveEtapaDestrabada) => {
+            const bloquePausa = document.createElement("div");
+            bloquePausa.style.cssText = "text-align:center; background:#111a2e; border: 1px dashed var(--dorado); padding: 15px; border-radius: 8px; margin: 20px 0;";
+            bloquePausa.innerHTML = `
+                <h4 style="color:var(--dorado); font-family:'Oswald'; margin:0 0 5px 0;">⏳ ETAPA TERMINADA</h4>
+                <p id="texto-sincro-${faseCompletada}" style="color:#bbb; font-size:0.9rem; margin:0 0 12px 0;">Presioná el botón para pasar a ${proximaFaseNombre}.</p>
+                <button type="button" id="btn-sincro-${faseCompletada}" class="btn-estadio" style="width:70%; margin:0 auto; padding: 8px 15px; background:var(--verde-match); border-color:var(--verde-match); font-weight:bold;">
+                    👍 CONFIRMAR Y CONTINUAR
+                </button>
+            `;
+            tablero.appendChild(bloquePausa);
+            bloquePausa.scrollIntoView({ behavior: 'smooth' });
+
+            const btn = document.getElementById(`btn-sincro-${faseCompletada}`);
+            const texto = document.getElementById(`texto-sincro-${faseCompletada}`);
+
+            btn.onclick = async function() {
+                btn.disabled = true;
+                btn.innerText = "⏳ ESPERANDO AL RIVAL PE...";
+                btn.style.background = "#222";
+
+                // Enviamos nuestro voto listo a Neon
+                await fetch('/api/multijugador/voto-listo', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ usuario_id: miUsuarioId, sala_id: multiSalaId })
+                });
+
+                // Polling en vivo contra la tabla de salas hasta que la fase_actual cambie de valor
+                const loopSincroReal = setInterval(async () => {
+                    const res = await fetch(`/api/multijugador/sala/${multiCodigoSala}`);
+                    const sala = await res.json();
+                    if (sala.ok && sala.fase_actual !== faseCompletada) {
+                        clearInterval(loopSincroReal);
+                        texto.innerText = "¡AMBOS CONFIRMARON! Abriendo transmisión...";
+                        bloquePausa.style.opacity = "0.5";
+                        setTimeout(() => { bloquePausa.remove(); resolveEtapaDestrabada(); }, 1200);
+                    }
+                }, 1500);
+            };
+        });
+    }
+
+    // 🔥 Cadena síncrona en fila real: Cuartos -> Pausa -> Semis -> Pausa -> Final
+    simularTandaPartidos(fases['CUARTOS'])
+    .then(() => esperarFaseSincronizada('CUARTOS', 'SEMIFINALES'))
+    .then(() => simularTandaPartidos(fases['SEMIFINAL']))
+    .then(() => esperarFaseSincronizada('SEMIFINAL', 'LA GRAN FINAL'))
+    .then(() => simularTandaPartidos(fases['FINAL']))
+    .then(() => {
+         // ========================================================================
+         // 🏁 FIN DEL TORNEO COMPLETO Y PREMIOS
+         // ========================================================================
+         const bloquePremio = document.createElement("div");
+         bloquePremio.style.cssText = "text-align:center; margin-top:25px; padding:15px; background:rgba(0,255,136,0.05); border:2px dashed var(--dorado); border-radius:10px;";
+         let textoPremio = premio && !premio.ganoBot ? `🏆 ¡FIN DEL TORNEO! 🏆\n👑 Campeón: ${premio.ganador_username.toUpperCase()}` : `🤖 Torneo ganado por un Bot.`;
+         
+         bloquePremio.innerHTML = `
+              <h3 style="color:var(--dorado); font-family:'Oswald'; margin:0 0 10px 0;">🏁 CRÓNICA DEFINITIVA</h3>
+              <p style="color:#fff; font-weight:bold; white-space:pre-line; font-size:1.05rem;">${textoPremio}</p>
+              <button type="button" id="btn-regresar-limpio-multi" class="btn-estadio btn-next-shot" style="width:80%; margin:15px auto 0; background:var(--celeste); border-color:var(--celeste);">
+                   🔄 REGRESAR A LA HOME PE
+              </button>
+         `;
+         tablero.appendChild(bloquePremio);
+         bloquePremio.scrollIntoView({ behavior: 'smooth' });
+
+         document.getElementById("btn-regresar-limpio-multi").onclick = () => {
+             document.getElementById("multi-pantalla-fixture").style.display = "none";
+             document.getElementById("multi-menu-inicial").style.display = "block";
+         };
+    });
+};
     // 🛑 PAUSA INTERACTIVA REAL: Ambos jugadores deben tocar el botón para avanzar de fase
     function crearPausaFase(indexFase, nombreSiguienteFase) {
         return new Promise((resolvePausaMutua) => {
