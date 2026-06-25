@@ -643,29 +643,43 @@ function arrancarCronometroMundialVisual(ms) {
      }, 1000);
 }
 
-async function prepararInscripcionMundial() {
+async function prepararInscripcionMundialMulti() {
      if (!usuarioActual) return;
-     mostrarCarga("Inscribiendo equipo...");
+     mostrarCarga("Conectando con la central Online...");
      try {
-          const res = await fetch(`${URL_BASE}/mundial/preparar`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ usuario_id: usuarioActual.id }) });
-          const data = await res.json(); ocultarCarga();
-          if (!data.ok) return alert(data.mensaje);
-
-          usuarioActual.monedas = data.monedasActualizadas; actualizarInterfazUI();
-          document.querySelector(".nav-modulos-estadio").style.display = "none"; document.querySelector(".btn-logout-kick").style.display = "none";
-
-          mundialTernaPaises = data.terna; mundialRivalClasif = data.rivalClasificacion; jugadoresSeleccionadosDraft = [];
-          const cont = document.getElementById("zona-eleccion-pais-mundial"); cont.innerHTML = "";
-          
-          document.getElementById("fase-inscripcion-mundial").style.display = "block";
-          document.getElementById("fase-draft-mundial").style.display = "none";
-          document.getElementById("fase-fixture-mundial").style.display = "none";
-
-          data.terna.forEach(pais => {
-               const btn = document.createElement("button"); btn.className = "btn-estadio btn-modulo-match"; btn.innerText = `⚽ ${pais.toUpperCase()}`;
-               btn.onclick = () => iniciarDraftJugadoresMundial(pais); cont.appendChild(btn);
+          // ✨ Forzamos el método POST con su cabecera y body correspondientes
+          const res = await fetch(`${URL_BASE}/multijugador/preparar-draft`, { 
+               method: 'POST', 
+               headers: { 'Content-Type': 'application/json' }, 
+               body: JSON.stringify({ usuario_id: usuarioActual.id }) 
           });
-     } catch (err) { ocultarCarga(); }
+          const data = await res.json(); 
+          ocultarCarga();
+
+          if (!data.ok) {
+               document.getElementById("multi-menu-inicial").style.display = "block";
+               document.getElementById("multi-fase-inscripcion").style.display = "none";
+               return alert(data.mensaje);
+          }
+          document.querySelector(".nav-modulos-estadio").style.display = "none"; 
+          document.querySelector(".btn-logout-kick").style.display = "none";
+
+          mundialTernaPaises = data.terna; 
+          jugadoresSeleccionadosDraft = [];
+          const cont = document.getElementById("multi-zona-eleccion-pais"); 
+          cont.innerHTML = "";
+          
+          data.terna.forEach(pais => {
+               const btn = document.createElement("button"); 
+               btn.className = "btn-estadio btn-modulo-match"; 
+               btn.innerText = `⚽ ${pais.toUpperCase()}`;
+               btn.onclick = () => iniciarDraftJugadoresMundialMulti(pais); 
+               cont.appendChild(btn);
+          });
+     } catch (err) { 
+          console.error("Error al conectar con preparar-draft:", err);
+          ocultarCarga(); 
+     }
 }
 
 function iniciarDraftJugadoresMundial(paisElegido) {
