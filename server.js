@@ -45,8 +45,21 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use(express.static(path.join(__dirname)));
+/* ========================================================================
+   📦 BASE DE DATOS E INICIALIZACIÓN
+   ======================================================================== */
+// 1️⃣ PRIMERO DEFINIMOS EL POOL
+const pool = new Pool({
+    connectionString: process.env.DATABASE_URL,
+    ssl: { rejectUnauthorized: false }
+});
 
+pool.query('SELECT NOW()', (err, res) => {
+    if (err) console.error('❌ Error de conexión a Neon:', err.message);
+    else console.log('📦 Conectado con éxito a PostgreSQL en Neon.');
+});
+
+// 2️⃣ SEGUNDO DECLARAMOS LA FUNCIÓN QUE USA ESE POOL
 async function inicializarTablas() {
     try {
         // 1. Tabla de Usuarios
