@@ -1486,7 +1486,6 @@ async function inicializarTablas() {
         console.error("❌ Error al inicializar estructuras en Neon:", err.message);
     }
 }
-inicializarTablas();
 
 /* ========================================================================
    👤 ENDPOINTS DE AUTENTICACIÓN Y USUARIOS
