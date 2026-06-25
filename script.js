@@ -2,7 +2,7 @@
    ===         🏆 VIRTUAL ALBUM MUNDIAL - ENGINE CORREGIDO 🏆           ===
    ======================================================================== */
 
-const URL_RENDER_SERVICIO = "https://albumpe.onrender.com";
+const URL_RENDER_SERVICIO = "https://prubaalbumpe.onrender.com";
 const URL_BASE = `${URL_RENDER_SERVICIO}/api`;
 
 let usuarioActual = null;
