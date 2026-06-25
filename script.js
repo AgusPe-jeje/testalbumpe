@@ -2030,7 +2030,7 @@ async function consultarResultadoInvitado(intento = 1) {
      }
 }
 
-// 🔥 10. FUNCIÓN MAESTRA MULTIJUGADOR: TRANSMISIÓN SINCRONIZADA POR FASES E INTERACTIVA (CERO CAMBIOS EN SERVER)
+// 🔥 10. FUNCIÓN MAESTRA MULTIJUGADOR: TRANSMISIÓN INTERACTIVA Y EN VIVO (CERO CAMBIOS EN SERVER)
 window.renderizarFixturePasoAPaso = function(bitacora, premio, apuestasTexto) {
     document.getElementById("multi-lobby-espera").style.display = "none";
     document.getElementById("multi-pantalla-fixture").style.display = "block";
@@ -2039,12 +2039,8 @@ window.renderizarFixturePasoAPaso = function(bitacora, premio, apuestasTexto) {
     if (!tablero) return;
     tablero.innerHTML = ""; 
 
-    // ⚽ Obtenemos la selección del usuario para remarcarla en la UI
     const miSeleccionUsuario = sessionStorage.getItem("mi_seleccion_multi") || ""; 
 
-    // ========================================================================
-    // 🃏 DETALLE TEXTUAL DE LAS CARTAS REPETIDAS EN JUEGO (SIMPLE)
-    // ========================================================================
     if (apuestasTexto && Array.isArray(apuestasTexto) && apuestasTexto.length > 0) {
         const bloqueTextoApuestas = document.createElement("div");
         bloqueTextoApuestas.style.cssText = "background: rgba(255, 0, 0, 0.05); border: 1px solid var(--rojo); padding: 12px; border-radius: 8px; margin-bottom: 20px; font-weight: bold; color: #fff; font-size: 0.95rem; text-align: center; font-family: sans-serif; line-height: 1.5; box-shadow: 0 0 10px rgba(239, 68, 68, 0.1);";
@@ -2057,153 +2053,156 @@ window.renderizarFixturePasoAPaso = function(bitacora, premio, apuestasTexto) {
         return;
     }
 
-    let secuenciaPromesas = Promise.resolve();
-    let ultimaRondaAgrupada = null;
+    // 🗂️ Agrupamos los partidos por fases reales del servidor
+    const fases = {
+        cuartos: bitacora.filter(p => p.ronda.includes("Cuartos")),
+        semis: bitacora.filter(p => p.ronda.includes("Semifinal")),
+        final: bitacora.filter(p => p.ronda.includes("Final"))
+    };
 
-    bitacora.forEach((partido, index) => {
-        const loc = partido.local || "Local";
-        const vis = partido.visitante || "Rival";
-        
-        // Limpiamos los textos tipo "Cuartos de Final (1/4)" para quedarnos solo con "Cuartos de Final" o "Semifinal"
-        const rondaNombre = partido.ronda || `PARTIDO #${index + 1}`;
-        const faseSimplificada = rondaNombre.split(" (")[0]; 
-        
-        const golesLocalDefinitivos = partido.golesLocal || 0;
-        const golesVisitanteDefinitivos = partido.golesVisitante || 0;
+    // Función auxiliar para renderizar una tanda entera de partidos
+    function simularTandaPartidos(listaPartidos) {
+        let promesaTanda = Promise.resolve();
+        listaPartidos.forEach((partido) => {
+            promesaTanda = promesaTanda.then(() => {
+                return new Promise((resolveCruce) => {
+                    const index = bitacora.indexOf(partido);
+                    const loc = partido.local || "Local";
+                    const vis = partido.visitante || "Rival";
+                    const rondaNombre = partido.ronda || "Partido";
+                    
+                    const golesLocalDefinitivos = partido.golesLocal || 0;
+                    const golesVisitanteDefinitivos = partido.golesVisitante || 0;
 
-        // 🛑 FRENO INTERACTIVO: Si cambia la fase (Ej: de Cuartos a Semifinal), metemos la pausa mutua
-        if (ultimaRondaAgrupada && ultimaRondaAgrupada !== faseSimplificada) {
-            secuenciaPromesas = secuenciaPromesas.then(() => {
-                return new Promise((resolveSiguienteFase) => {
-                    const bloquePausa = document.createElement("div");
-                    bloquePausa.style.cssText = "text-align:center; background:#111a2e; border: 1px dashed var(--dorado); padding: 15px; border-radius: 8px; margin: 20px 0; box-shadow: 0 0 15px rgba(255, 215, 0, 0.1);";
-                    bloquePausa.innerHTML = `
-                        <h4 style="color:var(--dorado); font-family:'Oswald'; margin:0 0 5px 0; font-size: 1.1rem;">⏳ ETAPA CONCLUIDA</h4>
-                        <p id="texto-estado-voto-${index}" style="color:#bbb; font-size:0.9rem; margin:0 0 12px 0;">Esperando la confirmación de ambos DTs para continuar...</p>
-                        <button type="button" id="btn-confirmar-fase-${index}" class="btn-estadio" style="width:70%; margin:0 auto; padding: 8px 15px; background:var(--verde-match); border-color:var(--verde-match); font-size:0.9rem; cursor:pointer; font-weight:bold;">
-                            👍 CONFIRMAR Y PASAR A ${faseSimplificada.toUpperCase()}
-                        </button>
+                    const bloquePartido = document.createElement("div");
+                    bloquePartido.className = "item-historial-partido";
+                    bloquePartido.style.cssText = "flex-direction: column; align-items: stretch; background: #0b111e; margin-bottom:15px; border-left:4px solid var(--dorado); padding: 10px;";
+                    
+                    const esLocalPropio = loc.trim().toLowerCase() === miSeleccionUsuario.trim().toLowerCase();
+                    const esVisitantePropio = vis.trim().toLowerCase() === miSeleccionUsuario.trim().toLowerCase();
+                    const estiloLocal = esLocalPropio ? "color: var(--dorado); font-weight: bold; background: rgba(255,215,0,0.12); padding: 2px 6px; border-radius: 4px; border: 1px solid rgba(255,215,0,0.3);" : "";
+                    const estiloVisitante = esVisitantePropio ? "color: var(--dorado); font-weight: bold; background: rgba(255,215,0,0.12); padding: 2px 6px; border-radius: 4px; border: 1px solid rgba(255,215,0,0.3);" : "";
+
+                    bloquePartido.innerHTML = `
+                        <div style="display:flex; justify-content:space-between; color:var(--dorado); font-size:0.9rem; border-bottom:1px solid #1a2436; padding-bottom:4px;">
+                            <span>📋 ${rondaNombre.toUpperCase()}</span>
+                            <span id="multi-reloj-${index}">⏱️ 00:00</span>
+                        </div>
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
+                            <span style="font-size:1.1rem; width:40%; text-align:left; ${estiloLocal}">⚽ ${loc.toUpperCase()}</span>
+                            <span id="multi-score-${index}" style="font-family:'Oswald'; font-size:1.4rem; background:#000; padding:2px 12px; border-radius:4px; color:var(--verde-match);">0 - 0</span>
+                            <span style="font-size:1.1rem; width:40%; text-align:right; ${estiloVisitante}">${vis.toUpperCase()} ⚽</span>
+                        </div>
+                        <div id="multi-penales-box-${index}" style="display:none; text-align:center; color:var(--rojo); font-weight:bold; font-size:0.9rem; margin-top:5px;"></div>
                     `;
-                    tablero.appendChild(bloquePausa);
-                    bloquePausa.scrollIntoView({ behavior: 'smooth' });
+                    tablero.appendChild(bloquePartido);
+                    bloquePartido.scrollIntoView({ behavior: 'smooth' });
 
-                    const btnVoto = document.getElementById(`btn-confirmar-fase-${index}`);
-                    const textoEstado = document.getElementById(`texto-estado-voto-${index}`);
+                    let minVirtual = 0; let gL_act = 0; let gV_act = 0;
+                    const timerMulti = setInterval(() => {
+                        minVirtual += 15;
+                        if (minVirtual > 90) minVirtual = 90;
+                        if (minVirtual >= 30 && gL_act < golesLocalDefinitivos && golesLocalDefinitivos > 0) gL_act++;
+                        if (minVirtual >= 60 && gV_act < golesVisitanteDefinitivos && golesVisitanteDefinitivos > 0) gV_act++;
 
-                    btnVoto.onclick = function() {
-                        btnVoto.disabled = true;
-                        btnVoto.innerText = "⏳ ESPERANDO RIVAL...";
-                        btnVoto.style.background = "#222";
+                        if (minVirtual === 90) { gL_act = golesLocalDefinitivos; gV_act = golesVisitanteDefinitivos; }
 
-                        // Guardamos de forma local en localStorage que este cliente ya dio el OK 
-                        // y usamos el endpoint existente de la sala para sincronizar de forma simulada
-                        localStorage.setItem(`voto_listo_${multiCodigoSala}_${faseSimplificada}`, "true");
+                        const relojElement = document.getElementById(`multi-reloj-${index}`);
+                        const scoreElement = document.getElementById(`multi-score-${index}`);
+                        if (relojElement) relojElement.innerText = `⏱️ MINUTO ${minVirtual}:00`;
+                        if (scoreElement) scoreElement.innerText = `${gL_act} - ${gV_act}`;
 
-                        const loopSincro = setInterval(async () => {
-                            try {
-                                // Consultamos tu endpoint nativo que ya devuelve los participantes de la sala
-                                const res = await fetch(`/api/multijugador/sala/${multiCodigoSala}`);
-                                const data = await res.json();
-                                
-                                if (data.ok) {
-                                    // Simulamos la confirmación del rival: el host avanza y el invitado responde al flujo en vivo
-                                    // Esto permite correr el flujo sincronizado sin tocar una sola línea de tu base de datos de Neon
-                                    clearInterval(loopSincro);
-                                    textoEstado.innerText = "¡ESTADIO CONFIRMADO! Arranca la siguiente etapa...";
-                                    bloquePausa.style.opacity = "0.5";
-                                    setTimeout(() => { resolveSiguienteFase(); }, 1200);
-                                }
-                            } catch (e) {
-                                clearInterval(loopSincro);
-                                resolveSiguienteFase(); // Fallback de seguridad para que no se trabe el juego si se cae la red
+                        if (minVirtual >= 90) {
+                            clearInterval(timerMulti);
+                            if (partido.definicionPenales) {
+                                const pBox = document.getElementById(`multi-penales-box-${index}`);
+                                if (pBox) { pBox.style.display = "block"; pBox.innerText = `💥 TANDA DE PENALES: (${partido.penalesLocal} - ${partido.penalesVisitante})`; }
                             }
-                        }, 1500);
-                    };
+                            bloquePartido.style.borderColor = "var(--verde-match)";
+                            const finTexto = document.createElement("div");
+                            finTexto.style.cssText = "text-align:right; font-size:0.85rem; font-weight:bold; margin-top:5px; color:var(--verde-match);";
+                            finTexto.innerText = ` GANADOR: ${partido.ganadorUsername.toUpperCase()} ✅`;
+                            bloquePartido.appendChild(finTexto);
+                            resolveCruce();
+                        }
+                    }, 400);
                 });
             });
-        }
-
-        ultimaRondaAgrupada = faseSimplificada;
-
-        // ⚽ RENDERIZADO EN VIVO DEL CRUCE MINUTO A MINUTO
-        secuenciaPromesas = secuenciaPromesas.then(() => {
-            return new Promise((resolveCruce) => {
-                const bloquePartido = document.createElement("div");
-                bloquePartido.className = "item-historial-partido";
-                bloquePartido.style.cssText = "flex-direction: column; align-items: stretch; background: #0b111e; margin-bottom:15px; border-left:4px solid var(--dorado); padding: 10px;";
-                
-                // ✨ REMARCADO: Verificamos si juega el país del usuario para clavarle fondo y color dorado
-                const esLocalPropio = loc.trim().toLowerCase() === miSeleccionUsuario.trim().toLowerCase();
-                const esVisitantePropio = vis.trim().toLowerCase() === miSeleccionUsuario.trim().toLowerCase();
-
-                const estiloLocal = esLocalPropio ? "color: var(--dorado); font-weight: bold; background: rgba(255,215,0,0.12); padding: 2px 6px; border-radius: 4px; border: 1px solid rgba(255,215,0,0.3);" : "";
-                const estiloVisitante = esVisitantePropio ? "color: var(--dorado); font-weight: bold; background: rgba(255,215,0,0.12); padding: 2px 6px; border-radius: 4px; border: 1px solid rgba(255,215,0,0.3);" : "";
-
-                bloquePartido.innerHTML = `
-                    <div style="display:flex; justify-content:space-between; color:var(--dorado); font-size:0.9rem; border-bottom:1px solid #1a2436; padding-bottom:4px;">
-                        <span>📋 ${rondaNombre.toUpperCase()}</span>
-                        <span id="multi-reloj-${index}">⏱️ 00:00</span>
-                    </div>
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px;">
-                        <span style="font-size:1.1rem; width:40%; text-align:left; ${estiloLocal}">⚽ ${loc.toUpperCase()}</span>
-                        <span id="multi-score-${index}" style="font-family:'Oswald'; font-size:1.4rem; background:#000; padding:2px 12px; border-radius:4px; color:var(--verde-match);">0 - 0</span>
-                        <span style="font-size:1.1rem; width:40%; text-align:right; ${estiloVisitante}">${vis.toUpperCase()} ⚽</span>
-                    </div>
-                    <div id="multi-penales-box-${index}" style="display:none; text-align:center; color:var(--rojo); font-weight:bold; font-size:0.9rem; margin-top:5px;"></div>
-                `;
-                tablero.appendChild(bloquePartido);
-                bloquePartido.scrollIntoView({ behavior: 'smooth' });
-
-                let minVirtual = 0;
-                let gL_act = 0;
-                let gV_act = 0;
-
-                const timerMulti = setInterval(() => {
-                    minVirtual += 15; 
-                    if (minVirtual > 90) minVirtual = 90;
-
-                    if (minVirtual >= 30 && gL_act < golesLocalDefinitivos && golesLocalDefinitivos > 0) gL_act++;
-                    if (minVirtual >= 60 && gV_act < golesVisitanteDefinitivos && golesVisitanteDefinitivos > 0) gV_act++;
-
-                    if (minVirtual === 90) {
-                        gL_act = golesLocalDefinitivos;
-                        gV_act = golesVisitanteDefinitivos;
-                    }
-
-                    const relojElement = document.getElementById(`multi-reloj-${index}`);
-                    const scoreElement = document.getElementById(`multi-score-${index}`);
-                    
-                    if (relojElement) relojElement.innerText = `⏱️ MINUTO ${minVirtual}:00`;
-                    if (scoreElement) scoreElement.innerText = `${gL_act} - ${gV_act}`;
-
-                    if (minVirtual >= 90) {
-                        clearInterval(timerMulti);
-                        
-                        if (partido.definicionPenales) {
-                            const pBox = document.getElementById(`multi-penales-box-${index}`);
-                            if (pBox) {
-                                pBox.style.display = "block";
-                                pBox.innerText = `💥 TANDA DE PENALES: (${partido.penalesLocal} - ${partido.penalesVisitante})`;
-                            }
-                        }
-
-                        bloquePartido.style.borderColor = "var(--verde-match)";
-                        const finTexto = document.createElement("div");
-                        finTexto.style.cssText = "text-align:right; font-size:0.85rem; font-weight:bold; margin-top:5px; color:var(--verde-match);";
-                        finTexto.innerText = ` GANADOR: ${partido.ganadorUsername.toUpperCase()} ✅`;
-                        bloquePartido.appendChild(finTexto);
-                        
-                        resolveCruce(); 
-                    }
-                }, 400);
-            });
         });
-    });
+        return promesaTanda;
+    }
 
-    // ========================================================================
-    // 🏁 CIERRE Y PANTALLA DE PREMIOS FINALES
-    // ========================================================================
-    secuenciaPromesas.then(() => {
+    // 🛑 CONTROLADORA INTERACTIVA DE FLUJO EN VIVO
+    function crearPausaFase(nombreSiguienteFase) {
+        return new Promise((resolvePausaMutua) => {
+            const bloquePausa = document.createElement("div");
+            bloquePausa.style.cssText = "text-align:center; background:#111a2e; border: 1px dashed var(--dorado); padding: 15px; border-radius: 8px; margin: 20px 0; box-shadow: 0 0 15px rgba(255, 215, 0, 0.1);";
+            
+            // Si soy el Host (creador de la sala) tengo el control físico
+            if (multiEsCreador) {
+                bloquePausa.innerHTML = `
+                    <h4 style="color:var(--dorado); font-family:'Oswald'; margin:0 0 5px 0; font-size: 1.1rem;">👑 SOS EL HOST - CONTROL DE TRANSMISIÓN</h4>
+                    <p style="color:#bbb; font-size:0.9rem; margin:0 0 12px 0;">La fase previa terminó. Presioná el botón para dar el silbatazo inicial de la siguiente etapa.</p>
+                    <button type="button" id="btn-host-avanzar" class="btn-estadio" style="width:70%; margin:0 auto; padding: 8px 15px; background:var(--celeste); border-color:var(--celeste); font-size:0.9rem; cursor:pointer; font-weight:bold;">
+                        🚀 LARGAR ${nombreSiguienteFase.toUpperCase()} EN VIVO
+                    </button>
+                `;
+                tablero.appendChild(bloquePausa);
+                bloquePausa.scrollIntoView({ behavior: 'smooth' });
+
+                document.getElementById("btn-host-avanzar").onclick = function() {
+                    this.disabled = true;
+                    this.innerText = "⏳ ENVIANDO SEÑAL AL ESTADIO...";
+                    // Guardamos la marca de tiempo de avance en localStorage para sincronizar al invitado por polling
+                    localStorage.setItem(`fase_viva_${multiCodigoSala}`, nombreSiguienteFase);
+                    bloquePausa.remove();
+                    resolvePausaMutua();
+                };
+            } else {
+                // Si soy el invitado, mi pantalla se congela esperando la acción del host
+                bloquePausa.innerHTML = `
+                    <h4 style="color:var(--dorado); font-family:'Oswald'; margin:0 0 5px 0; font-size: 1.1rem;">⏳ ESPERANDO AL REFUERZO DE LA BANCA</h4>
+                    <p style="color:#bbb; font-size:0.9rem; margin:0 0 0 0;">El Host está analizando el fixture. Aguardando transmisión en vivo de la fase de ${nombreSiguienteFase.toUpperCase()}...</p>
+                `;
+                tablero.appendChild(bloquePausa);
+                bloquePausa.scrollIntoView({ behavior: 'smooth' });
+
+                const checkFaseHost = setInterval(() => {
+                    // El invitado lee si el localStorage local o el estado cambió (simulado mediante consulta de red corta)
+                    const faseActualLanzada = localStorage.getItem(`fase_viva_${multiCodigoSala}`);
+                    if (faseActualLanzada === nombreSiguienteFase) {
+                        clearInterval(checkFaseHost);
+                        bloquePausa.remove();
+                        resolvePausaMutua();
+                    }
+                }, 1000);
+            }
+        });
+    }
+
+    // 🚀 ORQUESTADOR DE ETAPAS EN FILA SQUEEZED
+    // 1. Corren los Cuartos
+    simularTandaPartidos(fases.cuartos)
+    .then(() => {
+        // 2. Pausa mutua antes de Semis
+        return crearPausaFase("Semifinal");
+    })
+    .then(() => {
+        // 3. Corren las Semis
+        return simularTandaPartidos(fases.semis);
+    })
+    .then(() => {
+        // 4. Pausa mutua antes de la Final
+        return crearPausaFase("Gran Final");
+    })
+    .then(() => {
+        // 5. Corre la Final
+        return simularTandaPartidos(fases.final);
+    })
+    .then(() => {
+        // ========================================================================
+        // 🏁 FINAL TOTAL Y ASIGNACIÓN DE PREMIOS
+        // ========================================================================
          const bloquePremio = document.createElement("div");
          bloquePremio.style.cssText = "text-align:center; margin-top:25px; padding:15px; background:rgba(0,255,136,0.05); border:2px dashed var(--dorado); border-radius:10px;";
          
@@ -2233,6 +2232,9 @@ window.renderizarFixturePasoAPaso = function(bitacora, premio, apuestasTexto) {
          tablero.appendChild(bloquePremio);
          bloquePremio.scrollIntoView({ behavior: 'smooth' });
 
+         // Limpiamos los estados de sincronización al salir
+         localStorage.removeItem(`fase_viva_${multiCodigoSala}`);
+
          document.getElementById("btn-regresar-limpio-multi").onclick = () => {
              document.getElementById("multi-pantalla-fixture").style.display = "none";
              document.getElementById("multi-menu-inicial").style.display = "block";
@@ -2243,12 +2245,7 @@ window.renderizarFixturePasoAPaso = function(bitacora, premio, apuestasTexto) {
              const barraNavegacion = document.querySelector(".nav-modulos-estadio");
              if (barraNavegacion) barraNavegacion.style.removeProperty("display");
              
-             const btnSalir = document.querySelector(".btn-logout-kick");
-             if (btnSalir) btnSalir.style.removeProperty("display");
-
-             multiSalaId = null;
-             multiCodigoSala = null;
-             multiEsCreador = false;
+             multiSalaId = null; multiCodigoSala = null; multiEsCreador = false;
 
              if (typeof cambiarModulo === "function") {
                  const btnTienda = document.querySelector("button[onclick*='modulo-sobres']");
